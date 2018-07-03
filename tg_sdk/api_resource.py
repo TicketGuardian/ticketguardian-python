@@ -26,6 +26,8 @@ class APIResource(object):
         If the object does not have an attr that is in the data then it is stored as a
         private variable.
             Arguments:
+                instance {object} -- The new instance of the object to initialize.
+
                 data {dict} -- The dict of the item that was being searched for.
             Returns:
                 [object] -- An instance of the child object.
