@@ -8,10 +8,16 @@ class RetrieveResourceMixin(APIResource):
     @classmethod
     def retrieve(cls, resource_id, **params):
         """
-        Get a single resource using the child object that called and initialized
-        an instance of that child object.
+        Retrieve a single resource and initialize an instance of the child object that called.
             Arguments:
                 resource_id {str} -- The unique id of the resource.
+
+            Keyword Arguments:
+                public_key {str} -- The public key for this instance.
+                secret_key {str} -- The secret key for this instance.
+                core_url {str} -- The url where requests will be made to.
+                billing_url {str} -- The billing url where requests will be made to.
+
             Returns:
                 [object] -- An instance of the child object that called.
         """

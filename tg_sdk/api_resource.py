@@ -8,7 +8,7 @@ from tg_sdk import PUBLIC_KEY, SECRET_KEY, CORE_URL, BILLING_URL
 class APIResource(object):
     def __init__(self, **params):
         """
-        Any value passed as a params will be prioritized over the configuration variables.
+        Any value passed in params will be prioritized over the configuration variables.
             Keyword Arguments:
                 public_key {str} -- The public key for this instance.
                 secret_key {str} -- The secret key for this instance.
@@ -22,7 +22,7 @@ class APIResource(object):
 
     def construct(instance, data):
         """
-        Initializes an instance of the child class that made the request.
+        Initializes an instance of the child object that made the request.
         If the object does not have an attr that is in the data then it is stored as a
         private variable.
             Arguments:
