@@ -36,7 +36,6 @@ class API_Resource(object):
             if hasattr(instance, key):
                 instance.__setattr__(key, data[key])
             else:
-                # if the object does not have the attr save as a private variable
                 instance.__setattr__('_' + key, data[key])
         return instance
 
@@ -70,14 +69,14 @@ class API_Resource(object):
             return {}
 
     def has_valid_token(self):
-        if not hasattr(self, '_token'):
+        if not self._token:
             return False
         current_timestamp = datetime.now().timestamp()
         exp_timestamp = self._token_payload.get('exp', 0)
         return exp_timestamp > current_timestamp
 
     def _refresh_token(self):
-        if not (hasattr(self, '_public_key') and hasattr(self, '_secret_key')):
+        if not self._public_key and self._secret_key:
             raise CredentialsNotProvided(
                 "Cannot refresh token without a valid public and secret key"
             )
