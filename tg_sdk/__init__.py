@@ -22,3 +22,13 @@ HTTP_HEADER_ENCODING = 'iso-8859-1'
 
 # Default datetime input and output formats
 ISO_8601 = 'iso-8601'
+
+# Configuration variables
+core_url = "https://connect-dev.ticketguardian.net"
+billing_url = "https://billing.ticketguardian.net"
+token = None
+public_key = None
+secret_key = None
+
+
+from tg_sdk.product import Product
