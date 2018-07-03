@@ -1,8 +1,7 @@
-from tg_sdk.abstract.retrieve_resource import Retrieve_single
+from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
 
 
-class Product(Retrieve_single):
-    RESOURCE_NAME = "products"
+class Product(RetrieveResourceMixin):
+    resource = "products"
     id = None
     code = None
-

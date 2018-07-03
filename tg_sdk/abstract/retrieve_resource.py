@@ -1,24 +1,23 @@
-from tg_sdk.api_resource import API_Resource
-from tg_sdk import core_url
 import requests
 import json
+from tg_sdk.api_resource import APIResource
 
 
-class Retrieve_single(API_Resource):
+class RetrieveResourceMixin(APIResource):
 
     @classmethod
-    def Retrieve(cls, item_id, **params):
+    def retrieve(cls, resource_id, **params):
         """
-        Get a single item from the resource of the class that called and initialized
-        an instance of the child object.
+        Get a single resource using the child object that called and initialized
+        an instance of that child object.
             Arguments:
-                item_id {str} -- The unique id of the item.
+                resource_id {str} -- The unique id of the resource.
             Returns:
                 [object] -- An instance of the child object that called.
         """
         instance = cls()
         super().__init__(instance, **params)
-        url = "{}/api/v2/{}/{}/".format(core_url, cls.RESOURCE_NAME, item_id)
+        url = "{}/api/v2/{}/{}/".format(instance.core_url, instance.resource, resource_id)
 
         response = requests.request(
             "GET",

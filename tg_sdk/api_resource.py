@@ -1,26 +1,24 @@
-from tg_sdk.exceptions import CredentialsNotProvided, CouldNotRetrieveToken
-from tg_sdk import token, public_key, secret_key, core_url, billing_url
-from datetime import datetime
 import requests
 import json
+from tg_sdk.exceptions import CredentialsNotProvided, CouldNotRetrieveToken
+from tg_sdk import PUBLIC_KEY, SECRET_KEY, CORE_URL, BILLING_URL
+from datetime import datetime
 
 
-class API_Resource(object):
+class APIResource(object):
     def __init__(self, **params):
         """
         Any value passed as a params will be prioritized over the configuration variables.
             Keyword Arguments:
-                token {str} -- The Auth token for this instance.
                 public_key {str} -- The public key for this instance.
                 secret_key {str} -- The secret key for this instance.
                 core_url {str} -- The url where requests will be made to.
                 billing_url {str} -- The billing url where requests will be made to.
         """
-        self._token = params.pop('token', token)
-        self._public_key = params.pop('public_key', public_key)
-        self._secret_key = params.pop('secret_key', secret_key)
-        self._core_url = params.pop('core_url', core_url)
-        self._billing_url = params.pop('billing_url', billing_url)
+        self._public_key = params.pop('public_key', PUBLIC_KEY)
+        self._secret_key = params.pop('secret_key', SECRET_KEY)
+        self._core_url = params.pop('core_url', CORE_URL)
+        self._billing_url = params.pop('billing_url', BILLING_URL)
 
     def construct(instance, data):
         """
@@ -69,7 +67,7 @@ class API_Resource(object):
             return {}
 
     def has_valid_token(self):
-        if not self._token:
+        if not hasattr(self, '_token'):
             return False
         current_timestamp = datetime.now().timestamp()
         exp_timestamp = self._token_payload.get('exp', 0)
