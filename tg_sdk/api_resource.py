@@ -39,6 +39,11 @@ class APIResource(object):
                 instance.__setattr__('_' + key, data[key])
         return instance
 
+    @property
+    def core_url(self):
+        # TODO: return different urls ie. prod and sandbox
+        return self._core_url
+
     def __setattr__(self, key, value):
         if hasattr(self, key) or key[0] == '_':
             return super().__setattr__(key, value)
@@ -80,7 +85,7 @@ class APIResource(object):
             raise CredentialsNotProvided(
                 "Cannot refresh token without a valid public and secret key"
             )
-        url = self._core_url + "/api/v2/auth/token/"
+        url = self.core_url + "/api/v2/auth/token/"
         payload = {
             "public_key": self._public_key,
             "secret_key": self._secret_key
