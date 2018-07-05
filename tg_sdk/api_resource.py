@@ -2,7 +2,7 @@ import requests
 import json
 from datetime import datetime
 from tg_sdk.exceptions import CredentialsNotProvided, CouldNotRetrieveToken
-from tg_sdk import PUBLIC_KEY, SECRET_KEY, CORE_URL, BILLING_URL
+from tg_sdk import PUBLIC_KEY, SECRET_KEY, DEV, BILLING, PROD, SANDBOX
 
 
 class APIResource(object):
@@ -12,13 +12,13 @@ class APIResource(object):
             Keyword Arguments:
                 public_key {str} -- The public key for this instance.
                 secret_key {str} -- The secret key for this instance.
-                environment {str} -- The name of the environment that requests will be made to.
+                env {str} -- The tg_sdk constant of the environment you want to use. Prod will always be default.
                 billing_url {str} -- The billing url where requests will be made to.
         """
         self._public_key = params.pop('public_key', PUBLIC_KEY)
         self._secret_key = params.pop('secret_key', SECRET_KEY)
-        self._environment = params.pop('environment', 'prod')
-        self._billing_url = params.pop('billing_url', BILLING_URL)
+        self._env = params.pop('env', PROD)
+        self._billing_url = params.pop('billing_url', BILLING)
 
     def construct(instance, data):
         """
@@ -40,15 +40,7 @@ class APIResource(object):
 
     @property
     def core_url(self):
-        """
-        This will always default to prod if no environment or an invalid environment is given.
-            Returns:
-                [str] -- the url of the environments where requests will be made.
-        """
-        if self._environment.lower() == 'sandbox':
-            return 'https://connect-sandbox.ticketguardian.net'
-        else:
-            return 'https://connect.ticketguardian.net'
+        return self._env
 
     def __setattr__(self, key, value):
         if hasattr(self, key) or key[0] == '_':

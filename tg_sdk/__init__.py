@@ -24,10 +24,14 @@ HTTP_HEADER_ENCODING = 'iso-8859-1'
 ISO_8601 = 'iso-8601'
 
 # Configuration variables
-CORE_URL = "https://connect-dev.ticketguardian.net"
-BILLING_URL = "https://billing.ticketguardian.net"
 PUBLIC_KEY = None
 SECRET_KEY = None
+
+# Constants
+DEV = "https://connect-dev.ticketguardian.net"
+PROD = 'https://connect.ticketguardian.net'
+SANDBOX = 'https://connect-sandbox.ticketguardian.net'
+BILLING = "https://billing.ticketguardian.net"
 
 
 from tg_sdk.product import Product
