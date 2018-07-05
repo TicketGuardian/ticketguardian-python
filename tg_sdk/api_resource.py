@@ -2,7 +2,7 @@ import requests
 import json
 from datetime import datetime
 from tg_sdk.exceptions import CredentialsNotProvided, CouldNotRetrieveToken
-from tg_sdk import PUBLIC_KEY, SECRET_KEY, DEV, BILLING, PROD, SANDBOX
+from tg_sdk import PUBLIC_KEY, SECRET_KEY, CORE_DEV, CORE_PROD, CORE_SANDBOX, BILLING_DEV, BILLING_PROD, BILLING_SANDBOX
 
 
 class APIResource(object):
@@ -17,8 +17,9 @@ class APIResource(object):
         """
         self._public_key = params.pop('public_key', PUBLIC_KEY)
         self._secret_key = params.pop('secret_key', SECRET_KEY)
-        self._env = params.pop('env', PROD)
-        self._billing_url = params.pop('billing_url', BILLING)
+        self._core_url = CORE_PROD
+        self._billing_url = BILLING_PROD
+        self.configure_environment(params.pop('env', 'prod'))
 
     def construct(instance, data):
         """
@@ -37,6 +38,27 @@ class APIResource(object):
             else:
                 instance.__setattr__('_' + key, data[key])
         return instance
+
+    def configure_environment(self, env):
+        """
+        Changes both billing and core url according to the string that is passed.
+            Arguments:
+                env {str} -- The name of the enviroment to change to.
+                             Only accepts the strings 'prod', 'dev', and 'sandbox'
+        """
+        env = env.lower()
+        if env == 'dev':
+            self._core_url = CORE_DEV
+            self._billing_url = BILLING_DEV
+        elif env == 'sandbox':
+            self._core_url = CORE_SANDBOX
+            self._billing_url = BILLING_SANDBOX
+        elif env == 'prod':
+            self._core_url = CORE_PROD
+            self._billing_url = BILLING_PROD
+        else:
+            # TODO: ADD ERROR HANDLING
+            pass
 
     @property
     def core_url(self):

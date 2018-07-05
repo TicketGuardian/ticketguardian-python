@@ -28,10 +28,12 @@ PUBLIC_KEY = None
 SECRET_KEY = None
 
 # Constants
-DEV = "https://connect-dev.ticketguardian.net"
-PROD = 'https://connect.ticketguardian.net'
-SANDBOX = 'https://connect-sandbox.ticketguardian.net'
-BILLING = "https://billing.ticketguardian.net"
+CORE_PROD = 'https://connect.ticketguardian.net'
+CORE_DEV = "https://connect-dev.ticketguardian.net"
+CORE_SANDBOX = 'https://connect-sandbox.ticketguardian.net'
+BILLING_PROD = "https://billing.ticketguardian.net"
+BILLING_DEV = "https://billing.ticketguardian.net"
+BILLING_SANDBOX = "https://billing.ticketguardian.net"
 
 
 from tg_sdk.product import Product
