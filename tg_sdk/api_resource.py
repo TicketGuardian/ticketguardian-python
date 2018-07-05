@@ -62,7 +62,11 @@ class APIResource(object):
 
     @property
     def core_url(self):
-        return self._env
+        return self._core_url
+
+    @property
+    def billing_url(self):
+        return self._billing_url
 
     def __setattr__(self, key, value):
         if hasattr(self, key) or key[0] == '_':
