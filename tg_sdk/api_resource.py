@@ -12,12 +12,12 @@ class APIResource(object):
             Keyword Arguments:
                 public_key {str} -- The public key for this instance.
                 secret_key {str} -- The secret key for this instance.
-                core_url {str} -- The url where requests will be made to.
+                environment {str} -- The name of the environment that requests will be made to.
                 billing_url {str} -- The billing url where requests will be made to.
         """
         self._public_key = params.pop('public_key', PUBLIC_KEY)
         self._secret_key = params.pop('secret_key', SECRET_KEY)
-        self._core_url = params.pop('core_url', CORE_URL)
+        self._environment = params.pop('environment', 'prod')
         self._billing_url = params.pop('billing_url', BILLING_URL)
 
     def construct(instance, data):
@@ -27,7 +27,6 @@ class APIResource(object):
         private variable.
             Arguments:
                 instance {object} -- The new instance of the object to initialize.
-
                 data {dict} -- The dict of the item that was being searched for.
             Returns:
                 [object] -- An instance of the child object.
@@ -41,8 +40,15 @@ class APIResource(object):
 
     @property
     def core_url(self):
-        # TODO: return different urls ie. prod and sandbox
-        return self._core_url
+        """
+        This will always default to prod if no environment or an invalid environment is given.
+            Returns:
+                [str] -- the url of the environments where requests will be made.
+        """
+        if self._environment.lower() == 'sandbox':
+            return 'https://connect-sandbox.ticketguardian.net'
+        else:
+            return 'https://connect.ticketguardian.net'
 
     def __setattr__(self, key, value):
         if hasattr(self, key) or key[0] == '_':
