@@ -22,7 +22,7 @@ class RetrieveResourceMixin(APIResource):
                 [object] -- An instance of the child object that called.
         """
         instance = cls()
-        super().__init__(instance, **params)
+        super(cls, instance).__init__(**params)
         url = "{}/api/v2/{}/{}/".format(instance.core_url, instance.resource, resource_id)
 
         response = requests.request(
@@ -38,4 +38,4 @@ class RetrieveResourceMixin(APIResource):
             # TODO: ADD ERROR HANDLING
             return cls()
 
-        return super().construct(instance, data)
+        return super(cls, instance).construct(data)
