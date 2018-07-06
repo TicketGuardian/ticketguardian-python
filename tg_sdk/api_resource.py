@@ -1,19 +1,32 @@
-import requests
 import json
 from datetime import datetime
-from tg_sdk.exceptions import CredentialsNotProvided, CouldNotRetrieveToken
-from tg_sdk import PUBLIC_KEY, SECRET_KEY, CORE_DEV, CORE_PROD, CORE_SANDBOX, BILLING_DEV, BILLING_PROD, BILLING_SANDBOX
+import requests
+from tg_sdk import ( 
+    BILLING_DEV,
+    BILLING_PROD,
+    BILLING_SANDBOX,
+    CORE_DEV,
+    CORE_PROD,
+    CORE_SANDBOX,
+    PUBLIC_KEY,
+    SECRET_KEY, )
+from tg_sdk.exceptions import (
+    CredentialsNotProvided,
+    CouldNotRetrieveToken, )
 
 
 class APIResource(object):
     def __init__(self, **params):
         """
-        Any value passed in params will be prioritized over the configuration variables.
+        Any value passed in params will be prioritized
+        over the configuration variables.
             Keyword Arguments:
                 public_key {str} -- The public key for this instance.
                 secret_key {str} -- The secret key for this instance.
-                env {str} -- The tg_sdk constant of the environment you want to use. Prod will always be default.
-                billing_url {str} -- The billing url where requests will be made to.
+                env {str} -- The tg_sdk constant of the environment to use.
+                             Prod will always be default.
+                billing_url {str} -- The billing url where 
+                                     requests will be made.
         """
         self._public_key = params.pop('public_key', PUBLIC_KEY)
         self._secret_key = params.pop('secret_key', SECRET_KEY)
@@ -24,11 +37,13 @@ class APIResource(object):
     def construct(instance, data):
         """
         Initializes an instance of the child object that made the request.
-        If the object does not have an attr that is in the data then it is stored as a
-        private variable.
+        If the object does not have an attr that is in the data then it
+        is stored as a private variable.
             Arguments:
-                instance {object} -- The new instance of the object to initialize.
-                data {dict} -- The dict of the item that was being searched for.
+                instance {object} -- The new instance of the
+                                     object to initialize.
+                data {dict} -- The dict of the item that
+                               was being searched for.
             Returns:
                 [object] -- An instance of the child object.
         """
@@ -41,10 +56,11 @@ class APIResource(object):
 
     def configure_environment(self, env):
         """
-        Changes both billing and core url according to the string that is passed.
+        Changes both billing and core url according to the string
+        that is passed.
             Arguments:
                 env {str} -- The name of the enviroment to change to.
-                             Only accepts the strings 'prod', 'dev', and 'sandbox'
+                             Only accepts 'prod', 'dev', or 'sandbox'
         """
         env = env.lower()
         if env == 'dev':
