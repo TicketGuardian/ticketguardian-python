@@ -26,9 +26,9 @@ class RetrieveResourceMixin(APIResource):
         instance = cls()
         super(cls, instance).__init__(**params)
         url = "{}/api/v2/{}/{}/".format(
-                                        instance.core_url,
-                                        instance.resource,
-                                        resource_id)
+            instance.core_url,
+            instance.resource,
+            resource_id)
 
         response = requests.request(
             "GET",
@@ -40,7 +40,7 @@ class RetrieveResourceMixin(APIResource):
         if response.ok:
             data = json.loads(response.text)
         else:
-            # TODO: ADD ERROR HANDLING
+            # TODO(Justin): ADD ERROR HANDLING
             return cls()
 
         return super(cls, instance).construct(data)

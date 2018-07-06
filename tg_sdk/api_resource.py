@@ -1,7 +1,8 @@
-import json
 from datetime import datetime
+import json
 import requests
-from tg_sdk import ( 
+
+from tg_sdk import (
     BILLING_DEV,
     BILLING_PROD,
     BILLING_SANDBOX,
@@ -25,7 +26,7 @@ class APIResource(object):
                 secret_key {str} -- The secret key for this instance.
                 env {str} -- The tg_sdk constant of the environment to use.
                              Prod will always be default.
-                billing_url {str} -- The billing url where 
+                billing_url {str} -- The billing url where
                                      requests will be made.
         """
         self._public_key = params.pop('public_key', PUBLIC_KEY)
@@ -73,7 +74,7 @@ class APIResource(object):
             self._core_url = CORE_PROD
             self._billing_url = BILLING_PROD
         else:
-            # TODO: ADD ERROR HANDLING
+            # TODO(Justin): ADD ERROR HANDLING
             pass
 
     @property
