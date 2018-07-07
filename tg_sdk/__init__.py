@@ -37,3 +37,5 @@ BILLING_SANDBOX = "https://billing.ticketguardian.net"
 
 
 from tg_sdk.product import Product
+from tg_sdk.client import Client
+from tg_sdk.affiliate import Affiliate

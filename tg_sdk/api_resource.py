@@ -25,9 +25,8 @@ class APIResource(object):
                 public_key {str} -- The public key for this instance.
                 secret_key {str} -- The secret key for this instance.
                 env {str} -- The tg_sdk constant of the environment to use.
+                             Billing and Core will be in the same env.
                              Prod will always be default.
-                billing_url {str} -- The billing url where
-                                     requests will be made.
         """
         self._public_key = params.pop('public_key', PUBLIC_KEY)
         self._secret_key = params.pop('secret_key', SECRET_KEY)
