@@ -11,14 +11,12 @@ class ListResourcesMixin(APIResource):
         """
         Retrieve multiple resources and return a list of
         instances of child objects initialized with the data received.
-        Any additional filter can be added into params as a keyword arg.
-            Arguments:
-                resource_id {str} -- The unique id of the resource.
+        Any additional filters can be added into params as a keyword arg.
 
             Keyword Arguments:
-                public_key {str} -- The public key for this instance.
-                secret_key {str} -- The secret key for this instance.
-                limit {int} -- The maximum resources that will be returned
+                public_key (str) -- The public key for this instance.
+                secret_key (str) -- The secret key for this instance.
+                limit (int) -- The maximum resources that will be returned
 
             Returns:
                 list -- A list of instances of the child object that called.
