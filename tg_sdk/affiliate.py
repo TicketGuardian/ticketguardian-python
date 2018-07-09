@@ -22,7 +22,3 @@ class Affiliate(ListResourcesMixin, RetrieveResourceMixin,):
     def settings(self):
         self.update(self._settings)
         return self._settings
-
-    @settings.setter
-    def settings(self, data):
-        self._settings = data

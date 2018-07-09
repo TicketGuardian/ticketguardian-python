@@ -53,7 +53,7 @@ class APIResource(object):
         for key in data:
             if hasattr(instance, '_' + key):
                 instance.__setattr__('_' + key, data[key])
-            elif hasattr(instance, key):
+            else:
                 instance.__setattr__(key, data[key])
         return instance
 

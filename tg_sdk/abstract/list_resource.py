@@ -24,10 +24,8 @@ class ListResourcesMixin(APIResource):
         resources = []
         instance = cls()
         super(cls, instance).__init__(**params)
-        limit = params.get("limit", None)
-        request_limit = min(limit, cls.page_limit) if limit else cls.page_limit
         parameters = params
-        parameters['limit'] = request_limit
+        limit = parameters.get("limit", None)
         url = "{}/api/v2/{}/".format(
             instance.core_url,
             instance.resource

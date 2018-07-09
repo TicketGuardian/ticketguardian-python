@@ -31,33 +31,17 @@ class Client(ListResourcesMixin, RetrieveResourceMixin,):
         #               but is not on single retrieves
         return self._domain
 
-    @domain.setter
-    def domain(self, data):
-        self._domain = data
-
     @property
     def logo(self):
         self.update(self._logo)
         return self._logo
-
-    @logo.setter
-    def logo(self, data):
-        self._logo = data
 
     @property
     def ui_mode(self):
         self.update(self._ui_mode)
         return self._ui_mode
 
-    @ui_mode.setter
-    def ui_mode(self, data):
-        self._ui_mode = data
-
     @property
     def settings(self):
         self.update(self._settings)
         return self._settings
-
-    @settings.setter
-    def settings(self, data):
-        self._settings = data

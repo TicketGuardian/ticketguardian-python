@@ -6,3 +6,5 @@ class Product(RetrieveResourceMixin, ListResourcesMixin):
     resource = "products"
     id = None
     code = None
+    _label = None
+    _name = None
