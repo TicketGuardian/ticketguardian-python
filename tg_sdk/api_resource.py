@@ -17,6 +17,8 @@ from tg_sdk.exceptions import (
 
 
 class APIResource(object):
+    page_limit = 1000
+
     def __init__(self, **params):
         """
         Any value passed in params will be prioritized
@@ -34,7 +36,6 @@ class APIResource(object):
         self._billing_url = None
         self._env = params.get('env', 'prod')
         self.configure_environment(self._env)
-        self.page_limit = 1000
 
     def construct(instance, data):
         """
