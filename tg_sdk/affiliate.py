@@ -7,9 +7,16 @@ class Affiliate(ListResourcesMixin, RetrieveResourceMixin,):
     id = None
     name = None
     domain = None
-    parent = None
+    _parent = None
     _settings = None
     _updated = False
+
+    @property
+    def parent(self):
+        return self.retrieve(
+            self._parent['id'],
+            **self.credentials
+        )
 
     @property
     def settings(self):

@@ -1,4 +1,5 @@
 from tg_sdk.abstract.list_resource import ListResourcesMixin
+from tg_sdk.affiliate import Affiliate
 from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
 
 
@@ -9,12 +10,19 @@ class Client(ListResourcesMixin, RetrieveResourceMixin,):
     name = None
     status = None
     is_rev_share = None
-    affiliate = None
+    _affiliate = None
     _domain = None
     _logo = None
     _ui_mode = None
     _settings = None
     _updated = False
+
+    @property
+    def affiliate(self):
+        return Affiliate.retrieve(
+            self._affiliate['id'],
+            **self.credentials
+        )
 
     @property
     def domain(self):

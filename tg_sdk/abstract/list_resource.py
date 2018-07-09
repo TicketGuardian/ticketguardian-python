@@ -18,20 +18,18 @@ class ListResourcesMixin(APIResource):
             Keyword Arguments:
                 public_key {str} -- The public key for this instance.
                 secret_key {str} -- The secret key for this instance.
-                env {str} -- The tg_sdk constant of the environment to use.
-                             Billing and Core will be in the same env.
-                             Prod will always be default.
                 limit {int} -- The maximum resources that will be returned
 
             Returns:
-                [list] -- A list of instances of the child object that called.
+                list -- A list of instances of the child object that called.
         """
         resources = []
         instance = cls()
         super(cls, instance).__init__(**params)
-        limit = params.pop("limit", None)
+        limit = params.get("limit", None)
         request_limit = min(limit, 1000) if limit else 1000
-        params['limit'] = request_limit
+        parameters = params
+        parameters['limit'] = request_limit
         url = "{}/api/v2/{}/".format(
             instance.core_url,
             instance.resource)
@@ -41,7 +39,7 @@ class ListResourcesMixin(APIResource):
                 "GET",
                 url,
                 headers=instance.default_headers,
-                params=params
+                params=parameters
             )
             if response.ok:
                 data = json.loads(response.text)

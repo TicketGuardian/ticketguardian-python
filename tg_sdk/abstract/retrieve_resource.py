@@ -16,12 +16,9 @@ class RetrieveResourceMixin(APIResource):
             Keyword Arguments:
                 public_key {str} -- The public key for this instance.
                 secret_key {str} -- The secret key for this instance.
-                env {str} -- The tg_sdk constant of the environment to use.
-                             Billing and Core will be in the same env.
-                             Prod will always be default.
 
             Returns:
-                [object] -- An instance of the child object that called.
+                object -- An instance of the child object that called.
         """
         instance = cls()
         super(cls, instance).__init__(**params)

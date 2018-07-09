@@ -28,11 +28,13 @@ class APIResource(object):
                              Billing and Core will be in the same env.
                              Prod will always be default.
         """
-        self._public_key = params.pop('public_key', PUBLIC_KEY)
-        self._secret_key = params.pop('secret_key', SECRET_KEY)
-        self._core_url = CORE_PROD
-        self._billing_url = BILLING_PROD
-        self.configure_environment(params.pop('env', 'prod'))
+        self._public_key = params.get('public_key', PUBLIC_KEY)
+        self._secret_key = params.get('secret_key', SECRET_KEY)
+        self._core_url = None
+        self._billing_url = None
+        self._env = params.get('env', 'prod')
+        self.configure_environment(self._env)
+        self.page_limit = 1000
 
     def construct(instance, data):
         """
@@ -45,13 +47,13 @@ class APIResource(object):
                 data {dict} -- The dict of the item that
                                was being searched for.
             Returns:
-                [object] -- An instance of the child object.
+                object -- An instance of the child object.
         """
         for key in data:
-            if hasattr(instance, key):
-                instance.__setattr__(key, data[key])
-            else:
+            if hasattr(instance, '_' + key):
                 instance.__setattr__('_' + key, data[key])
+            elif hasattr(instance, key):
+                instance.__setattr__(key, data[key])
         return instance
 
     def configure_environment(self, env):
@@ -64,17 +66,28 @@ class APIResource(object):
         """
         env = env.lower()
         if env == 'dev':
+            self._env = 'dev'
             self._core_url = CORE_DEV
             self._billing_url = BILLING_DEV
         elif env == 'sandbox':
+            self._env = 'sandbox'
             self._core_url = CORE_SANDBOX
             self._billing_url = BILLING_SANDBOX
         elif env == 'prod':
+            self._env = 'prod'
             self._core_url = CORE_PROD
             self._billing_url = BILLING_PROD
         else:
             # TODO(Justin): ADD ERROR HANDLING
             pass
+
+    @property
+    def credentials(self):
+        return {
+            'public_key': self._public_key,
+            'secret_key': self._secret_key,
+            'env': self._env,
+        }
 
     @property
     def core_url(self):
