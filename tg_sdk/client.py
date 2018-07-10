@@ -1,6 +1,6 @@
 from tg_sdk.abstract.list_resource import ListResourcesMixin
-from tg_sdk.affiliate import Affiliate
 from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
+from tg_sdk.affiliate import Affiliate
 
 
 class Client(ListResourcesMixin, RetrieveResourceMixin,):
