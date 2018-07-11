@@ -58,6 +58,6 @@ class ListResourcesMixin(APIResource):
                     resources += [instance]
                 url = data.get('next')
             else:
-                # TODO: ADD ERROR HANDLING
+                # TODO(Justin): ADD ERROR HANDLING
                 return []
         return resources[:limit]
