@@ -26,16 +26,15 @@ class PostResource(APIResource):
         response = requests.post(
             url,
             headers=instance.default_headers,
-            json=cls._make_payload(**params)
+            json=instance._make_payload(**params)
         )
 
-        if response.ok:
-            print('ok')
-        else:
+        if not response.ok:
             # TODO(Justin): ADD ERROR HANDLING
-            print('not ok')
+            pass
 
     def _make_payload(**params):
+        # I am using check as
         check = {
             'public_key': 0,
             'secret_key': 0,
