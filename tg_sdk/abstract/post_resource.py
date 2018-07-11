@@ -1,4 +1,5 @@
 import requests
+import json
 
 from tg_sdk.api_resource import APIResource
 
@@ -34,6 +35,10 @@ class PostResourceMixin(APIResource):
             json=params
         )
 
-        if not response.ok:
+        if response.ok:
+            data = json.loads(response.text)
+        else:
             # TODO(Justin): ADD ERROR HANDLING
-            pass
+            return
+
+        return super(cls, instance).construct(data)
