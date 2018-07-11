@@ -1,9 +1,10 @@
-from tg_sdk.abstract.list_resource import ListResourcesMixin
-from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
 from tg_sdk.affiliate import Affiliate
+from tg_sdk.abstract.list_resource import ListResourcesMixin
+from tg_sdk.abstract.post_resource import PostResourceMixin
+from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
 
 
-class Client(ListResourcesMixin, RetrieveResourceMixin,):
+class Client(ListResourcesMixin, RetrieveResourceMixin, PostResourceMixin, ):
     resource = "clients"
     external_id = None
     id = None
