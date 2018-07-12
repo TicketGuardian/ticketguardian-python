@@ -13,10 +13,13 @@ class Affiliate(ListResourceMixin, RetrieveResourceMixin,):
 
     @property
     def parent(self):
-        return self.retrieve(
-            self._parent['id'],
-            **self.credentials
-        )
+        self.update(self._parent)
+        if isinstance(self._parent, dict):
+            self._parent = self.retrieve(
+                self._parent['id'],
+                **self.credentials
+            )
+        return self._parent
 
     @property
     def settings(self):
