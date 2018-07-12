@@ -93,6 +93,6 @@ class RetrieveResourceMixin(APIResource):
                         ensure that the object has already been updated and
                         the value is actually None.
         """
-        if not self._updated and (self.id and val is None):
-            self._updated = True
+        if not self.updated and (self.id and val is None):
+            self.updated = True
             self.get_missing_attrs()
