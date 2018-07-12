@@ -1,8 +1,8 @@
-from tg_sdk.abstract.list_resource import ListResourcesMixin
+from tg_sdk.abstract.list_resource import ListResourceMixin
 from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
 
 
-class Affiliate(ListResourcesMixin, RetrieveResourceMixin,):
+class Affiliate(ListResourceMixin, RetrieveResourceMixin,):
     resource = "affiliates"
     id = None
     name = None

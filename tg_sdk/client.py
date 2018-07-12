@@ -1,10 +1,10 @@
 from tg_sdk.affiliate import Affiliate
-from tg_sdk.abstract.list_resource import ListResourcesMixin
+from tg_sdk.abstract.list_resource import ListResourceMixin
 from tg_sdk.abstract.post_resource import PostResourceMixin
 from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
 
 
-class Client(ListResourcesMixin, RetrieveResourceMixin, PostResourceMixin, ):
+class Client(ListResourceMixin, RetrieveResourceMixin, PostResourceMixin, ):
     resource = "clients"
     external_id = None
     id = None
@@ -16,10 +16,11 @@ class Client(ListResourcesMixin, RetrieveResourceMixin, PostResourceMixin, ):
     _logo = None
     _ui_mode = None
     _settings = None
-    _updated = False
 
     @property
     def affiliate(self):
+        # TODO: Update so this saves the Affiliate object and doesnt make an
+        #       api call every time
         return Affiliate.retrieve(
             self._affiliate['id'],
             **self.credentials

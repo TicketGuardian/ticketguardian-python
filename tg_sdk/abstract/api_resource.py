@@ -18,6 +18,7 @@ from tg_sdk.exceptions import (
 
 class APIResource(object):
     page_limit = 1000
+    updated = False
 
     def __init__(self, **params):
         """

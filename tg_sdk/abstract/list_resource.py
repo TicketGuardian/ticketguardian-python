@@ -4,7 +4,7 @@ import requests
 from tg_sdk.abstract.api_resource import APIResource
 
 
-class ListResourcesMixin(APIResource):
+class ListResourceMixin(APIResource):
 
     @classmethod
     def list(cls, public_key=None, secret_key=None, env=None, **params):
