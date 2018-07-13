@@ -59,6 +59,15 @@ class APIResource(object):
                 instance.__setattr__(key, data[key])
         return instance
 
+    def construct_general(self, name, data):
+        """
+            A generalized version of construct. This is used to create an
+            object of type name from a dict.
+                Returns:
+                    object -- An instance of the new object.
+        """
+        return type(name, (object,), data)
+
     def configure_environment(self, env):
         """
         Changes both billing and core url according to the string

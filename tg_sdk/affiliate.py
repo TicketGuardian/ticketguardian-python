@@ -22,4 +22,9 @@ class Affiliate(ListResourceMixin, RetrieveResourceMixin,):
     @property
     def settings(self):
         self.update(self._settings)
+        if isinstance(self._settings, dict):
+            self._settings = super().construct_general(
+                'Settings',
+                self._settings
+            )
         return self._settings
