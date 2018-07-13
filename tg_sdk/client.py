@@ -19,12 +19,12 @@ class Client(ListResourceMixin, RetrieveResourceMixin, PostResourceMixin, ):
 
     @property
     def affiliate(self):
-        # TODO: Update so this saves the Affiliate object and doesnt make an
-        #       api call every time
-        return Affiliate.retrieve(
-            self._affiliate['id'],
-            **self.credentials
-        )
+        if isinstance(self._affiliate, dict):
+            self._affiliate = Affiliate.retrieve(
+                self._affiliate['id'],
+                **self.credentials
+            )
+        return self._affiliate
 
     @property
     def domain(self):

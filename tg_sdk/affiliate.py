@@ -9,11 +9,9 @@ class Affiliate(ListResourceMixin, RetrieveResourceMixin,):
     domain = None
     _parent = None
     _settings = None
-    _updated = False
 
     @property
     def parent(self):
-        self.update(self._parent)
         if isinstance(self._parent, dict):
             self._parent = self.retrieve(
                 self._parent['id'],
