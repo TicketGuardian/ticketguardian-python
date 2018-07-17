@@ -36,7 +36,7 @@ CORE_PROD = 'https://connect.ticketguardian.net'
 CORE_SANDBOX = 'https://connect-sandbox.ticketguardian.net'
 
 # Imports
-from tg_sdk.abstract import *
+from tg_sdk.ticketguardian_sdk import TicketGuardianSDK
 from tg_sdk.affiliate import Affiliate
 from tg_sdk.client import Client
 from tg_sdk.product import Product

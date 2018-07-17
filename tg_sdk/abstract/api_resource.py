@@ -39,6 +39,10 @@ class APIResource(object):
         self._env = params.get('env', 'prod')
         self.configure_environment(self._env)
 
+    @classmethod
+    def new_instance(cls, **params):
+        return cls(**params)
+
     def construct(instance, data):
         """
         Initializes an instance of the child object that made the request.
@@ -61,10 +65,10 @@ class APIResource(object):
 
     def construct_general(self, name, data):
         """
-            A generalized version of construct. This is used to create an
-            object of type name from a dict.
-                Returns:
-                    object -- An instance of the new object.
+        A generalized version of construct. This is used to create an
+        object of type name from a dict.
+            Returns:
+                object -- An instance of the new object.
         """
         return type(name, (object,), data)
 

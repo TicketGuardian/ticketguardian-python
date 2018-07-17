@@ -15,7 +15,6 @@ class Affiliate(ListResourceMixin, RetrieveResourceMixin,):
         if isinstance(self._parent, dict):
             self._parent = self.retrieve(
                 self._parent['id'],
-                **self.credentials
             )
         return self._parent
 
