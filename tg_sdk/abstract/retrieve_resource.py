@@ -6,7 +6,7 @@ from tg_sdk.abstract.api_resource import APIResource
 
 class RetrieveResourceMixin(APIResource):
 
-    def retrieve(self,resource_id,**params):
+    def retrieve(self, resource_id, **params):
         """
         Retrieve a single resource and initialize an instance of the child
         object that called.
@@ -16,6 +16,8 @@ class RetrieveResourceMixin(APIResource):
 
             Returns:
                 object -- An instance of the child object that called.
+                If a bad request is made then an empty resource object is
+                returned.
         """
         url = "{}/api/v2/{}/{}/".format(
             self.core_url,
@@ -31,11 +33,12 @@ class RetrieveResourceMixin(APIResource):
 
         if response.ok:
             data = json.loads(response.text)
-            instance = super().new_instance(**self.credentials)
-            return instance.construct(data)
         else:
             # TODO(Justin): ADD ERROR HANDLING
-            return super().construct({})
+            data = {}
+
+        instance = super().new_instance(**self.credentials)
+        return instance.construct(data)
 
     def get_missing_attrs(instance):
         """
