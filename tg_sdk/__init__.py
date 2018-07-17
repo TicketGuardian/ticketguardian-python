@@ -24,9 +24,9 @@ HTTP_HEADER_ENCODING = 'iso-8859-1'
 ISO_8601 = 'iso-8601'
 
 # Constants
-BILLING_DEV = "https://billing.ticketguardian.net"
+BILLING_DEV = "https://billing-dev.ticketguardian.net"
 BILLING_PROD = "https://billing.ticketguardian.net"
-BILLING_SANDBOX = "https://billing.ticketguardian.net"
+BILLING_SANDBOX = "https://billing-sandbox.ticketguardian.net"
 CORE_DEV = "https://connect-dev.ticketguardian.net"
 CORE_PROD = 'https://connect.ticketguardian.net'
 CORE_SANDBOX = 'https://connect-sandbox.ticketguardian.net'
