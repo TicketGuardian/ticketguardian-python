@@ -23,20 +23,16 @@ HTTP_HEADER_ENCODING = 'iso-8859-1'
 # Default datetime input and output formats
 ISO_8601 = 'iso-8601'
 
-# Configuration variables
-PUBLIC_KEY = None
-SECRET_KEY = None
-
 # Constants
-BILLING_DEV = "https://billing.ticketguardian.net"
+BILLING_DEV = "https://billing-dev.ticketguardian.net"
 BILLING_PROD = "https://billing.ticketguardian.net"
-BILLING_SANDBOX = "https://billing.ticketguardian.net"
+BILLING_SANDBOX = "https://billing-sandbox.ticketguardian.net"
 CORE_DEV = "https://connect-dev.ticketguardian.net"
 CORE_PROD = 'https://connect.ticketguardian.net'
 CORE_SANDBOX = 'https://connect-sandbox.ticketguardian.net'
 
 # Imports
-from tg_sdk.abstract import *
+from tg_sdk.ticketguardian_sdk import TicketGuardianSDK
 from tg_sdk.affiliate import Affiliate
 from tg_sdk.client import Client
 from tg_sdk.product import Product

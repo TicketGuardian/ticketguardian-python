@@ -8,23 +8,17 @@ from tg_sdk import (
     BILLING_SANDBOX,
     CORE_DEV,
     CORE_PROD,
-    CORE_SANDBOX,
-    PUBLIC_KEY,
-    SECRET_KEY, )
+    CORE_SANDBOX, )
 from tg_sdk.exceptions import (
-    CredentialsNotProvided,
-    CouldNotRetrieveToken, )
+    CouldNotRetrieveToken,
+    CredentialsNotProvided, )
 
 
 class APIResource(object):
-    page_limit = 1000
     updated = False
 
     def __init__(self, **params):
         """
-        Any value passed in params will be prioritized
-        over the configuration variables.
-
             Keyword Arguments:
                 public_key (str) -- The public key for this instance.
                 secret_key (str) -- The secret key for this instance.
@@ -32,32 +26,47 @@ class APIResource(object):
                              Billing and Core will be in the same env.
                              Prod will always be default.
         """
-        self._public_key = params.get('public_key', PUBLIC_KEY)
-        self._secret_key = params.get('secret_key', SECRET_KEY)
+        self._public_key = params.get('public_key', None)
+        self._secret_key = params.get('secret_key', None)
         self._core_url = None
         self._billing_url = None
         self._env = params.get('env', 'prod')
         self.configure_environment(self._env)
 
-    def construct(instance, data):
+    @classmethod
+    def new_instance(cls, **params):
+        return cls(**params)
+
+    def construct(self, data):
         """
-        Initializes an instance of the child object that made the request.
-        This checks first for the private variable to avoid property calls.
+        Creates and initialized an instance of the child object that made
+        the request. This checks first for the private variable to avoid
+        recursive property calls. If the private variable does not exist then
+        it is added as public.
 
             Arguments:
-                instance (object) -- The new instance of the
-                                     object to initialize.
-                data (dict) -- The dict of the item that
-                               was being searched for.
+                data (dict) -- The dict containing the data for the object.
+
             Returns:
                 object -- An instance of the child object.
         """
+        instance = self.new_instance(**self.credentials)
         for key in data:
             if hasattr(instance, '_' + key):
                 instance.__setattr__('_' + key, data[key])
             else:
                 instance.__setattr__(key, data[key])
         return instance
+
+    def construct_general(self, name, data):
+        """
+        A generalized version of construct. This is used to create a type
+        object that is initialized with the data from the dict.
+
+            Returns:
+                object -- An instance of the new object.
+        """
+        return type(name, (object,), data)
 
     def configure_environment(self, env):
         """
