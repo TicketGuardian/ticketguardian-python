@@ -37,9 +37,7 @@ class ListResourceMixin(APIResource):
             if response.ok:
                 data = json.loads(response.text)
                 for resource in data.get('results', []):
-                    instance = self.new_instance(**self.credentials)
-                    instance.construct(resource)
-                    resources += [instance]
+                    resources += [self.construct(resource)]
                 url = data.get('next')
             else:
                 # TODO(Justin): ADD ERROR HANDLING

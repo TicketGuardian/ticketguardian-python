@@ -37,31 +37,30 @@ class RetrieveResourceMixin(APIResource):
             # TODO(Justin): ADD ERROR HANDLING
             data = {}
 
-        instance = super().new_instance(**self.credentials)
-        return instance.construct(data)
+        return self.construct(data)
 
-    def get_missing_attrs(instance):
+    def get_missing_attrs(self):
         """
         Used to fill in any missing attributes in an object. List and Retrieve
         can return different attributes which so this makes another api call.
         """
         url = "{}/api/v2/{}/{}/".format(
-            instance.core_url,
-            instance.resource,
-            instance.id
+            self.core_url,
+            self.resource,
+            self.id
         )
 
         response = requests.request(
             "GET",
             url,
-            headers=instance.default_headers,
+            headers=self.default_headers,
         )
 
         if response.ok:
             data = json.loads(response.text)
             for attr in data:
-                if not getattr(instance, '_' + attr, True):
-                    instance.__setattr__('_' + attr, data[attr])
+                if not getattr(self, '_' + attr, True):
+                    self.__setattr__('_' + attr, data[attr])
 
         else:
             # TODO(Justin): ADD ERROR HANDLING
