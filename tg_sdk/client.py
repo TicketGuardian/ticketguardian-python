@@ -1,9 +1,10 @@
-from tg_sdk.abstract.list_resource import ListResourcesMixin
-from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
 from tg_sdk.affiliate import Affiliate
+from tg_sdk.abstract.list_resource import ListResourceMixin
+from tg_sdk.abstract.post_resource import PostResourceMixin
+from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
 
 
-class Client(ListResourcesMixin, RetrieveResourceMixin,):
+class Client(ListResourceMixin, RetrieveResourceMixin, PostResourceMixin, ):
     resource = "clients"
     external_id = None
     id = None
@@ -15,14 +16,15 @@ class Client(ListResourcesMixin, RetrieveResourceMixin,):
     _logo = None
     _ui_mode = None
     _settings = None
-    _updated = False
 
     @property
     def affiliate(self):
-        return Affiliate.retrieve(
-            self._affiliate['id'],
-            **self.credentials
-        )
+        if isinstance(self._affiliate, dict):
+            self._affiliate = Affiliate.retrieve(
+                self._affiliate['id'],
+                **self.credentials
+            )
+        return self._affiliate
 
     @property
     def domain(self):

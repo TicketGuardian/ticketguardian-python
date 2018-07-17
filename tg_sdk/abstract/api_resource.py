@@ -18,11 +18,13 @@ from tg_sdk.exceptions import (
 
 class APIResource(object):
     page_limit = 1000
+    updated = False
 
     def __init__(self, **params):
         """
         Any value passed in params will be prioritized
         over the configuration variables.
+
             Keyword Arguments:
                 public_key (str) -- The public key for this instance.
                 secret_key (str) -- The secret key for this instance.
@@ -40,8 +42,8 @@ class APIResource(object):
     def construct(instance, data):
         """
         Initializes an instance of the child object that made the request.
-        If the object does not have an attr that is in the data then it
-        is stored as a private variable.
+        This checks first for the private variable to avoid property calls.
+
             Arguments:
                 instance (object) -- The new instance of the
                                      object to initialize.
@@ -61,6 +63,7 @@ class APIResource(object):
         """
         Changes both billing and core url according to the string
         that is passed.
+
             Arguments:
                 env (str) -- The name of the enviroment to change to.
                              Only accepts 'prod', 'dev', or 'sandbox'

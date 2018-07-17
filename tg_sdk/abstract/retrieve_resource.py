@@ -1,27 +1,42 @@
 import json
 import requests
-from tg_sdk.api_resource import APIResource
+
+from tg_sdk.abstract.api_resource import APIResource
 
 
 class RetrieveResourceMixin(APIResource):
 
     @classmethod
-    def retrieve(cls, resource_id, **params):
+    def retrieve(
+        cls,
+        resource_id,
+        public_key=None,
+        secret_key=None,
+        env=None,
+        **params
+    ):
         """
-        Retrieve a single resource and initialize an
-        instance of the child object that called.
+        Retrieve a single resource and initialize an instance of the child
+        object that called.
+
             Arguments:
-                resource_id {str} -- The unique id of the resource.
+                resource_id (str) -- The unique id of the resource.
 
             Keyword Arguments:
-                public_key {str} -- The public key for this instance.
-                secret_key {str} -- The secret key for this instance.
-
+                public_key (str) -- The public key for this instance.
+                secret_key (str) -- The secret key for this instance.
+                env (str) -- The tg_sdk constant of the environment to use.
+                             Billing and Core will be in the same env.
+                             Prod will always be default.
             Returns:
                 object -- An instance of the child object that called.
         """
         instance = cls()
-        super(cls, instance).__init__(**params)
+        super(cls, instance).__init__(
+            public_key=public_key,
+            secret_key=secret_key,
+            env=env
+        )
         url = "{}/api/v2/{}/{}/".format(
             instance.core_url,
             instance.resource,
@@ -50,7 +65,8 @@ class RetrieveResourceMixin(APIResource):
         url = "{}/api/v2/{}/{}/".format(
             instance.core_url,
             instance.resource,
-            instance.id)
+            instance.id
+        )
 
         response = requests.request(
             "GET",
@@ -77,6 +93,6 @@ class RetrieveResourceMixin(APIResource):
                         ensure that the object has already been updated and
                         the value is actually None.
         """
-        if not self._updated and (self.id and val is None):
-            self._updated = True
+        if not self.updated and self.id and val is None:
+            self.updated = True
             self.get_missing_attrs()
