@@ -60,8 +60,8 @@ class APIResource(object):
 
     def construct_general(self, name, data):
         """
-        A generalized version of construct. This is used to create an
-        object of type name from a dict.
+        A generalized version of construct. This is used to create a type
+        object that is initialized with the data from the dict.
 
             Returns:
                 object -- An instance of the new object.
