@@ -53,9 +53,9 @@ class APIResource(object):
         instance = self.new_instance(**self.credentials)
         for key in data:
             if hasattr(instance, '_' + key):
-                instance.__setattr__('_' + key, data[key])
+                setattr(instance, '_' + key, data[key])
             else:
-                instance.__setattr__(key, data[key])
+                setattr(instance, key, data[key])
         return instance
 
     def construct_general(self, name, data):
