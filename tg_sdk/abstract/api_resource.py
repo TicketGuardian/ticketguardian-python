@@ -2,13 +2,7 @@ from datetime import datetime
 import json
 import requests
 
-from tg_sdk import (
-    BILLING_DEV,
-    BILLING_PROD,
-    BILLING_SANDBOX,
-    CORE_DEV,
-    CORE_PROD,
-    CORE_SANDBOX, )
+from tg_sdk import constants
 from tg_sdk.exceptions import (
     CouldNotRetrieveToken,
     CredentialsNotProvided, )
@@ -80,16 +74,16 @@ class APIResource(object):
         env = env.lower()
         if env == 'dev':
             self._env = 'dev'
-            self._core_url = CORE_DEV
-            self._billing_url = BILLING_DEV
+            self._core_url = constants.CORE_DEV
+            self._billing_url = constants.BILLING_DEV
         elif env == 'sandbox':
             self._env = 'sandbox'
-            self._core_url = CORE_SANDBOX
-            self._billing_url = BILLING_SANDBOX
+            self._core_url = constants.CORE_SANDBOX
+            self._billing_url = constants.BILLING_SANDBOX
         elif env == 'prod':
             self._env = 'prod'
-            self._core_url = CORE_PROD
-            self._billing_url = BILLING_PROD
+            self._core_url = constants.CORE_PROD
+            self._billing_url = constants.BILLING_PROD
         else:
             # TODO(Justin): ADD ERROR HANDLING
             pass
@@ -112,6 +106,9 @@ class APIResource(object):
 
     def __setattr__(self, key, value):
         if hasattr(self, key) or key[0] == '_':
+            if isinstance(value, dict):
+                value = self.construct_general(key.title(), value)
+
             return super().__setattr__(key, value)
 
     @property

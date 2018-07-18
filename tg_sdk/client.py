@@ -19,9 +19,9 @@ class Client(ListResourceMixin, RetrieveResourceMixin, PostResourceMixin, ):
 
     @property
     def affiliate(self):
-        if isinstance(self._affiliate, dict):
+        if not hasattr(self._affiliate, 'resource'):
             self._affiliate = Affiliate(**self.credentials).retrieve(
-                self._affiliate['id']
+                self._affiliate.id
             )
         return self._affiliate
 
@@ -45,9 +45,4 @@ class Client(ListResourceMixin, RetrieveResourceMixin, PostResourceMixin, ):
     @property
     def settings(self):
         self.update(self._settings)
-        if isinstance(self._settings, dict):
-            self._settings = super().construct_general(
-                'Settings',
-                self._settings
-            )
         return self._settings
