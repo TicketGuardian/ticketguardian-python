@@ -1,29 +1,21 @@
-import requests
 import json
+import requests
 
 from tg_sdk.abstract.api_resource import APIResource
 
 
 class PostResourceMixin(APIResource):
-
     @classmethod
-    def post(cls, public_key=None, secret_key=None, env=None, **params):
+    def post(cls, **params):
         """
         Post a new resource with the given parameters.
 
-            Keyword Arguments:
-                public_key (str) -- The public key for this instance.
-                secret_key (str) -- The secret key for this instance.
-                env (str) -- The str of the environment this will be posted to.
-                             'dev', 'sandbox', or 'prod'
-                              prod is always default.
+            Returns:
+                An instance of the object that was just posted.
+                If a bad request is made then an empty resource object is
+                returned.
         """
-        instance = cls(
-            public_key=public_key,
-            secret_key=secret_key,
-            env=env
-        )
-
+        instance = cls()
         url = "{}/api/v2/{}/".format(
             instance.core_url,
             instance.resource
@@ -39,6 +31,6 @@ class PostResourceMixin(APIResource):
             data = json.loads(response.text)
         else:
             # TODO(Justin): ADD ERROR HANDLING
-            return
+            data = {}
 
-        return super(cls, instance).construct(data)
+        return instance.construct(data)

@@ -12,11 +12,8 @@ class Affiliate(ListResourceMixin, RetrieveResourceMixin,):
 
     @property
     def parent(self):
-        if isinstance(self._parent, dict):
-            self._parent = self.retrieve(
-                self._parent['id'],
-                **self.credentials
-            )
+        if not hasattr(self._parent, 'resource'):
+            self._parent = self.retrieve(self._parent.id)
         return self._parent
 
     @property

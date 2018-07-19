@@ -5,16 +5,8 @@ from tg_sdk.abstract.api_resource import APIResource
 
 
 class RetrieveResourceMixin(APIResource):
-
     @classmethod
-    def retrieve(
-        cls,
-        resource_id,
-        public_key=None,
-        secret_key=None,
-        env=None,
-        **params
-    ):
+    def retrieve(cls, resource_id, **params):
         """
         Retrieve a single resource and initialize an instance of the child
         object that called.
@@ -22,21 +14,12 @@ class RetrieveResourceMixin(APIResource):
             Arguments:
                 resource_id (str) -- The unique id of the resource.
 
-            Keyword Arguments:
-                public_key (str) -- The public key for this instance.
-                secret_key (str) -- The secret key for this instance.
-                env (str) -- The tg_sdk constant of the environment to use.
-                             Billing and Core will be in the same env.
-                             Prod will always be default.
             Returns:
                 object -- An instance of the child object that called.
+                If a bad request is made then an empty resource object is
+                returned.
         """
         instance = cls()
-        super(cls, instance).__init__(
-            public_key=public_key,
-            secret_key=secret_key,
-            env=env
-        )
         url = "{}/api/v2/{}/{}/".format(
             instance.core_url,
             instance.resource,
@@ -53,32 +36,33 @@ class RetrieveResourceMixin(APIResource):
             data = json.loads(response.text)
         else:
             # TODO(Justin): ADD ERROR HANDLING
-            return cls()
+            data = {}
 
-        return super(cls, instance).construct(data)
+        return instance.construct(data)
 
-    def get_missing_attrs(instance):
+    def get_missing_attrs(self):
         """
-        Used to fill in any missing attributes in an object. List and Retrieve
-        can return different attributes which so this makes another api call.
+        Fills in any missing attributes in an object. List and Retrieve
+        can return different attributes so this fills all attributes that are
+        missing when a missing attribute is requested.
         """
         url = "{}/api/v2/{}/{}/".format(
-            instance.core_url,
-            instance.resource,
-            instance.id
+            self.core_url,
+            self.resource,
+            self.id
         )
 
         response = requests.request(
             "GET",
             url,
-            headers=instance.default_headers,
+            headers=self.default_headers,
         )
 
         if response.ok:
             data = json.loads(response.text)
             for attr in data:
-                if not getattr(instance, '_' + attr, True):
-                    instance.__setattr__('_' + attr, data[attr])
+                if not getattr(self, '_' + attr, True):
+                    setattr(self, '_' + attr, data[attr])
 
         else:
             # TODO(Justin): ADD ERROR HANDLING
@@ -86,12 +70,11 @@ class RetrieveResourceMixin(APIResource):
 
     def update(self, val):
         """
-        Used to fill in any missing attributes in an object. List and Retrieve
-        can return different attributes which so this makes another api call.
+        Checks if the object has already been updated or not. Some values in
+        the object are None so this ensures that api calls will not be made
+        multiple times to retrieve a value that is None.
             Arguments:
-                val  -- The value the user is trying to get. This checks to
-                        ensure that the object has already been updated and
-                        the value is actually None.
+                val  -- The value the user is trying to get.
         """
         if not self.updated and self.id and val is None:
             self.updated = True

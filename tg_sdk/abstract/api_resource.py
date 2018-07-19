@@ -2,96 +2,98 @@ from datetime import datetime
 import json
 import requests
 
-from tg_sdk import (
-    BILLING_DEV,
-    BILLING_PROD,
-    BILLING_SANDBOX,
-    CORE_DEV,
-    CORE_PROD,
-    CORE_SANDBOX,
-    PUBLIC_KEY,
-    SECRET_KEY, )
+from tg_sdk import constants
 from tg_sdk.exceptions import (
-    CredentialsNotProvided,
-    CouldNotRetrieveToken, )
+    CouldNotRetrieveToken,
+    CredentialsNotProvided, )
 
 
 class APIResource(object):
-    page_limit = 1000
     updated = False
 
     def __init__(self, **params):
         """
-        Any value passed in params will be prioritized
-        over the configuration variables.
-
             Keyword Arguments:
                 public_key (str) -- The public key for this instance.
                 secret_key (str) -- The secret key for this instance.
-                env (str) -- The tg_sdk constant of the environment to use.
+                env (str) -- The environment where requests will be made.
                              Billing and Core will be in the same env.
                              Prod will always be default.
+                             input can only be 'prod', 'dev', 'sandbox'
         """
+        from tg_sdk import PUBLIC_KEY, SECRET_KEY, ENV
         self._public_key = params.get('public_key', PUBLIC_KEY)
         self._secret_key = params.get('secret_key', SECRET_KEY)
         self._core_url = None
         self._billing_url = None
-        self._env = params.get('env', 'prod')
+        self._env = params.get('env', ENV)
         self.configure_environment(self._env)
+
+    def __setattr__(self, key, value):
+        if hasattr(self, key) or key[0] == '_':
+            if isinstance(value, dict):
+                value = self.construct_general(key.title(), value)
+
+            return super().__setattr__(key, value)
 
     def construct(instance, data):
         """
         Initializes an instance of the child object that made the request.
-        This checks first for the private variable to avoid property calls.
+        This checks first for the private variable to avoid recursive property
+        calls. If the private variable does not exist then it is added as
+        public.
 
             Arguments:
-                instance (object) -- The new instance of the
-                                     object to initialize.
-                data (dict) -- The dict of the item that
-                               was being searched for.
+                data (dict) -- The dict containing the data for the object.
+
             Returns:
                 object -- An instance of the child object.
         """
         for key in data:
             if hasattr(instance, '_' + key):
-                instance.__setattr__('_' + key, data[key])
+                setattr(instance, '_' + key, data[key])
             else:
-                instance.__setattr__(key, data[key])
+                setattr(instance, key, data[key])
         return instance
+
+    def construct_general(self, name, data):
+        """
+        A generalized version of construct. This is used to create a type
+        object that is initialized with the data from the dict.
+            Arguments:
+                name: The name of the object that is going to be constructed.
+                data: The dict containing the data to be stored
+
+            Returns:
+                object -- An instance of the new object.
+        """
+        return type(name, (object,), data)
 
     def configure_environment(self, env):
         """
-        Changes both billing and core url according to the string
-        that is passed.
+        Changes both billing and core url according to the string that is
+        passed.
 
             Arguments:
-                env (str) -- The name of the enviroment to change to.
+                env (str) -- The name of the environment to change to.
                              Only accepts 'prod', 'dev', or 'sandbox'
         """
         env = env.lower()
         if env == 'dev':
             self._env = 'dev'
-            self._core_url = CORE_DEV
-            self._billing_url = BILLING_DEV
+            self._core_url = constants.CORE_DEV
+            self._billing_url = constants.BILLING_DEV
         elif env == 'sandbox':
             self._env = 'sandbox'
-            self._core_url = CORE_SANDBOX
-            self._billing_url = BILLING_SANDBOX
+            self._core_url = constants.CORE_SANDBOX
+            self._billing_url = constants.BILLING_SANDBOX
         elif env == 'prod':
             self._env = 'prod'
-            self._core_url = CORE_PROD
-            self._billing_url = BILLING_PROD
+            self._core_url = constants.CORE_PROD
+            self._billing_url = constants.BILLING_PROD
         else:
             # TODO(Justin): ADD ERROR HANDLING
             pass
-
-    @property
-    def credentials(self):
-        return {
-            'public_key': self._public_key,
-            'secret_key': self._secret_key,
-            'env': self._env,
-        }
 
     @property
     def core_url(self):
@@ -100,10 +102,6 @@ class APIResource(object):
     @property
     def billing_url(self):
         return self._billing_url
-
-    def __setattr__(self, key, value):
-        if hasattr(self, key) or key[0] == '_':
-            return super().__setattr__(key, value)
 
     @property
     def token(self):
