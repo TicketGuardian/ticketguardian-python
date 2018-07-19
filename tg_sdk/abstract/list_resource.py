@@ -17,7 +17,7 @@ class ListResourceMixin(APIResource):
 
             Returns:
                 list -- A list of instances of the child object that called.
-                If an error occurs and a bad request is made then an empty
+                If an error occurs or a bad request is made then an empty
                 list is returned.
         """
         instance = cls()
