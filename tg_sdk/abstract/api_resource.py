@@ -16,9 +16,10 @@ class APIResource(object):
             Keyword Arguments:
                 public_key (str) -- The public key for this instance.
                 secret_key (str) -- The secret key for this instance.
-                env (str) -- The tg_sdk constant of the environment to use.
+                env (str) -- The environment where requests will be made.
                              Billing and Core will be in the same env.
                              Prod will always be default.
+                             input can only be 'prod', 'dev', 'sandbox'
         """
         from tg_sdk import PUBLIC_KEY, SECRET_KEY, ENV
         self._public_key = params.get('public_key', PUBLIC_KEY)
@@ -28,12 +29,19 @@ class APIResource(object):
         self._env = params.get('env', ENV)
         self.configure_environment(self._env)
 
+    def __setattr__(self, key, value):
+        if hasattr(self, key) or key[0] == '_':
+            if isinstance(value, dict):
+                value = self.construct_general(key.title(), value)
+
+            return super().__setattr__(key, value)
+
     def construct(instance, data):
         """
-        Initializes an instance of the child object that made
-        the request. This checks first for the private variable to avoid
-        recursive property calls. If the private variable does not exist then
-        it is added as public.
+        Initializes an instance of the child object that made the request.
+        This checks first for the private variable to avoid recursive property
+        calls. If the private variable does not exist then it is added as
+        public.
 
             Arguments:
                 data (dict) -- The dict containing the data for the object.
@@ -52,6 +60,9 @@ class APIResource(object):
         """
         A generalized version of construct. This is used to create a type
         object that is initialized with the data from the dict.
+            Arguments:
+                name: The name of the object that is going to be constructed.
+                data: The dict containing the data to be stored
 
             Returns:
                 object -- An instance of the new object.
@@ -60,11 +71,11 @@ class APIResource(object):
 
     def configure_environment(self, env):
         """
-        Changes both billing and core url according to the string
-        that is passed.
+        Changes both billing and core url according to the string that is
+        passed.
 
             Arguments:
-                env (str) -- The name of the enviroment to change to.
+                env (str) -- The name of the environment to change to.
                              Only accepts 'prod', 'dev', or 'sandbox'
         """
         env = env.lower()
@@ -85,27 +96,12 @@ class APIResource(object):
             pass
 
     @property
-    def credentials(self):
-        return {
-            'public_key': self._public_key,
-            'secret_key': self._secret_key,
-            'env': self._env,
-        }
-
-    @property
     def core_url(self):
         return self._core_url
 
     @property
     def billing_url(self):
         return self._billing_url
-
-    def __setattr__(self, key, value):
-        if hasattr(self, key) or key[0] == '_':
-            if isinstance(value, dict):
-                value = self.construct_general(key.title(), value)
-
-            return super().__setattr__(key, value)
 
     @property
     def token(self):

@@ -42,8 +42,9 @@ class RetrieveResourceMixin(APIResource):
 
     def get_missing_attrs(self):
         """
-        Used to fill in any missing attributes in an object. List and Retrieve
-        can return different attributes which so this makes another api call.
+        Fills in any missing attributes in an object. List and Retrieve
+        can return different attributes so this fills all attributes that are
+        missing when a missing attribute is requested.
         """
         url = "{}/api/v2/{}/{}/".format(
             self.core_url,
@@ -69,12 +70,11 @@ class RetrieveResourceMixin(APIResource):
 
     def update(self, val):
         """
-        Used to fill in any missing attributes in an object. List and Retrieve
-        can return different attributes which so this makes another api call.
+        Checks if the object has already been updated or not. Some values in
+        the object are None so this ensures that api calls will not be made
+        multiple times to retrieve a value that is None.
             Arguments:
-                val  -- The value the user is trying to get. This checks to
-                        ensure that the object has already been updated and
-                        the value is actually None.
+                val  -- The value the user is trying to get.
         """
         if not self.updated and self.id and val is None:
             self.updated = True
