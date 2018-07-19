@@ -28,4 +28,3 @@ from tg_sdk.affiliate import Affiliate
 from tg_sdk.client import Client
 from tg_sdk.product import Product
 from tg_sdk.constants import PUBLIC_KEY, SECRET_KEY, ENV
-from tg_sdk.ticketguardian_sdk import TicketGuardianSDK
