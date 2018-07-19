@@ -20,20 +20,18 @@ class APIResource(object):
                              Billing and Core will be in the same env.
                              Prod will always be default.
         """
-        self._public_key = params.get('public_key', None)
-        self._secret_key = params.get('secret_key', None)
+        from tg_sdk import PUBLIC_KEY, SECRET_KEY, ENV
+        self._public_key = params.get('public_key', PUBLIC_KEY)
+        self._secret_key = params.get('secret_key', SECRET_KEY)
+        print(self, self._public_key, self._secret_key)
         self._core_url = None
         self._billing_url = None
-        self._env = params.get('env', 'prod')
+        self._env = params.get('env', ENV)
         self.configure_environment(self._env)
 
-    @classmethod
-    def new_instance(cls, **params):
-        return cls(**params)
-
-    def construct(self, data):
+    def construct(instance, data):
         """
-        Creates and initialized an instance of the child object that made
+        Initializes an instance of the child object that made
         the request. This checks first for the private variable to avoid
         recursive property calls. If the private variable does not exist then
         it is added as public.
@@ -44,7 +42,6 @@ class APIResource(object):
             Returns:
                 object -- An instance of the child object.
         """
-        instance = self.new_instance(**self.credentials)
         for key in data:
             if hasattr(instance, '_' + key):
                 setattr(instance, '_' + key, data[key])

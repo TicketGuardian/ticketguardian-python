@@ -5,8 +5,8 @@ from tg_sdk.abstract.api_resource import APIResource
 
 
 class ListResourceMixin(APIResource):
-
-    def list(self, **params):
+    @classmethod
+    def list(cls, **params):
         """
         Retrieve multiple resources and return a list of instances of child
         objects initialized with the data received. Any additional filters can
@@ -20,24 +20,25 @@ class ListResourceMixin(APIResource):
                 If an error occurs and a bad request is made then an empty
                 list is returned.
         """
+        instance = cls()
         resources = []
         limit = params.get("limit", None)
         url = "{}/api/v2/{}/".format(
-            self.core_url,
-            self.resource
+            instance.core_url,
+            instance.resource
         )
 
         while url and (limit is None or limit > len(resources)):
             response = requests.request(
                 "GET",
                 url,
-                headers=self.default_headers,
+                headers=instance.default_headers,
                 params=params
             )
             if response.ok:
                 data = json.loads(response.text)
                 for resource in data.get('results', []):
-                    resources += [self.construct(resource)]
+                    resources += [instance.construct(resource)]
                 url = data.get('next')
             else:
                 # TODO(Justin): ADD ERROR HANDLING

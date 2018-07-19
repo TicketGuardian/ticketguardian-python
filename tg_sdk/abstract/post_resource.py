@@ -5,8 +5,8 @@ from tg_sdk.abstract.api_resource import APIResource
 
 
 class PostResourceMixin(APIResource):
-
-    def post(self, **params):
+    @classmethod
+    def post(cls, **params):
         """
         Post a new resource with the given parameters.
 
@@ -15,14 +15,15 @@ class PostResourceMixin(APIResource):
                 If a bad request is made then an empty resource object is
                 returned.
         """
+        instance = cls()
         url = "{}/api/v2/{}/".format(
-            self.core_url,
-            self.resource
+            instance.core_url,
+            instance.resource
         )
 
         response = requests.post(
             url,
-            headers=self.default_headers,
+            headers=instance.default_headers,
             json=params
         )
 
@@ -32,4 +33,4 @@ class PostResourceMixin(APIResource):
             # TODO(Justin): ADD ERROR HANDLING
             data = {}
 
-        return self.construct(data)
+        return instance.construct(data)

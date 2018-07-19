@@ -20,9 +20,7 @@ class Client(ListResourceMixin, RetrieveResourceMixin, PostResourceMixin, ):
     @property
     def affiliate(self):
         if not hasattr(self._affiliate, 'resource'):
-            self._affiliate = Affiliate(**self.credentials).retrieve(
-                self._affiliate.id
-            )
+            self._affiliate = Affiliate.retrieve(self._affiliate.id)
         return self._affiliate
 
     @property

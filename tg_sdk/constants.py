@@ -5,3 +5,6 @@ BILLING_SANDBOX = "https://billing-sandbox.ticketguardian.net"
 CORE_DEV = "https://connect-dev.ticketguardian.net"
 CORE_PROD = 'https://connect.ticketguardian.net'
 CORE_SANDBOX = 'https://connect-sandbox.ticketguardian.net'
+ENV = 'prod'
+PUBLIC_KEY = None
+SECRET_KEY = None
