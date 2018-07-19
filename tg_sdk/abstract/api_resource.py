@@ -23,7 +23,6 @@ class APIResource(object):
         from tg_sdk import PUBLIC_KEY, SECRET_KEY, ENV
         self._public_key = params.get('public_key', PUBLIC_KEY)
         self._secret_key = params.get('secret_key', SECRET_KEY)
-        print(self, self._public_key, self._secret_key)
         self._core_url = None
         self._billing_url = None
         self._env = params.get('env', ENV)
