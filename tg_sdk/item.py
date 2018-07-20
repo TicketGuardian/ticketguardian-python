@@ -16,5 +16,6 @@ class Item(APIResource):
     @property
     def customer(self):
         if self._customer is None:
+            # Some items on dev have null customers
             return Customer()
         return Customer().construct(self._customer)
