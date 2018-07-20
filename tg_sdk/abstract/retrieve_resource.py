@@ -61,8 +61,11 @@ class RetrieveResourceMixin(APIResource):
         if response.ok:
             data = json.loads(response.text)
             for attr in data:
-                if not getattr(self, '_' + attr, True):
-                    setattr(self, '_' + attr, data[attr])
+                key = attr
+                if hasattr(self, '_' + attr):
+                    attr = '_' + attr
+                if getattr(self, attr) is None:
+                    setattr(self, attr, data[key])
 
         else:
             # TODO(Justin): ADD ERROR HANDLING
