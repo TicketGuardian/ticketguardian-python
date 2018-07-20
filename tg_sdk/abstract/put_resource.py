@@ -5,24 +5,24 @@ from tg_sdk.abstract.api_resource import APIResource
 
 
 class PutResourceMixin(APIResource):
-
-    def put(self, resource_id, ext=None, **params):
+    @classmethod
+    def put(cls, resource_id, ext=None, **params):
         """
         Update a currently existing resource.
             Arguments:
-                resource_id: (str) -- The unique id of the resource.
-                ext (str) -- An extension of the url if extra args are needed.
-                             Does not need the leading or trailing '/'.
+                resource_id: The unique id of the resource.
+                ext: An extension of the url if extra args are needed.
+                     Does not need the leading or trailing '/'.
 
             Returns:
                 An instance of the object that is being updated.
                 If a bad request is made then an empty instance of the resource
                 object is returned.
         """
-
+        instance = cls()
         url = "{}/api/v2/{}/{}/".format(
-            self.core_url,
-            self.resource,
+            instance.core_url,
+            instance.resource,
             resource_id
         )
 
@@ -31,7 +31,7 @@ class PutResourceMixin(APIResource):
 
         response = requests.put(
             url,
-            headers=self.default_headers,
+            headers=instance.default_headers,
             json=params
         )
 
@@ -41,4 +41,4 @@ class PutResourceMixin(APIResource):
             # TODO(Justin): ADD ERROR HANDLING
             data = {}
 
-        return self.construct(data)
+        return instance.construct(data)
