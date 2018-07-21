@@ -79,6 +79,8 @@ class RetrieveResourceMixin(APIResource):
             Arguments:
                 val  -- The value the user is trying to get.
         """
-        if not self.updated and self.id and val is None:
-            self.updated = True
+        # TODO(Justin): Use __getattr__ so I dont have to manually use
+        #               self.update on every property.
+        if not self.is_updated and self.id and val is None:
+            self.is_updated = True
             self.get_missing_attrs()

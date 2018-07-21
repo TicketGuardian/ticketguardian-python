@@ -9,7 +9,7 @@ from tg_sdk.exceptions import (
 
 
 class APIResource(object):
-    updated = False
+    is_updated = False
 
     def __init__(self, **params):
         """
@@ -68,6 +68,21 @@ class APIResource(object):
                 object -- An instance of the new object.
         """
         return type(name, (object,), data)
+
+    def construct_list(self, li, cls):
+        """
+        Takes a list of dictionaries and makes each dict in the list into the
+        given object type.
+            Arguments:
+                li: The list of dictionaries.
+                cls: The object type to create.
+            Returns:
+                A list of objects of the given object type.
+        """
+        new_list = []
+        for i in range(len(li)):
+            new_list += [cls().construct(li[i])]
+        return new_list
 
     def configure_environment(self, env):
         """

@@ -7,11 +7,13 @@ class Item(APIResource):
     #               return from other resource classes. I will add more
     #               functionality to this once I make more progress on those
     #               classes.
+    # Todo(Justin): Fix class to update attrs when needed.
     id = None
     name = None
     reference_number = None
     cost = None
     _customer = None
+    _event = None
 
     @property
     def customer(self):
@@ -19,3 +21,7 @@ class Item(APIResource):
             # Some items on dev have null customers
             return Customer()
         return Customer().construct(self._customer)
+
+    @property
+    def event(self):
+        return self._event

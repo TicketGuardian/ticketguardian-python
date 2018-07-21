@@ -1,4 +1,7 @@
-from tg_sdk import Client, Customer, Item, Policy
+from tg_sdk.client import Client
+from tg_sdk.customer import Customer
+from tg_sdk.item import Item
+from tg_sdk.policy import Policy
 from tg_sdk.abstract.list_resource import ListResourceMixin
 from tg_sdk.abstract.post_resource import PostResourceMixin
 from tg_sdk.abstract.put_resource import PutResourceMixin
@@ -24,6 +27,10 @@ class Order(
     _attrs = None
 
     @property
+    def id(self):
+        return self.order_number
+
+    @property
     def attrs(self):
         self.update(self._attrs)
         return self._attrs
@@ -41,24 +48,16 @@ class Order(
 
     @property
     def items(self):
-        # Is it necessary to create an object for every item when
-        # This property is called? or should I make the object
-        # just for the specific item they request.
         self.update(self._items)
         if len(self._items) > 0 and isinstance(self._items[0], dict):
-            for i in range(len(self._items)):
-                self._items[i] = Item().construct(self._items[i])
-            return self._items
+            self._items = self.construct_list(self._items, Item)
+        return self._items
 
     @property
     def policies(self):
-        # Is it necessary to create an object for every item when
-        # This property is called? or should I make the object
-        # just for the specific item they request.
         self.update(self._policies)
         if len(self._policies) > 0 and isinstance(self._policies[0], dict):
-            for i in range(len(self._policies)):
-                self._policies[i] = Policy().construct(self._policies[i])
+            self._policies = self.construct_list(self._policies, Policy)
         return self._policies
 
     @property
