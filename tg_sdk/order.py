@@ -65,12 +65,9 @@ class Order(
         # TODO(Justin): IMPLEMENT WHEN QUOTE CLASS IS CREATED
         return
 
-    def add_items(self, order_id=None, **params):
-        if order_id is None:
-            if self.order_number is not None:
-                order_id = self.order_number
-            else:
-                # TODO(Justin): Error handling
-                return None
+    def add_items(self, **params):
+        if self.order_number is None or params == {}:
+            # TODO(Justin): Error handling
+            return None
 
-        return self.put(order_id, ext='add-items', **params)
+        return self.put(self.order_number, ext='add-items', **params)
