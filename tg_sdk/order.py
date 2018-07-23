@@ -66,6 +66,8 @@ class Order(
         return
 
     def add_items(self, **params):
+        # TODO(Justin): Using PUT should not return a new instance but should
+        #               update the existing instance that was used to call.
         if self.order_number is None or params == {}:
             # TODO(Justin): Error handling
             return None
