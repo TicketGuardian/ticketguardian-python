@@ -18,12 +18,14 @@ pip install git+https://github.com/TicketGuardian/ticketguardian-python
 
 
 ## Usage
+
 The library needs to be configured to your active key pair. Set `tg_sdk.PUBLIC_KEY` and `tg_sdk.SECRET_KEY` to their appropriate values:
 ```
 import tg_sdk
 tg_sdk.PUBLIC_KEY = ...
 tg_sdk.SECRET_KEY = ...
 ```
+
 The default environment is prod, so if you would like to use another environment then set `tg_sdk.ENV` to the environment you would like to use.
 `tg_sdk.ENV` only accepts 3 strings `'prod'`, `'dev'`, or `'sandbox'`. Core and Billing will always use the same environment.
 ```
@@ -31,6 +33,7 @@ tg_sdk.ENV = 'dev'
 ```
 
 ### Retrieving a single resource
+
 To retrieve a resource, you need the resources unique id or number. You may also add additional filters to be added as keyword arguments.
 ```
 affiliate1 = tg_sdk.Affiliate.retrieve('uniqueid')
@@ -44,12 +47,16 @@ all_affiliates = tg_sdk.Affiliate.list()
 filtered_affiliates = tg_sdk.Affiliate.list(filter1=..., filter2=...)
 max10_affiliates = tg_sdk.Affiliates.list(limit=10)
 ```
+
 ### Posting a new resource
+
 To post a new resource, you just need the appropriate information for that new resource. If the post is successful then the posted information is returned as an instance of the resource object.
 ```
 new_client = tg_sdk.Client.post(attr1=..., attr2=...)
 ```
+
 ### Updating a resource
+
 Resources that are able to be updated have class specific methods to use. These methods need to be used on an instance of the resource you would like to update.
 ```
 order = tg_sdk.Order.retrieve(...)
