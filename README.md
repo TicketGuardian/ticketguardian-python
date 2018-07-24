@@ -32,33 +32,29 @@ The default environment is prod, so if you would like to use another environment
 tg_sdk.ENV = 'dev'
 ```
 
-### Retrieving a single resource
-
-To retrieve a resource, you need the resources unique id or number. You may also add additional filters to be added as keyword arguments.
 ```
+# Initialize SDK
+import tg_sdk
+tg_sdk.PUBLIC_KEY = ...
+tg_sdk.SECRET_KEY = ...
+
+# Set Environment
+# NOTE: tg_sdk.ENV can only be 'prod', 'dev', or 'sandbox'.
+#       'prod' will always be default is no ENV is provided.
+tg_sdk.ENV = 'dev'
+
+# Retrieving a single resource
 affiliate1 = tg_sdk.Affiliate.retrieve('uniqueid')
-```
 
-### Listing out resources
-The list mixin allows you to list all resources of the same type and list resources using filters as keyword arguments. To set a maximum on the number of resources returned use the keyword `limit`. `limit` can be used either with or without additional filters.
-
-```
+# Listing out resources
 all_affiliates = tg_sdk.Affiliate.list()
 filtered_affiliates = tg_sdk.Affiliate.list(filter1=..., filter2=...)
 max10_affiliates = tg_sdk.Affiliates.list(limit=10)
-```
 
-### Posting a new resource
-
-To post a new resource, you just need the appropriate information for that new resource. If the post is successful then the posted information is returned as an instance of the resource object.
-```
+# Posting a new resource
 new_client = tg_sdk.Client.post(attr1=..., attr2=...)
-```
 
-### Updating a resource
-
-Resources that are able to be updated have class specific methods to use. These methods need to be used on an instance of the resource you would like to update.
-```
+# Updating a resource
 order = tg_sdk.Order.retrieve(...)
 order.add_items(arg1=..., arg2=...)
 ```
