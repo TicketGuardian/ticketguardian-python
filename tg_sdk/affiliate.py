@@ -6,20 +6,26 @@ class Affiliate(ListResourceMixin, RetrieveResourceMixin,):
     resource = "affiliates"
     id = None
     name = None
-    domain = None
+    _domain = None
     _parent = None
     _settings = None
 
     @property
+    def domain(self):
+        self.update(self._domain)
+        return self._domain
+
+    @property
     def parent(self):
         if self._parent is None:
-            return self.construct({})
+            return None
         if not hasattr(self._parent, 'resource'):
-            # TODO(Justin): This should construct an object and not make an
-            #               API call. API calls should only be made when an
-            #               attr of the parent is called.
-
-            self._parent = self.retrieve(self._parent.id)
+            self._parent = self.construct(
+                {
+                    'id': self._parent.id,
+                    'name': self._parent.name
+                 }
+            )
         return self._parent
 
     @property
