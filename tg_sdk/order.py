@@ -44,7 +44,7 @@ class Order(
 
     @property
     def customer(self):
-        return Customer.construct(self._customer)
+        return Customer.construct(**self._customer)
 
     @property
     def items(self):
