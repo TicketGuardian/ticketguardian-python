@@ -36,9 +36,10 @@ class APIResource(object):
 
             return super().__setattr__(key, value)
 
-    def construct(instance, data):
+    @classmethod
+    def construct(cls, data):
         """
-        Initializes an instance of the child object that made the request.
+        Creates an instance of the child object that made the request.
         This checks first for the private variable to avoid recursive property
         calls. If the private variable does not exist then it is added as
         public.
@@ -49,6 +50,7 @@ class APIResource(object):
             Returns:
                 object -- An instance of the child object.
         """
+        instance = cls()
         for key in data:
             if hasattr(instance, '_' + key):
                 setattr(instance, '_' + key, data[key])
@@ -79,10 +81,7 @@ class APIResource(object):
             Returns:
                 A list of objects of the given object type.
         """
-        new_list = []
-        for i in range(len(li)):
-            new_list += [cls().construct(li[i])]
-        return new_list
+        return [cls().construct(data) for data in li]
 
     def configure_environment(self, env):
         """
