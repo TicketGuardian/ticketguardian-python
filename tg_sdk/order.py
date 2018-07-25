@@ -10,7 +10,7 @@ from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
 
 class Order(
     ListResourceMixin,
-    RetrieveResouMixin,
+    RetrieveResourceMixin,
     PostResourceMixin,
     PutResourceMixin, ):
 
