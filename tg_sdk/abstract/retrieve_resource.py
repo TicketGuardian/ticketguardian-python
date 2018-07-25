@@ -5,6 +5,12 @@ from tg_sdk.abstract.api_resource import APIResource
 
 
 class RetrieveResourceMixin(APIResource):
+    def __getattr__(self, attr):
+        if attr[0] == '_' and attr[1:] in type(self).__dict__:
+            self.get_missing_attrs()
+            return object.__getattribute__(self, attr)
+        return None
+
     @classmethod
     def retrieve(cls, resource_id, **params):
         """
@@ -37,8 +43,7 @@ class RetrieveResourceMixin(APIResource):
         else:
             # TODO(Justin): ADD ERROR HANDLING
             data = {}
-
-        return instance.construct(data)
+        return instance.construct(**data)
 
     def get_missing_attrs(self):
         """
@@ -60,27 +65,10 @@ class RetrieveResourceMixin(APIResource):
 
         if response.ok:
             data = json.loads(response.text)
-            for attr in data:
-                key = attr
-                if hasattr(self, '_' + attr):
-                    attr = '_' + attr
-                if getattr(self, attr) is None:
-                    setattr(self, attr, data[key])
+            for attr in type(self).__dict__:
+                if attr[0] != '_' and ('_' + attr) not in self.__dict__:
+                    setattr(self, '_' + attr, data.get(attr, None))
 
         else:
             # TODO(Justin): ADD ERROR HANDLING
             return None
-
-    def update(self, val):
-        """
-        Checks if the object has already been updated or not. Some values in
-        the object are None so this ensures that api calls will not be made
-        multiple times to retrieve a value that is None.
-            Arguments:
-                val  -- The value the user is trying to get.
-        """
-        # TODO(Justin): Use __getattr__ so I dont have to manually use
-        #               self.update on every property.
-        if not self.is_updated and self.id and val is None:
-            self.is_updated = True
-            self.get_missing_attrs()
