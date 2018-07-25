@@ -61,8 +61,11 @@ class RetrieveResourceMixin(APIResource):
         if response.ok:
             data = json.loads(response.text)
             for attr in data:
-                if not getattr(self, '_' + attr, True):
-                    setattr(self, '_' + attr, data[attr])
+                key = attr
+                if hasattr(self, '_' + attr):
+                    attr = '_' + attr
+                if getattr(self, attr) is None:
+                    setattr(self, attr, data[key])
 
         else:
             # TODO(Justin): ADD ERROR HANDLING
@@ -76,6 +79,8 @@ class RetrieveResourceMixin(APIResource):
             Arguments:
                 val  -- The value the user is trying to get.
         """
-        if not self.updated and self.id and val is None:
-            self.updated = True
+        # TODO(Justin): Use __getattr__ so I dont have to manually use
+        #               self.update on every property.
+        if not self.is_updated and self.id and val is None:
+            self.is_updated = True
             self.get_missing_attrs()

@@ -9,7 +9,7 @@ from tg_sdk.exceptions import (
 
 
 class APIResource(object):
-    updated = False
+    is_updated = False
 
     def __init__(self, **params):
         """
@@ -36,9 +36,10 @@ class APIResource(object):
 
             return super().__setattr__(key, value)
 
-    def construct(instance, data):
+    @classmethod
+    def construct(cls, data):
         """
-        Initializes an instance of the child object that made the request.
+        Creates an instance of the child object that made the request.
         This checks first for the private variable to avoid recursive property
         calls. If the private variable does not exist then it is added as
         public.
@@ -49,6 +50,7 @@ class APIResource(object):
             Returns:
                 object -- An instance of the child object.
         """
+        instance = cls()
         for key in data:
             if hasattr(instance, '_' + key):
                 setattr(instance, '_' + key, data[key])
@@ -68,6 +70,18 @@ class APIResource(object):
                 object -- An instance of the new object.
         """
         return type(name, (object,), data)
+
+    def construct_list(self, li, cls):
+        """
+        Takes a list of dictionaries and makes each dict in the list into the
+        given object type.
+            Arguments:
+                li: The list of dictionaries.
+                cls: The object type to create.
+            Returns:
+                A list of objects of the given object type.
+        """
+        return [cls.construct(data) for data in li]
 
     def configure_environment(self, env):
         """
