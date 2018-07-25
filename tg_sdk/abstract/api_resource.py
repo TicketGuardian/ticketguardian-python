@@ -81,7 +81,7 @@ class APIResource(object):
             Returns:
                 A list of objects of the given object type.
         """
-        return [cls().construct(data) for data in li]
+        return [cls.construct(data) for data in li]
 
     def configure_environment(self, env):
         """
