@@ -30,32 +30,25 @@ class APIResource(object):
         self.configure_environment(self._env)
 
     def __setattr__(self, key, value):
-        if hasattr(self, key) or key[0] == '_':
+        if key[0] == '_' or key in self.__dict__:
             if isinstance(value, dict):
                 value = self.construct_general(key.title(), value)
-
             return super().__setattr__(key, value)
 
     @classmethod
-    def construct(cls, data):
+    def construct(cls, **params):
         """
         Creates an instance of the child object that made the request.
         This checks first for the private variable to avoid recursive property
         calls. If the private variable does not exist then it is added as
         public.
 
-            Arguments:
-                data (dict) -- The dict containing the data for the object.
-
             Returns:
                 object -- An instance of the child object.
         """
         instance = cls()
-        for key in data:
-            if hasattr(instance, '_' + key):
-                setattr(instance, '_' + key, data[key])
-            else:
-                setattr(instance, key, data[key])
+        for key in params:
+            setattr(instance, '_' + key, params.get(key))
         return instance
 
     def construct_general(self, name, data):
@@ -81,7 +74,7 @@ class APIResource(object):
             Returns:
                 A list of objects of the given object type.
         """
-        return [cls.construct(data) for data in li]
+        return [cls.construct(**data) for data in li]
 
     def configure_environment(self, env):
         """
@@ -120,7 +113,8 @@ class APIResource(object):
     @property
     def token(self):
         if self.has_valid_token():
-            return self._token
+            from tg_sdk import TOKEN
+            return TOKEN
         elif self._public_key and self._secret_key:
             return self._refresh_token()
         else:
@@ -138,12 +132,14 @@ class APIResource(object):
     def _token_payload(self):
         try:
             import jwt
-            return jwt.decode(self._token, None, False)
+            from tg_sdk import TOKEN
+            return jwt.decode(TOKEN, None, False)
         except Exception:
             return {}
 
     def has_valid_token(self):
-        if not hasattr(self, '_token'):
+        from tg_sdk import TOKEN
+        if TOKEN is None:
             return False
         current_timestamp = datetime.now().timestamp()
         exp_timestamp = self._token_payload.get('exp', 0)
@@ -172,6 +168,7 @@ class APIResource(object):
         if response.ok:
             response_data = json.loads(response.text)
             if response_data.get("token"):
-                self._token = response_data.get("token")
-                return self._token
+                from tg_sdk import TOKEN
+                TOKEN = response_data.get("token")
+                return TOKEN
         raise CouldNotRetrieveToken(response.text)
