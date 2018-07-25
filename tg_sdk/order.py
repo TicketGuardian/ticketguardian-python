@@ -10,21 +10,31 @@ from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
 
 class Order(
     ListResourceMixin,
-    RetrieveResourceMixin,
+    RetrieveResouMixin,
     PostResourceMixin,
     PutResourceMixin, ):
 
     resource = "orders"
-    created = None
-    updated = None
-    order_number = None
-    subtotal = None
-    currency = None
-    _client = None
-    _items = None
-    _policies = None
-    _customer = None
-    _attrs = None
+
+    @property
+    def created(self):
+        return self._created
+
+    @property
+    def updated(self):
+        return self._updated
+
+    @property
+    def order_number(self):
+        return self._order_number
+
+    @property
+    def subtotal(self):
+        return self._subtotal
+
+    @property
+    def currency(self):
+        return self._currency
 
     @property
     def id(self):
@@ -32,30 +42,35 @@ class Order(
 
     @property
     def attrs(self):
-        self.update(self._attrs)
         return self._attrs
 
     @property
     def client(self):
-        self.update(self._client)
+        if self._client is None:
+            return None
         if isinstance(self._client, str):
-            self._client = Client.retrieve(self._client)
+            self._client = Client.construct(id=self._client)
         return self._client
 
     @property
     def customer(self):
-        return Customer.construct(**self._customer)
+        if self._customer is None:
+            return None
+        return Customer.construct(
+            id=self._customer.id,
+            email=self._customer.email,
+            first_name=self._customer.first_name,
+            last_name=self._customer.last_name
+        )
 
     @property
     def items(self):
-        self.update(self._items)
         if len(self._items) > 0 and isinstance(self._items[0], dict):
             self._items = self.construct_list(self._items, Item)
         return self._items
 
     @property
     def policies(self):
-        self.update(self._policies)
         if len(self._policies) > 0 and isinstance(self._policies[0], dict):
             self._policies = self.construct_list(self._policies, Policy)
         return self._policies
