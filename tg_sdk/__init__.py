@@ -24,9 +24,9 @@ HTTP_HEADER_ENCODING = 'iso-8859-1'
 ISO_8601 = 'iso-8601'
 
 # Imports
+from tg_sdk.constants import PUBLIC_KEY, SECRET_KEY, ENV, TOKEN
 from tg_sdk.affiliate import Affiliate
 from tg_sdk.client import Client
-from tg_sdk.constants import PUBLIC_KEY, SECRET_KEY, ENV
 from tg_sdk.customer import Customer
 from tg_sdk.item import Item
 from tg_sdk.order import Order
