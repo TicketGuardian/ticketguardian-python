@@ -1,11 +1,11 @@
-from tg_sdk.client import Client
-from tg_sdk.customer import Customer
-from tg_sdk.item import Item
-from tg_sdk.policy import Policy
 from tg_sdk.abstract.list_resource import ListResourceMixin
 from tg_sdk.abstract.post_resource import PostResourceMixin
 from tg_sdk.abstract.put_resource import PutResourceMixin
 from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
+from tg_sdk.client import Client
+from tg_sdk.customer import Customer
+from tg_sdk.item import Item
+from tg_sdk.policy import Policy
 
 
 class Order(

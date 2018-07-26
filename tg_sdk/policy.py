@@ -1,12 +1,9 @@
-from tg_sdk.item import Item
 from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
+from tg_sdk.item import Item
 
 
 class Policy(RetrieveResourceMixin):
-    # Todo(Justin): This is barebones for now just so I can have an object to
-    #               return from other resource classes. I will add more
-    #               functionality to this once I make more progress on those
-    #               classes.
+    # Todo(Justin): Finish rest of functionality for this class
     resource = 'policies'
 
     @property
