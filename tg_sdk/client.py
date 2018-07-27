@@ -8,10 +8,6 @@ class Client(ListResourceMixin, RetrieveResourceMixin, PostResourceMixin, ):
     resource = "clients"
 
     @property
-    def external_id(self):
-        return self._external_id
-
-    @property
     def id(self):
         return self._id
 
