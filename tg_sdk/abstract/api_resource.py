@@ -2,7 +2,14 @@ from datetime import datetime
 import json
 import requests
 
-from tg_sdk import constants
+from tg_sdk.constants import (
+    BILLING_DEV,
+    BILLING_PROD,
+    BILLING_SANDBOX,
+    CORE_DEV,
+    CORE_PROD,
+    CORE_SANDBOX,
+    TOKEN, )
 from tg_sdk.exceptions import (
     CouldNotRetrieveToken,
     CredentialsNotProvided, )
@@ -30,7 +37,7 @@ class APIResource(object):
         self.configure_environment(self._env)
 
     def __setattr__(self, key, value):
-        if key[0] == '_' or key in self.__dict__:
+        if key[0] == '_':
             if isinstance(value, dict):
                 value = self.construct_general(key.title(), value)
             return super().__setattr__(key, value)
@@ -88,16 +95,16 @@ class APIResource(object):
         env = env.lower()
         if env == 'dev':
             self._env = 'dev'
-            self._core_url = constants.CORE_DEV
-            self._billing_url = constants.BILLING_DEV
+            self._core_url = CORE_DEV
+            self._billing_url = BILLING_DEV
         elif env == 'sandbox':
             self._env = 'sandbox'
-            self._core_url = constants.CORE_SANDBOX
-            self._billing_url = constants.BILLING_SANDBOX
+            self._core_url = CORE_SANDBOX
+            self._billing_url = BILLING_SANDBOX
         elif env == 'prod':
             self._env = 'prod'
-            self._core_url = constants.CORE_PROD
-            self._billing_url = constants.BILLING_PROD
+            self._core_url = CORE_PROD
+            self._billing_url = BILLING_PROD
         else:
             # TODO(Justin): ADD ERROR HANDLING
             pass
@@ -113,7 +120,6 @@ class APIResource(object):
     @property
     def token(self):
         if self.has_valid_token():
-            from tg_sdk import TOKEN
             return TOKEN
         elif self._public_key and self._secret_key:
             return self._refresh_token()
@@ -132,13 +138,11 @@ class APIResource(object):
     def _token_payload(self):
         try:
             import jwt
-            from tg_sdk import TOKEN
             return jwt.decode(TOKEN, None, False)
         except Exception:
             return {}
 
     def has_valid_token(self):
-        from tg_sdk import TOKEN
         if TOKEN is None:
             return False
         current_timestamp = datetime.now().timestamp()
@@ -168,7 +172,6 @@ class APIResource(object):
         if response.ok:
             response_data = json.loads(response.text)
             if response_data.get("token"):
-                from tg_sdk import TOKEN
                 TOKEN = response_data.get("token")
                 return TOKEN
         raise CouldNotRetrieveToken(response.text)
