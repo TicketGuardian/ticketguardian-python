@@ -5,7 +5,7 @@ from tg_sdk.abstract.api_resource import APIResource
 
 
 class PutResourceMixin(APIResource):
-    def put(self, resource_id, ext=None, **params):
+    def update(self, resource_id, ext=None, **params):
         """
         Update a currently existing resource.
             Arguments:
