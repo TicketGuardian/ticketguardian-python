@@ -8,4 +8,3 @@ CORE_SANDBOX = 'https://connect-sandbox.ticketguardian.net'
 ENV = 'prod'
 PUBLIC_KEY = None
 SECRET_KEY = None
-TOKEN = None

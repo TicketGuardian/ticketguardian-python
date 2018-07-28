@@ -8,8 +8,7 @@ from tg_sdk.constants import (
     BILLING_SANDBOX,
     CORE_DEV,
     CORE_PROD,
-    CORE_SANDBOX,
-    TOKEN, )
+    CORE_SANDBOX, )
 from tg_sdk.exceptions import (
     CouldNotRetrieveToken,
     CredentialsNotProvided, )
@@ -20,19 +19,20 @@ class APIResource(object):
 
     def __init__(self, **params):
         """
-            Keyword Arguments:
-                public_key (str) -- The public key for this instance.
-                secret_key (str) -- The secret key for this instance.
-                env (str) -- The environment where requests will be made.
-                             Billing and Core will be in the same env.
-                             Prod will always be default.
-                             input can only be 'prod', 'dev', 'sandbox'
+        Keyword Arguments:
+            public_key (str) -- The public key for this instance.
+            secret_key (str) -- The secret key for this instance.
+            env (str) -- The environment where requests will be made.
+                         Billing and Core will be in the same env.
+                         Prod will always be default.
+                         input can only be 'prod', 'dev', 'sandbox'
         """
         from tg_sdk import PUBLIC_KEY, SECRET_KEY, ENV
         self._public_key = params.get('public_key', PUBLIC_KEY)
         self._secret_key = params.get('secret_key', SECRET_KEY)
         self._core_url = None
         self._billing_url = None
+        self._token = None
         self._env = params.get('env', ENV)
         self.configure_environment(self._env)
 
@@ -62,6 +62,9 @@ class APIResource(object):
         """
         A generalized version of construct. This is used to create a type
         object that is initialized with the data from the dict.
+        This method differs from construct by only creating a type object with
+        data from a dict rather than initializing an instance for a resource
+        object.
             Arguments:
                 name: The name of the object that is going to be constructed.
                 data: The dict containing the data to be stored
@@ -120,7 +123,7 @@ class APIResource(object):
     @property
     def token(self):
         if self.has_valid_token():
-            return TOKEN
+            return self._token
         elif self._public_key and self._secret_key:
             return self._refresh_token()
         else:
@@ -138,12 +141,12 @@ class APIResource(object):
     def _token_payload(self):
         try:
             import jwt
-            return jwt.decode(TOKEN, None, False)
+            return jwt.decode(self._token, None, False)
         except Exception:
             return {}
 
     def has_valid_token(self):
-        if TOKEN is None:
+        if self._token is None:
             return False
         current_timestamp = datetime.now().timestamp()
         exp_timestamp = self._token_payload.get('exp', 0)
@@ -172,6 +175,6 @@ class APIResource(object):
         if response.ok:
             response_data = json.loads(response.text)
             if response_data.get("token"):
-                TOKEN = response_data.get("token")
-                return TOKEN
+                self._token = response_data.get("token")
+                return self._token
         raise CouldNotRetrieveToken(response.text)
