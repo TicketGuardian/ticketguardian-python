@@ -66,7 +66,11 @@ class RetrieveResourceMixin(APIResource):
         if response.ok:
             data = json.loads(response.text)
             for attr in type(self).__dict__:
+                # Use type(self).__dict__ to iterate through all property
+                # method names
                 if attr[0] != '_' and ('_' + attr) not in self.__dict__:
+                    # This condition skips all non property method names then
+                    # checks if a private variable of the same name exists
                     setattr(self, '_' + attr, data.get(attr, None))
 
         else:
