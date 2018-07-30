@@ -3,7 +3,7 @@ from tg_sdk.abstract.api_resource import APIResource
 
 
 class Item(APIResource):
-    # Todo(Justin): Finish rest of functionality for this class
+    # Todo(Justin): Add the rest of the functionality to this class
     resource = 'items'
 
     @property

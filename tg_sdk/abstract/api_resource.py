@@ -49,10 +49,17 @@ class APIResource(object):
         This checks first for the private variable to avoid recursive property
         calls. If the private variable does not exist then it is added as
         public.
-
+            Keyword Arguments:
+                obj -- A type object to iterate through for data.
             Returns:
                 object -- An instance of the child object.
         """
+        if 'obj' in params:
+            data = params.pop('obj').__dict__
+            for key in data:
+                if key[0] != '_':
+                    params[key] = data[key]
+
         instance = cls()
         for key in params:
             setattr(instance, '_' + key, params.get(key))

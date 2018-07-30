@@ -56,12 +56,7 @@ class Order(
     def customer(self):
         if self._customer is None:
             return None
-        return Customer.construct(
-            id=self._customer.id,
-            email=self._customer.email,
-            first_name=self._customer.first_name,
-            last_name=self._customer.last_name
-        )
+        return Customer.construct(obj=self._customer)
 
     @property
     def items(self):
