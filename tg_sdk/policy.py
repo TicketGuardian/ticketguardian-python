@@ -3,29 +3,19 @@ from tg_sdk.item import Item
 
 
 class Policy(RetrieveResourceMixin):
-    # Todo(Justin): Finish rest of functionality for this class
+    # Todo(Justin): Add the rest of the functionality to this class
     resource = 'policies'
 
     @property
     def item(self):
         if not hasattr(self._item, 'resource'):
-            self._item = Item.construct(
-                reference_number=self._item.reference_number,
-                cost=self._item.cost,
-                id=self._item.id,
-                name=self._item.name
-            )
+            self._item = Item.construct(obj=self._item)
         return self._item
 
     @property
     def customer(self):
         if not hasattr(self._customer, 'resource'):
-            self._item = Item.construct(
-                reference_number=self._item.reference_number,
-                cost=self._item.cost,
-                id=self._item.id,
-                name=self._item.name
-            )
+            self._item = Item.construct(obj=self._item)
         return self._customer
 
     @property
