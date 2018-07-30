@@ -49,6 +49,8 @@ class APIResource(object):
         This checks first for the private variable to avoid recursive property
         calls. If the private variable does not exist then it is added as
         public.
+            Keyword Arguments:
+                obj -- A type object to iterate through for data.
             Returns:
                 object -- An instance of the child object.
         """
