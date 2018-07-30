@@ -5,8 +5,7 @@ from tg_sdk.abstract.api_resource import APIResource
 
 
 class PutResourceMixin(APIResource):
-    @classmethod
-    def put(cls, resource_id, ext=None, **params):
+    def update(self, resource_id, ext=None, **params):
         """
         Update a currently existing resource.
             Arguments:
@@ -19,10 +18,9 @@ class PutResourceMixin(APIResource):
                 If a bad request is made then an empty instance of the resource
                 object is returned.
         """
-        instance = cls()
         url = "{}/api/v2/{}/{}/".format(
-            instance.core_url,
-            instance.resource,
+            self.core_url,
+            self.resource,
             resource_id
         )
 
@@ -31,14 +29,14 @@ class PutResourceMixin(APIResource):
 
         response = requests.put(
             url,
-            headers=instance.default_headers,
+            headers=self.default_headers,
             json=params
         )
 
         if response.ok:
             data = json.loads(response.text)
+            for key in data:
+                setattr(self, '_' + key, data[key])
         else:
             # TODO(Justin): ADD ERROR HANDLING
-            data = {}
-
-        return instance.construct(data)
+            return

@@ -33,4 +33,4 @@ class PostResourceMixin(APIResource):
             # TODO(Justin): ADD ERROR HANDLING
             data = {}
 
-        return instance.construct(data)
+        return instance.construct(**data)

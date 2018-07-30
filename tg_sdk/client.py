@@ -6,25 +6,29 @@ from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
 
 class Client(ListResourceMixin, RetrieveResourceMixin, PostResourceMixin, ):
     resource = "clients"
-    external_id = None
-    id = None
-    name = None
-    status = None
-    is_rev_share = None
-    _affiliate = None
-    _domain = None
-    _logo = None
-    _ui_mode = None
-    _settings = None
+
+    @property
+    def id(self):
+        return self._id
+
+    @property
+    def name(self):
+        return self._name
+
+    @property
+    def status(self):
+        return self._status
+
+    @property
+    def is_rev_share(self):
+        return self._is_rev_share
 
     @property
     def affiliate(self):
         if not hasattr(self._affiliate, 'resource'):
             self._affiliate = Affiliate.construct(
-                {
-                    'id': self._affiliate.id,
-                    'name': self._affiliate.name
-                }
+                id=self._affiliate.id,
+                name=self._affiliate.name
             )
         return self._affiliate
 
@@ -37,15 +41,12 @@ class Client(ListResourceMixin, RetrieveResourceMixin, PostResourceMixin, ):
 
     @property
     def logo(self):
-        self.update(self._logo)
         return self._logo
 
     @property
     def ui_mode(self):
-        self.update(self._ui_mode)
         return self._ui_mode
 
     @property
     def settings(self):
-        self.update(self._settings)
         return self._settings
