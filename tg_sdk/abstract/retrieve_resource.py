@@ -59,38 +59,6 @@ class RetrieveResourceMixin(APIResource):
         else:
             return instance.construct(**data)
 
-    def retrieve_raw(self, ext=None, **params):
-        """
-        Retrieve a single resource but return the raw data instead of
-        constructing new instance. There are a few cases where resource classes
-        need to make requests that does not require a new instance.
-
-            Returns:
-                The raw data of the response
-        """
-        url = "{}/api/v2/{}/{}/".format(
-            self.core_url,
-            self.resource,
-            self.id
-        )
-
-        if ext:
-            url += "{}/".format(ext)
-
-        response = requests.request(
-            "GET",
-            url,
-            headers=self.default_headers,
-            params=params
-        )
-
-        if response.ok:
-            data = json.loads(response.text)
-        else:
-            # TODO(Justin): ADD ERROR HANDLING
-            data = {}
-        return data
-
     def get_missing_attrs(self):
         """
         Fills in any missing attributes in an object. List and Retrieve
