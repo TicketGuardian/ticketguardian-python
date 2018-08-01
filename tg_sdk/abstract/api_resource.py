@@ -3,13 +3,13 @@ import json
 import requests
 
 from tg_sdk.constants import (
+    API_VERSION,
     BILLING_DEV,
     BILLING_PROD,
     BILLING_SANDBOX,
     CORE_DEV,
     CORE_PROD,
-    CORE_SANDBOX,
-    API_VERSION, )
+    CORE_SANDBOX, )
 from tg_sdk.exceptions import (
     CouldNotRetrieveToken,
     CredentialsNotProvided, )
@@ -38,7 +38,7 @@ class APIResource(object):
         self.configure_environment(self._env)
 
     def __setattr__(self, key, value):
-        if key[0] == '_':
+        if key[0] == '_' or key in type(self.__dict__):
             if isinstance(value, dict):
                 value = self.construct_general(key.title(), value)
             return super().__setattr__(key, value)
