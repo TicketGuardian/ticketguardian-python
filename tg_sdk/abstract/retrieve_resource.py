@@ -9,6 +9,9 @@ class RetrieveResourceMixin(APIResource):
         if attr[0] == '_' and attr[1:] in type(self).__dict__:
             self.get_missing_attrs()
             return object.__getattribute__(self, attr)
+        # TODO(Justin): Revisit when adding error handling
+        #               Figure out if this should raise a custom Exception or
+        #               an AttributeError.
         return None
 
     @classmethod
