@@ -1,4 +1,5 @@
 # Constants
+API_VERSION = 'api/v2'
 BILLING_DEV = "https://billing-dev.ticketguardian.net"
 BILLING_PROD = "https://billing.ticketguardian.net"
 BILLING_SANDBOX = "https://billing-sandbox.ticketguardian.net"

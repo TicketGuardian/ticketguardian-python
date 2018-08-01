@@ -8,7 +8,8 @@ from tg_sdk.constants import (
     BILLING_SANDBOX,
     CORE_DEV,
     CORE_PROD,
-    CORE_SANDBOX, )
+    CORE_SANDBOX,
+    API_VERSION, )
 from tg_sdk.exceptions import (
     CouldNotRetrieveToken,
     CredentialsNotProvided, )
@@ -118,6 +119,16 @@ class APIResource(object):
         else:
             # TODO(Justin): ADD ERROR HANDLING
             pass
+
+    def make_url(self, *args):
+        url = "{}/{}/{}/".format(
+            self.core_url,
+            API_VERSION,
+            self.resource
+        )
+        for arg in args:
+            url += "{}/".format(arg)
+        return url
 
     @property
     def core_url(self):
