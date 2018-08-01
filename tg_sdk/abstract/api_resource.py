@@ -38,7 +38,7 @@ class APIResource(object):
         self.configure_environment(self._env)
 
     def __setattr__(self, key, value):
-        if key[0] == '_' or key in type(self.__dict__):
+        if key[0] == '_':
             if isinstance(value, dict):
                 value = self.construct_general(key.title(), value)
             return super().__setattr__(key, value)
