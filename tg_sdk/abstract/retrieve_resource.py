@@ -34,7 +34,7 @@ class RetrieveResourceMixin(APIResource):
                 If a bad request is made then an empty resource object is
                 returned.
                 -or-
-                raw_data: If raw_data is true this will return the data that
+                raw data: If raw_data is true this will return the data that
                           was returned from the request.
 
         """
