@@ -9,17 +9,16 @@ class PostResourceMixin(APIResource):
     def post(cls, **params):
         """
         Post a new resource with the given parameters.
-
+            Keyword Arguments:
+                ext: A list of strings that are extensions of the url
+                     This should only be used from within resource methods.
             Returns:
                 An instance of the object that was just posted.
                 If a bad request is made then an empty resource object is
                 returned.
         """
         instance = cls()
-        url = "{}/api/v2/{}/".format(
-            instance.core_url,
-            instance.resource
-        )
+        url = instance.make_url(*params.pop('ext', []))
 
         response = requests.post(
             url,
