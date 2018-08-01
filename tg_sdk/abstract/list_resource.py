@@ -46,7 +46,7 @@ class ListResourceMixin(APIResource):
                 else:
                     new = [
                         instance.construct(**res)
-                        for res in data.get('results',[])
+                        for res in data.get('results', [])
                     ]
                 resources += new
                 url = data.get('next')
