@@ -18,10 +18,10 @@ class RetrieveResourceMixin(APIResource):
         object that called.
 
             Arguments:
-                resource_id (str) -- The unique id of the resource.
+                resource_id: The unique id of the resource.
 
             Returns:
-                object -- An instance of the child object that called.
+                object: An instance of the child object that called.
                 If a bad request is made then an empty resource object is
                 returned.
         """
@@ -44,6 +44,38 @@ class RetrieveResourceMixin(APIResource):
             # TODO(Justin): ADD ERROR HANDLING
             data = {}
         return instance.construct(**data)
+
+    def retrieve_raw(self, ext=None, **params):
+        """
+        Retrieve a single resource but return the raw data instead of
+        constructing new instance. There are a few cases where resource classes
+        need to make requests that does not require a new instance.
+
+            Returns:
+                The raw data of the response
+        """
+        url = "{}/api/v2/{}/{}/".format(
+            self.core_url,
+            self.resource,
+            self.id
+        )
+
+        if ext:
+            url += "{}/".format(ext)
+
+        response = requests.request(
+            "GET",
+            url,
+            headers=self.default_headers,
+            params=params
+        )
+
+        if response.ok:
+            data = json.loads(response.text)
+        else:
+            # TODO(Justin): ADD ERROR HANDLING
+            data = {}
+        return data.get('results', None)
 
     def get_missing_attrs(self):
         """
