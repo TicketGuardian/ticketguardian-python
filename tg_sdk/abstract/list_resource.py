@@ -24,7 +24,7 @@ class ListResourceMixin(APIResource):
                 called. If an error occurs or a bad request is made then an
                 empty list is returned.
                 -or-
-                list: If raw_data is true this will return a list of raw data.
+                list of raw data: If raw_data is true.
         """
         instance = cls()
         resources = []
