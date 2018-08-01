@@ -6,7 +6,7 @@ from tg_sdk.abstract.api_resource import APIResource
 
 class PostResourceMixin(APIResource):
     @classmethod
-    def post(cls, **params):
+    def create(cls, **params):
         """
         Post a new resource with the given parameters.
             Keyword Arguments:
