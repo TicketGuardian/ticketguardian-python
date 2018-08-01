@@ -75,7 +75,7 @@ class RetrieveResourceMixin(APIResource):
         else:
             # TODO(Justin): ADD ERROR HANDLING
             data = {}
-        return data.get('results', None)
+        return data
 
     def get_missing_attrs(self):
         """
