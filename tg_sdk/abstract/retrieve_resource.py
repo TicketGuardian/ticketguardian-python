@@ -23,17 +23,24 @@ class RetrieveResourceMixin(APIResource):
             Arguments:
                 resource_id: The unique id of the resource.
 
+            Keyword Arguments:
+                ext: A list of strings that are extensions of the url
+                     This should only be used from within resource methods.
+                raw_data: A boolean value that will tell this method to return
+                          the raw list data.
+
             Returns:
                 object: An instance of the child object that called.
                 If a bad request is made then an empty resource object is
                 returned.
+                -or-
+                raw_data: If raw_data is true this will return the data that
+                          was returned from the request.
+
         """
         instance = cls()
-        url = "{}/api/v2/{}/{}/".format(
-            instance.core_url,
-            instance.resource,
-            resource_id)
-
+        url = instance.make_url(resource_id, *params.pop('ext', []))
+        raw_data = params.pop('raw_data', False)
         response = requests.request(
             "GET",
             url,
@@ -46,7 +53,11 @@ class RetrieveResourceMixin(APIResource):
         else:
             # TODO(Justin): ADD ERROR HANDLING
             data = {}
-        return instance.construct(**data)
+
+        if raw_data:
+            return data
+        else:
+            return instance.construct(**data)
 
     def retrieve_raw(self, ext=None, **params):
         """
