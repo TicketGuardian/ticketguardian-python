@@ -5,11 +5,10 @@ from tg_sdk.abstract.api_resource import APIResource
 
 
 class PutResourceMixin(APIResource):
-    def update(self, resource_id, ext=None, **params):
+    def update(self, **params):
         """
         Update a currently existing resource.
-            Arguments:
-                resource_id: The unique id of the resource.
+            Keyword Arguments:
                 ext: An extension of the url if extra args are needed.
                      Does not need the leading or trailing '/'.
 
@@ -21,9 +20,10 @@ class PutResourceMixin(APIResource):
         url = "{}/api/v2/{}/{}/".format(
             self.core_url,
             self.resource,
-            resource_id
+            self.id
         )
 
+        ext = params.pop('ext', None)
         if ext:
             url += "{}/".format(ext)
 
