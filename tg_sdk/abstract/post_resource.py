@@ -12,10 +12,14 @@ class PostResourceMixin(APIResource):
             Keyword Arguments:
                 ext: A list of strings that are extensions of the url
                      This should only be used from within resource methods.
+                raw_data: A boolean value that will tell this method to return
+                          the raw list data.
             Returns:
                 An instance of the object that was just posted.
                 If a bad request is made then an empty resource object is
                 returned.
+                -or-
+                dict of raw data: If raw_data is true.
         """
         instance = cls()
         url = instance.make_url(*params.pop('ext', []))
@@ -32,4 +36,7 @@ class PostResourceMixin(APIResource):
             # TODO(Justin): ADD ERROR HANDLING
             data = {}
 
-        return instance.construct(**data)
+        if params.pop('raw_data', False):
+            return data
+        else:
+            return instance.construct(**data)
