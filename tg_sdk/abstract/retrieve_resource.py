@@ -24,6 +24,7 @@ class RetrieveResourceMixin(APIResource):
                 resource_id: The unique id of the resource.
 
             Keyword Arguments:
+                instance: An instance of the class making the retrieval.
                 ext: A list of strings that are extensions of the url
                      This should only be used from within resource methods.
                 raw_data: A boolean value that will tell this method to return
@@ -36,9 +37,8 @@ class RetrieveResourceMixin(APIResource):
                 -or-
                 raw data: If raw_data is true this will return the data that
                           was returned from the request.
-
         """
-        instance = cls()
+        instance = params.pop('instance', cls())
         url = instance.make_url(resource_id, *params.pop('ext', []))
         raw_data = params.pop('raw_data', False)
         response = requests.request(

@@ -13,6 +13,7 @@ class ListResourceMixin(APIResource):
         be added into params as a keyword arg.
 
             Keyword Arguments:
+                instance: An instance of the class making the retrieval.
                 ext: A list of strings that are extensions of the url
                      This should only be used from within resource methods.
                 limit: The maximum resources that will be returned.
@@ -26,7 +27,7 @@ class ListResourceMixin(APIResource):
                 -or-
                 list of raw data: If raw_data is true.
         """
-        instance = cls()
+        instance = params.pop('instance', cls())
         resources = []
         raw_data = params.pop('raw_data', False)
         limit = params.get("limit", None)

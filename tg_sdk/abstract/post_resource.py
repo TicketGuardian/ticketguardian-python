@@ -10,6 +10,7 @@ class PostResourceMixin(APIResource):
         """
         Post a new resource with the given parameters.
             Keyword Arguments:
+                instance: An instance of the class making the retrieval.
                 ext: A list of strings that are extensions of the url
                      This should only be used from within resource methods.
                 raw_data: A boolean value that will tell this method to return
@@ -21,7 +22,7 @@ class PostResourceMixin(APIResource):
                 -or-
                 dict of raw data: If raw_data is true.
         """
-        instance = cls()
+        instance = params.pop('instance', cls())
         url = instance.make_url(*params.pop('ext', []))
 
         response = requests.post(
