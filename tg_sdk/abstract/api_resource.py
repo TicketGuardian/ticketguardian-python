@@ -38,9 +38,15 @@ class APIResource(object):
         self.configure_environment(self._env)
 
     def __setattr__(self, key, value):
-        if key[0] == '_':
-            if isinstance(value, dict):
-                value = self.construct_general(key.title(), value)
+        # TODO(Justin): Find out if I need to restrict new attribute from being
+        #               set. For example, self.randomkey = 10 would set a new
+        #               attr 'randomkey' to 10.
+        if isinstance(value, dict):
+            value = self.construct_general(key.title(), value)
+
+        if key in vars(type(self)):
+            return super().__setattr__('_' + key, value)
+        else:
             return super().__setattr__(key, value)
 
     @classmethod
@@ -55,15 +61,15 @@ class APIResource(object):
             Returns:
                 object -- An instance of the child object.
         """
+        instance = params.pop('instance', cls())
         if 'obj' in params:
             data = params.pop('obj').__dict__
             for key in data:
                 if key[0] != '_':
                     params[key] = data[key]
 
-        instance = cls()
         for key in params:
-            setattr(instance, '_' + key, params.get(key))
+            setattr(instance, key, params.get(key))
         return instance
 
     def construct_general(self, name, data):
