@@ -8,22 +8,6 @@ class Client(ListResourceMixin, RetrieveResourceMixin, PostResourceMixin, ):
     resource = "clients"
 
     @property
-    def id(self):
-        return self._id
-
-    @property
-    def name(self):
-        return self._name
-
-    @property
-    def status(self):
-        return self._status
-
-    @property
-    def is_rev_share(self):
-        return self._is_rev_share
-
-    @property
     def affiliate(self):
         if not hasattr(self._affiliate, 'resource'):
             self._affiliate = Affiliate.construct(obj=self._affiliate)
@@ -35,15 +19,3 @@ class Client(ListResourceMixin, RetrieveResourceMixin, PostResourceMixin, ):
         #               The problem is that domain in included on list calls
         #               but is not on single retrieves
         return self._domain
-
-    @property
-    def logo(self):
-        return self._logo
-
-    @property
-    def ui_mode(self):
-        return self._ui_mode
-
-    @property
-    def settings(self):
-        return self._settings
