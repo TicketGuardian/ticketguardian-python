@@ -6,7 +6,7 @@ from tg_sdk.abstract.api_resource import APIResource
 
 class ListResourceMixin(APIResource):
     @classmethod
-    def list(cls, **params):
+    def list(cls, *ext, **params):
         """
         Retrieve multiple resources and return a list of instances of child
         objects initialized with the data received. Any additional filters can
@@ -31,7 +31,7 @@ class ListResourceMixin(APIResource):
         resources = []
         raw_data = params.pop('raw_data', False)
         limit = params.get("limit", None)
-        url = instance.make_url(*params.pop('ext', []))
+        url = instance.make_url(*ext)
 
         while url and (limit is None or limit > len(resources)):
             response = requests.request(

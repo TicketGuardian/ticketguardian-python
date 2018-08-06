@@ -126,7 +126,10 @@ class APIResource(object):
             # TODO(Justin): ADD ERROR HANDLING
             pass
 
-    def make_url(self, *args):
+    def make_url(self, *args, default=[]):
+        if not args:
+            args = default
+
         url = "{}/{}/{}/".format(
             self.core_url,
             API_VERSION,

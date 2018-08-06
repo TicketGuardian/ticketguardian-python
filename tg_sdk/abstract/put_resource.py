@@ -5,7 +5,7 @@ from tg_sdk.abstract.api_resource import APIResource
 
 
 class PutResourceMixin(APIResource):
-    def update(self, **params):
+    def update(self, *ext, **params):
         """
         Update a currently existing resource.
             Keyword Arguments:
@@ -17,7 +17,7 @@ class PutResourceMixin(APIResource):
                 If a bad request is made then an empty instance of the resource
                 object is returned.
         """
-        url = self.make_url(*params.pop('ext', [self.id]))
+        url = self.make_url(*ext, default=[self.id])
 
         response = requests.put(
             url,

@@ -16,7 +16,7 @@ class RetrieveResourceMixin(APIResource):
         raise AttributeError
 
     @classmethod
-    def retrieve(cls, resource_id, **params):
+    def retrieve(cls, resource_id, *ext, **params):
         """
         Retrieve a single resource and initialize an instance of the child
         object that called.
@@ -40,9 +40,7 @@ class RetrieveResourceMixin(APIResource):
                           was returned from the request.
         """
         instance = params.pop('instance', cls())
-        url = instance.make_url(
-            *params.pop('ext', [resource_id])
-        )
+        url = instance.make_url(resource_id, *ext, default=[resource_id])
         raw_data = params.pop('raw_data', False)
         response = requests.request(
             "GET",
@@ -50,7 +48,6 @@ class RetrieveResourceMixin(APIResource):
             headers=instance.default_headers,
             params=params
         )
-
         if response.ok:
             data = json.loads(response.text)
         else:
