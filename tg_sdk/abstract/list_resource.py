@@ -6,27 +6,32 @@ from tg_sdk.abstract.api_resource import APIResource
 
 class ListResourceMixin(APIResource):
     @classmethod
-    def list(cls, **params):
+    def list(cls, *ext, **params):
         """
         Retrieve multiple resources and return a list of instances of child
         objects initialized with the data received. Any additional filters can
         be added into params as a keyword arg.
 
             Keyword Arguments:
-                limit (int) -- The maximum resources that will be returned
+                instance: An instance of the class making the retrieval.
+                ext: A list of strings that are extensions of the url
+                     This should only be used from within resource methods.
+                limit: The maximum resources that will be returned.
+                raw_data: A boolean value that will tell this method to return
+                          the raw list data.
 
             Returns:
-                list -- A list of instances of the child object that called.
-                If an error occurs or a bad request is made then an empty
-                list is returned.
+                list of objects: A list of instances of the child object that
+                called. If an error occurs or a bad request is made then an
+                empty list is returned.
+                -or-
+                list of raw data: If raw_data is true.
         """
-        instance = cls()
+        instance = params.pop('instance', cls())
         resources = []
+        raw_data = params.pop('raw_data', False)
         limit = params.get("limit", None)
-        url = "{}/api/v2/{}/".format(
-            instance.core_url,
-            instance.resource
-        )
+        url = instance.make_url(*ext)
 
         while url and (limit is None or limit > len(resources)):
             response = requests.request(
@@ -37,9 +42,14 @@ class ListResourceMixin(APIResource):
             )
             if response.ok:
                 data = json.loads(response.text)
-                resources += [
-                    instance.construct(**res) for res in data.get('results',[])
-                ]
+                if raw_data:
+                    new = [res for res in data.get('results', [])]
+                else:
+                    new = [
+                        instance.construct(**res)
+                        for res in data.get('results', [])
+                    ]
+                resources += new
                 url = data.get('next')
             else:
                 # TODO(Justin): ADD ERROR HANDLING

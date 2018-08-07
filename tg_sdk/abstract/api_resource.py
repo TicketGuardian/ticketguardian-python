@@ -3,6 +3,7 @@ import json
 import requests
 
 from tg_sdk.constants import (
+    API_VERSION,
     BILLING_DEV,
     BILLING_PROD,
     BILLING_SANDBOX,
@@ -118,6 +119,19 @@ class APIResource(object):
         else:
             # TODO(Justin): ADD ERROR HANDLING
             pass
+
+    def make_url(self, *args, default=[]):
+        if not args:
+            args = default
+
+        url = "{}/{}/{}/".format(
+            self.core_url,
+            API_VERSION,
+            self.resource
+        )
+        for arg in args:
+            url += "{}/".format(arg)
+        return url
 
     @property
     def core_url(self):

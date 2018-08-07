@@ -82,4 +82,4 @@ class Order(
             # TODO(Justin): Error handling
             return None
 
-        return self.update(self.order_number, ext='add-items', **params)
+        return self.update(self.order_number, 'add-items', **params)
