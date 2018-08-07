@@ -6,13 +6,14 @@ from tg_sdk.abstract.api_resource import APIResource
 
 class RetrieveResourceMixin(APIResource):
     def __getattr__(self, attr):
-        if attr[0] == '_' and attr[1:] in type(self).__dict__:
+        if not self.is_updated:
+            self.is_updated = True
             self.get_missing_attrs()
             return object.__getattribute__(self, attr)
         # TODO(Justin): Revisit when adding error handling
         #               Figure out if this should raise a custom Exception or
         #               an AttributeError.
-        return None
+        raise AttributeError
 
     @classmethod
     def retrieve(cls, resource_id, *ext, **params):
@@ -65,11 +66,9 @@ class RetrieveResourceMixin(APIResource):
         missing when a missing attribute is requested.
         """
         data = self.retrieve(self.id, raw_data=True)
-        for attr in type(self).__dict__:
-            # Use type(self).__dict__ to iterate through all property
-            # method names
-            if attr[0] != '_' and ('_' + attr) not in self.__dict__:
+        for attr in data:
+            if '_' + attr not in vars(self):
                 # This condition skips all non property method names then
                 # checks if a private variable of the same name exists
-                setattr(self, '_' + attr, data.get(attr, None))
+                setattr(self, attr, data.get(attr, None))
 

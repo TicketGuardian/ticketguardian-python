@@ -17,34 +17,6 @@ class Order(
     resource = "orders"
 
     @property
-    def created(self):
-        return self._created
-
-    @property
-    def updated(self):
-        return self._updated
-
-    @property
-    def order_number(self):
-        return self._order_number
-
-    @property
-    def subtotal(self):
-        return self._subtotal
-
-    @property
-    def currency(self):
-        return self._currency
-
-    @property
-    def id(self):
-        return self.order_number
-
-    @property
-    def attrs(self):
-        return self._attrs
-
-    @property
     def client(self):
         if self._client is None:
             return None

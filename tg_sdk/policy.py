@@ -17,31 +17,3 @@ class Policy(RetrieveResourceMixin):
         if not hasattr(self._customer, 'resource'):
             self._item = Item.construct(obj=self._item)
         return self._customer
-
-    @property
-    def policy_number(self):
-        return self._policy_number
-
-    @property
-    def premium(self):
-        return self._premium
-
-    @property
-    def coverage_amount(self):
-        return self._coverage_amount
-
-    @property
-    def currency(self):
-        return self._currency
-
-    @property
-    def id(self):
-        return self._policy_number
-
-    @property
-    def created(self):
-        return self._created
-
-    @property
-    def updated(self):
-        return self._updated

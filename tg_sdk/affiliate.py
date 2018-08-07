@@ -6,18 +6,6 @@ class Affiliate(ListResourceMixin, RetrieveResourceMixin,):
     resource = "affiliates"
 
     @property
-    def id(self):
-        return self._id
-
-    @property
-    def name(self):
-        return self._name
-
-    @property
-    def domain(self):
-        return self._domain
-
-    @property
     def parent(self):
         if self._parent is None:
             return None
@@ -25,7 +13,3 @@ class Affiliate(ListResourceMixin, RetrieveResourceMixin,):
         if not hasattr(self._parent, 'resource'):
             self._parent = self.construct(obj=self._parent)
         return self._parent
-
-    @property
-    def settings(self):
-        return self._settings
