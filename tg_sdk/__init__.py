@@ -22,13 +22,3 @@ HTTP_HEADER_ENCODING = 'iso-8859-1'
 
 # Default datetime input and output formats
 ISO_8601 = 'iso-8601'
-
-# Imports
-from affiliate.affiliate import Affiliate
-from client.client import Client
-from constants import ENV, PUBLIC_KEY, SECRET_KEY
-from customer.customer import Customer
-from item.item import Item
-from order.order import Order
-from policy.policy import Policy
-from product.product import Product

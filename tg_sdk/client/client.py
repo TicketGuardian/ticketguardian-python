@@ -1,7 +1,7 @@
-from tg_sdk.affiliate import Affiliate
-from tg_sdk.abstract.list_resource import ListResourceMixin
-from tg_sdk.abstract.post_resource import PostResourceMixin
-from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
+from affiliate import Affiliate
+from abstract.list_resource import ListResourceMixin
+from abstract.post_resource import PostResourceMixin
+from abstract.retrieve_resource import RetrieveResourceMixin
 
 
 class Client(ListResourceMixin, RetrieveResourceMixin, PostResourceMixin, ):

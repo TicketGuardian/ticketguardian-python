@@ -1,7 +1,7 @@
 import json
 import requests
 
-from tg_sdk.abstract.api_resource import APIResource
+from .abstract.api_resource import APIResource
 
 
 class RetrieveResourceMixin(APIResource):
@@ -79,4 +79,3 @@ class RetrieveResourceMixin(APIResource):
                 # This condition skips all non property method names then
                 # checks if a private variable of the same name exists
                 setattr(self, attr, data.get(attr, None))
-

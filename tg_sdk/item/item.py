@@ -1,5 +1,5 @@
-from tg_sdk import Customer
-from tg_sdk.abstract.api_resource import APIResource
+from customer import Customer
+from abstract.api_resource import APIResource
 
 
 class Item(APIResource):

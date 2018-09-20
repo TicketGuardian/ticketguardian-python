@@ -1,18 +1,18 @@
-from tg_sdk.abstract.list_resource import ListResourceMixin
-from tg_sdk.abstract.post_resource import PostResourceMixin
-from tg_sdk.abstract.put_resource import PutResourceMixin
-from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
-from tg_sdk.client import Client
-from tg_sdk.customer import Customer
-from tg_sdk.item import Item
-from tg_sdk.policy import Policy
+from abstract.list_resource import ListResourceMixin
+from abstract.post_resource import PostResourceMixin
+from abstract.put_resource import PutResourceMixin
+from abstract.retrieve_resource import RetrieveResourceMixin
+from client import Client
+from customer import Customer
+from item import Item
+from policy import Policy
 
 
 class Order(
-    ListResourceMixin,
-    RetrieveResourceMixin,
-    PostResourceMixin,
-    PutResourceMixin, ):
+        ListResourceMixin,
+        RetrieveResourceMixin,
+        PostResourceMixin,
+        PutResourceMixin, ):
 
     resource = "orders"
 

@@ -1,5 +1,5 @@
-from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
-from tg_sdk.item import Item
+from abstract.retrieve_resource import RetrieveResourceMixin
+from item import Item
 
 
 class Policy(RetrieveResourceMixin):
