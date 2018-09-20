@@ -8,7 +8,7 @@
 """
 
 # Imports
-from tg_sdk.abstract.api_resource import APIResource
-from tg_sdk.abstract.list_resource import ListResourceMixin
-from tg_sdk.abstract.post_resource import PostResourceMixin
-from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
+from abstract.api_resource import APIResource
+from abstract.list_resource import ListResourceMixin
+from abstract.post_resource import PostResourceMixin
+from abstract.retrieve_resource import RetrieveResourceMixin
