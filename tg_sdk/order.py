@@ -63,7 +63,7 @@ class Order(
                                  Defaults to null.
 
         Returns:
-
+            The order object that the items were added to.
         """
         if self.order_number is None or params == {}:
             # TODO(Justin): Error handling
