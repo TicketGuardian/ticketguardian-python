@@ -17,7 +17,7 @@ class PutResourceMixin(APIResource):
                 If a bad request is made then an empty instance of the resource
                 object is returned.
         """
-        url = self.make_url(*ext, default=[self.id])
+        url = self.make_url(self.id, *ext)
 
         response = requests.put(
             url,

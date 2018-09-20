@@ -47,9 +47,24 @@ class Order(
         # TODO(Justin): IMPLEMENT WHEN QUOTE CLASS IS CREATED
         return
 
-    def add_items(self, **params):
-        # TODO(Justin): Using PUT should not return a new instance but should
-        #               update the existing instance that was used to call.
+    def add_items(self, currency="USD", **params):
+        """Add items to the order instance using the given parameters.
+
+        Keyword Arguments:
+            currency (str): The currency of the Items. Defaults to USD.
+            items (list): The list of item dictionaries.
+                item (dict): a dictionary containing the following values.
+                   Name (str): The name of the item.
+                   reference_number (str): The unique number of the item.
+                   cost (float): The cost of the item.
+                   customer (dict): An optional customer object.
+                                    Defaults to null.
+                   event (dict): An optional event object.
+                                 Defaults to null.
+
+        Returns:
+
+        """
         if self.order_number is None or params == {}:
             # TODO(Justin): Error handling
             return None

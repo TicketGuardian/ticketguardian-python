@@ -80,8 +80,9 @@ class APIResource(object):
         data from a dict rather than initializing an instance for a resource
         object.
             Arguments:
-                name: The name of the object that is going to be constructed.
-                data: The dict containing the data to be stored
+                name (str) -- The name of the object that is going to be
+                              constructed.
+                data (dict) -- The dict containing the data to be stored.
 
             Returns:
                 object -- An instance of the new object.
@@ -93,8 +94,8 @@ class APIResource(object):
         Takes a list of dictionaries and makes each dict in the list into the
         given object type.
             Arguments:
-                li: The list of dictionaries.
-                cls: The object type to create.
+                li (list) -- The list of dictionaries.
+                cls (object) -- The object type to create.
             Returns:
                 A list of objects of the given object type.
         """
@@ -126,10 +127,12 @@ class APIResource(object):
             # TODO(Justin): ADD ERROR HANDLING
             pass
 
-    def make_url(self, *args, default=[]):
-        if not args:
-            args = default
-
+    def make_url(self, *args):
+        """ Used internally to make urls for the mixins.
+        Arguments:
+            Any extension of the url as strings. The default url is the
+            {core url}/{api version}/{resource name}
+        """
         url = "{}/{}/{}/".format(
             self.core_url,
             API_VERSION,
@@ -149,7 +152,7 @@ class APIResource(object):
 
     @property
     def token(self):
-        if self.has_valid_token():
+        if self._has_valid_token():
             return self._token
         elif self._public_key and self._secret_key:
             return self._refresh_token()
@@ -172,7 +175,7 @@ class APIResource(object):
         except Exception:
             return {}
 
-    def has_valid_token(self):
+    def _has_valid_token(self):
         if self._token is None:
             return False
         current_timestamp = datetime.now().timestamp()
