@@ -28,6 +28,8 @@ class APIResource(object):
                          Prod will always be default.
                          input can only be 'prod', 'dev', 'sandbox'
         """
+        # TODO(Justin): Find out if we want to support this. Will a user ever
+        #               have more than one pair of keys?
         from tg_sdk import PUBLIC_KEY, SECRET_KEY, ENV
         self._public_key = params.get('public_key', PUBLIC_KEY)
         self._secret_key = params.get('secret_key', SECRET_KEY)
