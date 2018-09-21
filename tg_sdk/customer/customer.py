@@ -1,4 +1,4 @@
-from abstract.retrieve_resource import RetrieveResourceMixin
+from tg_sdk.abstract import RetrieveResourceMixin
 
 
 class Customer(RetrieveResourceMixin,):

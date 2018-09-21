@@ -1,5 +1,6 @@
-from abstract.list_resource import ListResourceMixin
-from abstract.retrieve_resource import RetrieveResourceMixin
+from tg_sdk.abstract import (
+    ListResourceMixin,
+    RetrieveResourceMixin, )
 
 
 class Product(RetrieveResourceMixin, ListResourceMixin):

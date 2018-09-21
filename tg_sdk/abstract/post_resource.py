@@ -1,7 +1,7 @@
 import json
 import requests
 
-from tg_sdk.abstract.api_resource import APIResource
+from .api_resource import APIResource
 
 
 class PostResourceMixin(APIResource):

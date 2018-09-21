@@ -8,12 +8,16 @@
 """
 
 # Imports
-from abstract.api_resource import APIResource
-from abstract.list_resource import ListResourceMixin
-from abstract.post_resource import PostResourceMixin
-from abstract.retrieve_resource import RetrieveResourceMixin
+from .api_resource import APIResource
+from .delete_resource import DeleteResourceMixin
+from .list_resource import ListResourceMixin
+from .post_resource import PostResourceMixin
+from .put_resource import PutResourceMixin
+from .retrieve_resource import RetrieveResourceMixin
 
 __all__ = ['APIResource',
+           'DeleteResourceMixin',
            'ListResourceMixin',
            'PostResourceMixin',
+           'PutResourceMixin',
            'RetrieveResourceMixin', ]

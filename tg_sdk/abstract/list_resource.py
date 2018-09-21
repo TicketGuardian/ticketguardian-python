@@ -1,7 +1,7 @@
 import json
 import requests
 
-from .abstract.api_resource import APIResource
+from .api_resource import APIResource
 
 
 class ListResourceMixin(APIResource):
