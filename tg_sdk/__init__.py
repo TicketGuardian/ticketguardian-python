@@ -10,7 +10,7 @@
 # Imports
 from .affiliate import Affiliate
 from .client import Client
-from .constants import ENV, PUBLIC_KEY, SECRET_KEY
+from .constants import *
 from .customer import Customer
 from .item import Item
 from .order import Order
