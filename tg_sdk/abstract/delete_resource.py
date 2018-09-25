@@ -1,6 +1,7 @@
 import requests
 
 from .api_resource import APIResource
+from .error_handling import raise_response_error
 
 
 class DeleteResourceMixin(APIResource):
@@ -32,5 +33,4 @@ class DeleteResourceMixin(APIResource):
         )
 
         if not response.ok:
-            # TODO(Justin): ADD ERROR HANDLING
-            return
+            raise_response_error(response)

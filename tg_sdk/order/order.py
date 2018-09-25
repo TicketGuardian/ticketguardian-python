@@ -53,7 +53,8 @@ class Order(
         # TODO(Justin): Using PUT should not return a new instance but should
         #               update the existing instance that was used to call.
         if self.order_number is None or params == {}:
-            # TODO(Justin): Error handling
+            # TODO(Justin): Error handling. Ill add this in when I start the
+            #               related ticket.
             return None
 
         return self.update(self.order_number, 'add-items', **params)

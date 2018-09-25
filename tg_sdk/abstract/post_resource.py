@@ -2,6 +2,7 @@ import json
 import requests
 
 from .api_resource import APIResource
+from .error_handling import raise_response_error
 
 
 class PostResourceMixin(APIResource):
@@ -34,8 +35,7 @@ class PostResourceMixin(APIResource):
         if response.ok:
             data = json.loads(response.text)
         else:
-            # TODO(Justin): ADD ERROR HANDLING
-            data = {}
+            raise_response_error(response)
 
         if params.pop('raw_data', False):
             return data

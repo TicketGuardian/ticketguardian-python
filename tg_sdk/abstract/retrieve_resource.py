@@ -2,6 +2,7 @@ import json
 import requests
 
 from .api_resource import APIResource
+from .error_handling import raise_response_error
 
 
 class RetrieveResourceMixin(APIResource):
@@ -10,9 +11,6 @@ class RetrieveResourceMixin(APIResource):
             self.is_updated = True
             self.get_missing_attrs()
             return object.__getattribute__(self, attr)
-        # TODO(Justin): Revisit when adding error handling
-        #               Figure out if this should raise a custom Exception or
-        #               an AttributeError.
         raise AttributeError
 
     def __repr__(self):
@@ -59,8 +57,7 @@ class RetrieveResourceMixin(APIResource):
         if response.ok:
             data = json.loads(response.text)
         else:
-            # TODO(Justin): ADD ERROR HANDLING
-            data = {}
+            raise_response_error(response)
 
         if raw_data:
             return data

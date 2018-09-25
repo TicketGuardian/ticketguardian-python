@@ -2,6 +2,7 @@ import json
 import requests
 
 from .api_resource import APIResource
+from .error_handling import raise_response_error
 
 
 class ListResourceMixin(APIResource):
@@ -52,6 +53,5 @@ class ListResourceMixin(APIResource):
                 resources += new
                 url = data.get('next')
             else:
-                # TODO(Justin): ADD ERROR HANDLING
-                return []
+                raise_response_error(response)
         return resources[:limit]

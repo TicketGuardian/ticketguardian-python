@@ -125,8 +125,8 @@ class APIResource(object):
             self._core_url = CORE_PROD
             self._billing_url = BILLING_PROD
         else:
-            # TODO(Justin): ADD ERROR HANDLING
-            pass
+            raise Exception("Invalid environment. "
+                            "Use 'dev', 'prod', or 'sandbox'")
 
     def make_url(self, *args, default=[]):
         if not args:

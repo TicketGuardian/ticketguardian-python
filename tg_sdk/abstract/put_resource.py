@@ -2,6 +2,7 @@ import json
 import requests
 
 from .api_resource import APIResource
+from .error_handling import raise_response_error
 
 
 class PutResourceMixin(APIResource):
@@ -30,5 +31,4 @@ class PutResourceMixin(APIResource):
             for key in data:
                 setattr(self, '_' + key, data[key])
         else:
-            # TODO(Justin): ADD ERROR HANDLING
-            return
+            raise_response_error(response)

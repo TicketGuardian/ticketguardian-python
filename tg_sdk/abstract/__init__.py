@@ -14,6 +14,7 @@ from .list_resource import ListResourceMixin
 from .post_resource import PostResourceMixin
 from .put_resource import PutResourceMixin
 from .retrieve_resource import RetrieveResourceMixin
+from .error_handling import raise_response_error
 
 __all__ = ['APIResource',
            'DeleteResourceMixin',
