@@ -8,14 +8,14 @@
 """
 
 # Imports
-from .affiliate import Affiliate
-from .client import Client
-from .constants import *
-from .customer import Customer
-from .item import Item
-from .order import Order
-from .policy import Policy
-from .product import Product
+from tg_sdk.affiliate import Affiliate
+from tg_sdk.client import Client
+from tg_sdk.constants import *
+from tg_sdk.customer import Customer
+from tg_sdk.item import Item
+from tg_sdk.order import Order
+from tg_sdk.policy import Policy
+from tg_sdk.product import Product
 
 __title__ = 'TicketGuardian SDK'
 __version__ = '0.0.0'

@@ -8,12 +8,12 @@
 """
 
 # Imports
-from .api_resource import APIResource
-from .delete_resource import DeleteResourceMixin
-from .list_resource import ListResourceMixin
-from .post_resource import PostResourceMixin
-from .put_resource import PutResourceMixin
-from .retrieve_resource import RetrieveResourceMixin
+from tg_sdk.abstract.api_resource import APIResource
+from tg_sdk.abstract.delete_resource import DeleteResourceMixin
+from tg_sdk.abstract.list_resource import ListResourceMixin
+from tg_sdk.abstract.post_resource import PostResourceMixin
+from tg_sdk.abstract.put_resource import PutResourceMixin
+from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
 
 __all__ = ['APIResource',
            'DeleteResourceMixin',

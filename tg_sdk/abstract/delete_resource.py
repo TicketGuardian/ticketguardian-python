@@ -1,6 +1,6 @@
 import requests
 
-from .api_resource import APIResource
+from tg_sdk.abstract.api_resource import APIResource
 
 
 class DeleteResourceMixin(APIResource):
