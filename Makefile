@@ -7,5 +7,5 @@ venv:
 	python3 -m virtualenv venv
 
 tests:
-	make sdk
+	make install
 	python3 -m pytest
