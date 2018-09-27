@@ -16,11 +16,11 @@ class DeleteResourceMixin(APIResource):
                 If a bad request is made then an exception should be raised.
         """
         instance = cls()
-        url = instance.make_url(resource_id, *ext)
+        url = instance._make_url(resource_id, *ext)
 
         response = requests.delete(
             url,
-            headers=instance.default_headers
+            headers=instance._default_headers
         )
 
         if not response.ok:

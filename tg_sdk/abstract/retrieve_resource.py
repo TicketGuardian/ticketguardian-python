@@ -49,12 +49,12 @@ class RetrieveResourceMixin(APIResource):
                           was returned from the request.
         """
         instance = params.pop('instance', cls())
-        url = instance.make_url(resource_id, *ext)
+        url = instance._make_url(resource_id, *ext)
         raw_data = params.pop('raw_data', False)
         response = requests.request(
             "GET",
             url,
-            headers=instance.default_headers,
+            headers=instance._default_headers,
             params=params
         )
         if response.ok:
@@ -66,7 +66,7 @@ class RetrieveResourceMixin(APIResource):
         if raw_data:
             return data
         else:
-            return instance.construct(**data)
+            return instance._construct(**data)
 
     def get_missing_attrs(self):
         """

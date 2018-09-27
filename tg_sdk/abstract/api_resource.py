@@ -35,14 +35,14 @@ class APIResource(object):
         self._billing_url = None
         self._token = None
         self._env = params.get('env', ENV)
-        self.configure_environment(self._env)
+        self._configure_environment(self._env)
 
     def __setattr__(self, key, value):
         # TODO(Justin): Find out if I need to restrict new attribute from being
         #               set. For example, self.randomkey = 10 would set a new
         #               attr 'randomkey' to 10.
         if isinstance(value, dict):
-            value = self.construct_general(key.title(), value)
+            value = self._construct_general(key.title(), value)
 
         if key in vars(type(self)):
             return super().__setattr__('_' + key, value)
@@ -50,7 +50,7 @@ class APIResource(object):
             return super().__setattr__(key, value)
 
     @classmethod
-    def construct(cls, **params):
+    def _construct(cls, **params):
         """
         Creates an instance of the child object that made the request.
         This checks first for the private variable to avoid recursive property
@@ -72,7 +72,7 @@ class APIResource(object):
             setattr(instance, key, params.get(key))
         return instance
 
-    def construct_general(self, name, data):
+    def _construct_general(self, name, data):
         """
         A generalized version of construct. This is used to create a type
         object that is initialized with the data from the dict.
@@ -89,7 +89,7 @@ class APIResource(object):
         """
         return type(name, (object,), data)
 
-    def construct_list(self, li, cls):
+    def _construct_list(self, li, cls):
         """
         Takes a list of dictionaries and makes each dict in the list into the
         given object type.
@@ -99,9 +99,9 @@ class APIResource(object):
             Returns:
                 A list of objects of the given object type.
         """
-        return [cls.construct(**data) for data in li]
+        return [cls._construct(**data) for data in li]
 
-    def configure_environment(self, env):
+    def _configure_environment(self, env):
         """
         Changes both billing and core url according to the string that is
         passed.
@@ -127,7 +127,7 @@ class APIResource(object):
             # TODO(Justin): ADD ERROR HANDLING
             pass
 
-    def make_url(self, *args):
+    def _make_url(self, *args):
         """ Used internally to make urls for the mixins.
         Arguments:
             Any extension of the url as strings. The default url is the
@@ -160,7 +160,7 @@ class APIResource(object):
             raise CredentialsNotProvided
 
     @property
-    def default_headers(self):
+    def _default_headers(self):
         return {
             'Accept': "application/json",
             'Content-Type': "application/json",

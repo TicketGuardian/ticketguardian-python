@@ -21,25 +21,25 @@ class Order(
         if self._client is None:
             return None
         if isinstance(self._client, str):
-            self._client = Client.construct(id=self._client)
+            self._client = Client._construct(id=self._client)
         return self._client
 
     @property
     def customer(self):
         if self._customer is None:
             return None
-        return Customer.construct(obj=self._customer)
+        return Customer._construct(obj=self._customer)
 
     @property
     def items(self):
         if len(self._items) > 0 and isinstance(self._items[0], dict):
-            self._items = self.construct_list(self._items, Item)
+            self._items = self._construct_list(self._items, Item)
         return self._items
 
     @property
     def policies(self):
         if len(self._policies) > 0 and isinstance(self._policies[0], dict):
-            self._policies = self.construct_list(self._policies, Policy)
+            self._policies = self._construct_list(self._policies, Policy)
         return self._policies
 
     @property
