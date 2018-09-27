@@ -10,4 +10,4 @@ class Item(APIResource):
     def customer(self):
         if self._customer is None:
             return None
-        return Customer.construct(**self._customer)
+        return Customer._construct(**self._customer)

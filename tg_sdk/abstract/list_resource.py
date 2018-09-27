@@ -13,8 +13,8 @@ class ListResourceMixin(APIResource):
         be added into params as a keyword arg.
 
             Keyword Arguments:
-                instance: An instance of the class making the retrieval.
-                ext: A list of strings that are extensions of the url
+                instance (object): An instance of the class making the retrieval.
+                ext: Strings that are extensions of the url
                      This should only be used from within resource methods.
                 limit: The maximum resources that will be returned.
                 raw_data: A boolean value that will tell this method to return
@@ -31,13 +31,13 @@ class ListResourceMixin(APIResource):
         resources = []
         raw_data = params.pop('raw_data', False)
         limit = params.get("limit", None)
-        url = instance.make_url(*ext)
+        url = instance._make_url(*ext)
 
         while url and (limit is None or limit > len(resources)):
             response = requests.request(
                 "GET",
                 url,
-                headers=instance.default_headers,
+                headers=instance._default_headers,
                 params=params
             )
             if response.ok:
@@ -46,7 +46,7 @@ class ListResourceMixin(APIResource):
                     new = [res for res in data.get('results', [])]
                 else:
                     new = [
-                        instance.construct(**res)
+                        instance._construct(**res)
                         for res in data.get('results', [])
                     ]
                 resources += new
