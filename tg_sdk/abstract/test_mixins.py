@@ -14,8 +14,8 @@ def test_retrieve_resource():
         if hasattr(cls, 'resource') and hasattr(cls, 'retrieve'):
             response = requests.request(
                 "GET",
-                cls().make_url(),
-                headers=cls().default_headers
+                cls()._make_url(),
+                headers=cls()._default_headers
             )
             # Get list of objects
             data = json.loads(response.text)
@@ -42,8 +42,8 @@ def test_list_resource():
         if hasattr(cls, 'resource') and hasattr(cls, 'list'):
             response = requests.request(
                 "GET",
-                cls().make_url('?limit=50'),
-                headers=cls().default_headers
+                cls()._make_url('?limit=50'),
+                headers=cls()._default_headers
             )
             # Get list of objects
             data = json.loads(response.text)

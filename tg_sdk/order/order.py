@@ -23,25 +23,25 @@ class Order(
         if self._client is None:
             return None
         if isinstance(self._client, str):
-            self._client = Client.construct(id=self._client)
+            self._client = Client._construct(id=self._client)
         return self._client
 
     @property
     def customer(self):
         if self._customer is None:
             return None
-        return Customer.construct(obj=self._customer)
+        return Customer._construct(obj=self._customer)
 
     @property
     def items(self):
         if len(self._items) > 0 and isinstance(self._items[0], dict):
-            self._items = self.construct_list(self._items, Item)
+            self._items = self._construct_list(self._items, Item)
         return self._items
 
     @property
     def policies(self):
         if len(self._policies) > 0 and isinstance(self._policies[0], dict):
-            self._policies = self.construct_list(self._policies, Policy)
+            self._policies = self._construct_list(self._policies, Policy)
         return self._policies
 
     @property
@@ -49,9 +49,24 @@ class Order(
         # TODO(Justin): IMPLEMENT WHEN QUOTE CLASS IS CREATED
         return
 
-    def add_items(self, **params):
-        # TODO(Justin): Using PUT should not return a new instance but should
-        #               update the existing instance that was used to call.
+    def add_items(self, currency="USD", **params):
+        """Add items to the order instance using the given parameters.
+
+        Keyword Arguments:
+            currency (str): The currency of the Items. Defaults to USD.
+            items (list): The list of item dictionaries.
+                item (dict): a dictionary containing the following values.
+                   Name (str): The name of the item.
+                   reference_number (str): The unique number of the item.
+                   cost (float): The cost of the item.
+                   customer (dict): An optional customer object.
+                                    Defaults to null.
+                   event (dict): An optional event object.
+                                 Defaults to null.
+
+        Returns:
+            The order object that the items were added to.
+        """
         if self.order_number is None or params == {}:
             # TODO(Justin): Error handling. Ill add this in when I start the
             #               related ticket.
