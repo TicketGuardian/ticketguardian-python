@@ -35,14 +35,11 @@ class APIResource(object):
         self._billing_url = None
         self._token = None
         self._env = params.get('env', ENV)
-        self.configure_environment(self._env)
+        self._configure_environment(self._env)
 
     def __setattr__(self, key, value):
-        # TODO(Justin): Find out if I need to restrict new attribute from being
-        #               set. For example, self.randomkey = 10 would set a new
-        #               attr 'randomkey' to 10.
         if isinstance(value, dict):
-            value = self.construct_general(key.title(), value)
+            value = self._construct_general(key.title(), value)
 
         if key in vars(type(self)):
             return super().__setattr__('_' + key, value)
@@ -50,7 +47,7 @@ class APIResource(object):
             return super().__setattr__(key, value)
 
     @classmethod
-    def construct(cls, **params):
+    def _construct(cls, **params):
         """
         Creates an instance of the child object that made the request.
         This checks first for the private variable to avoid recursive property
@@ -72,7 +69,7 @@ class APIResource(object):
             setattr(instance, key, params.get(key))
         return instance
 
-    def construct_general(self, name, data):
+    def _construct_general(self, name, data):
         """
         A generalized version of construct. This is used to create a type
         object that is initialized with the data from the dict.
@@ -80,27 +77,28 @@ class APIResource(object):
         data from a dict rather than initializing an instance for a resource
         object.
             Arguments:
-                name: The name of the object that is going to be constructed.
-                data: The dict containing the data to be stored
+                name (str) -- The name of the object that is going to be
+                              constructed.
+                data (dict) -- The dict containing the data to be stored.
 
             Returns:
                 object -- An instance of the new object.
         """
         return type(name, (object,), data)
 
-    def construct_list(self, li, cls):
+    def _construct_list(self, li, cls):
         """
         Takes a list of dictionaries and makes each dict in the list into the
         given object type.
             Arguments:
-                li: The list of dictionaries.
-                cls: The object type to create.
+                li (list) -- The list of dictionaries.
+                cls (object) -- The object type to create.
             Returns:
                 A list of objects of the given object type.
         """
-        return [cls.construct(**data) for data in li]
+        return [cls._construct(**data) for data in li]
 
-    def configure_environment(self, env):
+    def _configure_environment(self, env):
         """
         Changes both billing and core url according to the string that is
         passed.
@@ -123,13 +121,15 @@ class APIResource(object):
             self._core_url = CORE_PROD
             self._billing_url = BILLING_PROD
         else:
-            # TODO(Justin): ADD ERROR HANDLING
-            pass
+            raise Exception("Invalid environment. "
+                            "Use 'dev', 'prod', or 'sandbox'")
 
-    def make_url(self, *args, default=[]):
-        if not args:
-            args = default
-
+    def _make_url(self, *args):
+        """ Used internally to make urls for the mixins.
+        Arguments:
+            Any extension of the url as strings. The default url is the
+            {core url}/{api version}/{resource name}
+        """
         url = "{}/{}/{}/".format(
             self.core_url,
             API_VERSION,
@@ -149,7 +149,7 @@ class APIResource(object):
 
     @property
     def token(self):
-        if self.has_valid_token():
+        if self._has_valid_token():
             return self._token
         elif self._public_key and self._secret_key:
             return self._refresh_token()
@@ -157,7 +157,7 @@ class APIResource(object):
             raise CredentialsNotProvided
 
     @property
-    def default_headers(self):
+    def _default_headers(self):
         return {
             'Accept': "application/json",
             'Content-Type': "application/json",
@@ -172,7 +172,7 @@ class APIResource(object):
         except Exception:
             return {}
 
-    def has_valid_token(self):
+    def _has_valid_token(self):
         if self._token is None:
             return False
         current_timestamp = datetime.now().timestamp()

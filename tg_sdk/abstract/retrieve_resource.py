@@ -2,6 +2,7 @@ import json
 import requests
 
 from tg_sdk.abstract.api_resource import APIResource
+from tg_sdk.abstract.error_handling import raise_response_error
 
 
 class RetrieveResourceMixin(APIResource):
@@ -10,9 +11,6 @@ class RetrieveResourceMixin(APIResource):
             self.is_updated = True
             self.get_missing_attrs()
             return object.__getattribute__(self, attr)
-        # TODO(Justin): Revisit when adding error handling
-        #               Figure out if this should raise a custom Exception or
-        #               an AttributeError.
         raise AttributeError
 
     def __repr__(self):
@@ -33,11 +31,12 @@ class RetrieveResourceMixin(APIResource):
                 resource_id: The unique id of the resource.
 
             Keyword Arguments:
-                instance: An instance of the class making the retrieval.
-                ext: A list of strings that are extensions of the url
+                instance (object): An instance of the class making the
+                                   retrieval.
+                ext: Strings that are extensions of the url
                      This should only be used from within resource methods.
-                raw_data: A boolean value that will tell this method to return
-                          the raw list data.
+                raw_data (bool): A boolean value that will tell this method
+                                 to return the raw list data.
 
             Returns:
                 object: An instance of the child object that called.
@@ -48,24 +47,23 @@ class RetrieveResourceMixin(APIResource):
                           was returned from the request.
         """
         instance = params.pop('instance', cls())
-        url = instance.make_url(resource_id, *ext, default=[resource_id])
+        url = instance._make_url(resource_id, *ext)
         raw_data = params.pop('raw_data', False)
         response = requests.request(
             "GET",
             url,
-            headers=instance.default_headers,
+            headers=instance._default_headers,
             params=params
         )
         if response.ok:
             data = json.loads(response.text)
         else:
-            # TODO(Justin): ADD ERROR HANDLING
-            data = {}
+            raise_response_error(response)
 
         if raw_data:
             return data
         else:
-            return instance.construct(**data)
+            return instance._construct(**data)
 
     def get_missing_attrs(self):
         """
@@ -79,4 +77,3 @@ class RetrieveResourceMixin(APIResource):
                 # This condition skips all non property method names then
                 # checks if a private variable of the same name exists
                 setattr(self, attr, data.get(attr, None))
-

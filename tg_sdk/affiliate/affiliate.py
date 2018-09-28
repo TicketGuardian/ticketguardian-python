@@ -1,5 +1,6 @@
-from tg_sdk.abstract.list_resource import ListResourceMixin
-from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
+from tg_sdk.abstract import (
+    ListResourceMixin,
+    RetrieveResourceMixin, )
 
 
 class Affiliate(ListResourceMixin, RetrieveResourceMixin,):
@@ -11,5 +12,5 @@ class Affiliate(ListResourceMixin, RetrieveResourceMixin,):
             return None
 
         if not hasattr(self._parent, 'resource'):
-            self._parent = self.construct(obj=self._parent)
+            self._parent = self._construct(obj=self._parent)
         return self._parent
