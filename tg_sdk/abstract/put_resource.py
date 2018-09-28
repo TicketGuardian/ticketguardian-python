@@ -29,6 +29,6 @@ class PutResourceMixin(APIResource):
         if response.ok:
             data = json.loads(response.text)
             for key in data:
-                setattr(self, '_' + key, data[key])
+                setattr(self, key, data[key])
         else:
             raise_response_error(response)
