@@ -46,7 +46,6 @@ class Order(
 
     @property
     def quote(self):
-        # TODO(Justin): IMPLEMENT WHEN QUOTE CLASS IS CREATED
         return
 
     def add_items(self, currency="USD", **params):
@@ -68,8 +67,6 @@ class Order(
             The order object that the items were added to.
         """
         if self.order_number is None or params == {}:
-            # TODO(Justin): Error handling. Ill add this in when I start the
-            #               related ticket.
             return None
 
         return self.update(self.order_number, 'add-items', **params)

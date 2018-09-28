@@ -28,8 +28,6 @@ class APIResource(object):
                          Prod will always be default.
                          input can only be 'prod', 'dev', 'sandbox'
         """
-        # TODO(Justin): Find out if we want to support this. Will a user ever
-        #               have more than one pair of keys?
         from tg_sdk import PUBLIC_KEY, SECRET_KEY, ENV
         self._public_key = params.get('public_key', PUBLIC_KEY)
         self._secret_key = params.get('secret_key', SECRET_KEY)
@@ -40,9 +38,6 @@ class APIResource(object):
         self._configure_environment(self._env)
 
     def __setattr__(self, key, value):
-        # TODO(Justin): Find out if I need to restrict new attribute from being
-        #               set. For example, self.randomkey = 10 would set a new
-        #               attr 'randomkey' to 10.
         if isinstance(value, dict):
             value = self._construct_general(key.title(), value)
 

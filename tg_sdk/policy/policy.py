@@ -3,7 +3,6 @@ from tg_sdk.item import Item
 
 
 class Policy(RetrieveResourceMixin):
-    # Todo(Justin): Add the rest of the functionality to this class
     resource = 'policies'
     id_name = 'policy_number'
 

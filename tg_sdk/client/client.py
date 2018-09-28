@@ -16,7 +16,4 @@ class Client(ListResourceMixin, RetrieveResourceMixin, PostResourceMixin, ):
 
     @property
     def domain(self):
-        # TODO(Justin): Find an elegant way to get the domain for a Client
-        #               The problem is that domain in included on list calls
-        #               but is not on single retrieves
         return

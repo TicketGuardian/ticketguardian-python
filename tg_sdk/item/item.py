@@ -3,7 +3,6 @@ from tg_sdk.abstract import APIResource
 
 
 class Item(APIResource):
-    # Todo(Justin): Add the rest of the functionality to this class
     resource = 'items'
 
     @property
