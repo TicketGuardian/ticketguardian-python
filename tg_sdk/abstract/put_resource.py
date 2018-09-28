@@ -6,7 +6,7 @@ from tg_sdk.abstract.error_handling import raise_response_error
 
 
 class PutResourceMixin(APIResource):
-    def update(self, *ext, **params):
+    def update(self, resource_id, *ext, **params):
         """
         Update a currently existing resource.
             Keyword Arguments:
@@ -18,7 +18,7 @@ class PutResourceMixin(APIResource):
                 If a bad request is made then an empty instance of the resource
                 object is returned.
         """
-        url = self._make_url(self.id, *ext)
+        url = self._make_url(resource_id, *ext)
 
         response = requests.put(
             url,
@@ -29,6 +29,6 @@ class PutResourceMixin(APIResource):
         if response.ok:
             data = json.loads(response.text)
             for key in data:
-                setattr(self, '_' + key, data[key])
+                setattr(self, key, data[key])
         else:
             raise_response_error(response)

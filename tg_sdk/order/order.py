@@ -7,6 +7,10 @@ from tg_sdk.client import Client
 from tg_sdk.customer import Customer
 from tg_sdk.item import Item
 from tg_sdk.policy import Policy
+from tg_sdk.order import (
+    exceptions,
+    _validate_card, 
+    _validate_address)
 
 
 class Order(
@@ -30,7 +34,9 @@ class Order(
     def customer(self):
         if self._customer is None:
             return None
-        return Customer._construct(obj=self._customer)
+        if not hasattr(self._customer, 'resource'):
+            self._customer = Customer._construct(obj=self._customer)
+        return self._customer
 
     @property
     def items(self):
@@ -48,14 +54,13 @@ class Order(
     def quote(self):
         return
 
-    def add_items(self, currency="USD", **params):
+    def add_items(self, items, currency='USD', **params):
         """Add items to the order instance using the given parameters.
 
         Keyword Arguments:
-            currency (str): The currency of the Items. Defaults to USD.
             items (list): The list of item dictionaries.
                 item (dict): a dictionary containing the following values.
-                   Name (str): The name of the item.
+                   name (str): The name of the item.
                    reference_number (str): The unique number of the item.
                    cost (float): The cost of the item.
                    customer (dict): An optional customer object.
@@ -63,10 +68,84 @@ class Order(
                    event (dict): An optional event object.
                                  Defaults to null.
 
+        Optional Keyword Arguments:
+            currency (str): The currency of the Items. Defaults to USD.
+            card (dict): Card must contain the 'number', 'expire_month',
+                         and 'expire_year'.
+
         Returns:
             The order object that the items were added to.
         """
-        if self.order_number is None or params == {}:
-            return None
+        if not isinstance(items, list) or len(items) == 0:
+            raise exceptions.InvalidItemsException
 
-        return self.update(self.order_number, 'add-items', **params)
+        if params.get('card'):
+            _validate_card(params.get('card'))
+
+        return self.update(
+            self.order_number,
+            'add-items',
+            items=items,
+            currency=currency,
+            **params)
+
+    @classmethod
+    def create(cls, items, customer, order_number, **params):
+        """ Create an order using the following parameters.
+
+        Keyword Arguments:
+            items (list): The list of item objects.
+                item (dict): a dictionary containing the following values.
+                   name (str): The name of the item.
+                   reference_number (str): The unique number of the item.
+                   cost (float): The cost of the item.
+                   customer (dict): An optional customer object.
+                                    Must include first_name, last_name, email.
+                                    Defaults to null.
+                   event (dict): An optional event object.
+                                 Defaults to null.
+            customer (dict): The order level customer object.
+                             Must include first_name, last_name, email.
+            order_number (str or int): A unique id for the order.
+
+        Optional Keyword Arguments:
+            card (dict): Card must contain the 'number', 'expire_month',
+                         and 'expire_year'.
+            currency (str): The currency of the Items. Defaults to USD.
+            http_referrer (str): The clients IP.
+            tracking (dict): An object containing the tracking information.
+                             Must include carrier and tracking_number.
+            shipping_address (dict): The order's shipping address.
+                                     Must include address1, address2, city,
+                                     state, country, zip_code.
+                                     Defaults to billing_address.
+            billing_address (dict): The order's billing address.
+                                    Must include address1, address2, city,
+                                    state, country, zip_code.
+
+        Returns:
+            The order object that was created.
+        """
+        if not isinstance(items, list) or len(items) == 0:
+            raise exceptions.InvalidItemsException
+        if {"first_name", "last_name", "email"} != set(customer.keys()):
+            raise exceptions.InvalidCustomerInformationException
+        if params.get('card'):
+            _validate_card(params.get('card'))
+
+        billing_address = params.get('billing_address')
+        shipping_address = params.get('shipping_address')
+
+        if billing_address:
+            _validate_address(billing_address)
+
+        if shipping_address:
+            _validate_address(shipping_address)
+        elif billing_address:
+            params['ship_to_billing_addr'] = True
+
+        return super(Order, cls).create(
+                                    items=items,
+                                    customer=customer,
+                                    order_number=order_number,
+                                    **params)
