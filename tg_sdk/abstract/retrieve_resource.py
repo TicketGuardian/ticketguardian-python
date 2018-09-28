@@ -63,9 +63,7 @@ class RetrieveResourceMixin(APIResource):
         can return different attributes so this fills all attributes that are
         missing when a missing attribute is requested.
         """
-        data = self.retrieve(self.id, raw_data=True)
+        data = self.retrieve(self._get_object_id, raw_data=True)
+
         for attr in data:
-            if '_' + attr not in vars(self):
-                # This condition skips all non property method names then
-                # checks if a private variable of the same name exists
-                setattr(self, attr, data.get(attr, None))
+            setattr(self, attr, data.get(attr, None))
