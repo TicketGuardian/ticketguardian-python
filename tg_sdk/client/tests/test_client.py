@@ -12,6 +12,3 @@ def test_client_post():
         'affiliate': 'af_xgFkJRVh'
     }
     # c = tg.Client.create(**client_info)
-    # TODO(Justin): I'm going to need to fix this. We can only use new names
-    #               for clients so this fails since a client with this name
-    #               is already archived
