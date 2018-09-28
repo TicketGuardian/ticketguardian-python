@@ -13,14 +13,6 @@ class RetrieveResourceMixin(APIResource):
             return object.__getattribute__(self, attr)
         raise AttributeError
 
-    def __repr__(self):
-        # Each resource class has a resource class attribute that is the
-        # plural of the resource name. So I am removing the last letter s.
-        return '<{}: {}>'.format(self.resource[:-1].title(), self.name)
-
-    def __str__(self):
-        pass
-
     @classmethod
     def retrieve(cls, resource_id, *ext, **params):
         """

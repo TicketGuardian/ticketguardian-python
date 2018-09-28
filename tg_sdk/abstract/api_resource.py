@@ -46,6 +46,17 @@ class APIResource(object):
         else:
             return super().__setattr__(key, value)
 
+    def __repr__(self):
+        resource_name = self.resource[:-1].title()
+
+        if hasattr(self, 'id_name'):
+            name = getattr(self, self.id_name)
+        else:
+            name = self.name
+
+        return '<{}: {}>'.format(resource_name, name)
+
+
     @classmethod
     def _construct(cls, **params):
         """
