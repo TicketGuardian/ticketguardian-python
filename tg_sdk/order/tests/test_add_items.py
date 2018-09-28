@@ -2,12 +2,14 @@ from tg_sdk.order import Order
 import tg_sdk
 import random
 
-tg_sdk.PUBLIC_KEY = tg_sdk.AFF_PUB
-tg_sdk.SECRET_KEY = tg_sdk.AFF_SEC
-tg_sdk.ENV = 'DEV'
+
 
 
 def test_add_items_wo_card():
+    tg_sdk.PUBLIC_KEY = tg_sdk.constants.CLI_PUB
+    tg_sdk.SECRET_KEY = tg_sdk.constants.CLI_SEC
+    tg_sdk.ENV = 'dev'
+
     order = Order.list(limit=1)[0]
     items_before = order.items
     params = {
@@ -29,6 +31,10 @@ def test_add_items_wo_card():
 
 
 def test_add_items_w_card():
+    tg_sdk.PUBLIC_KEY = tg_sdk.constants.CLI_PUB
+    tg_sdk.SECRET_KEY = tg_sdk.constants.CLI_SEC
+    tg_sdk.ENV = 'dev'
+
     order = Order.list(limit=1)[0]
     items_before = order.items
     params = {
@@ -54,6 +60,10 @@ def test_add_items_w_card():
         assert getattr(new_item, key) == params['items'][0][key]
 
 def test_add_multiple_items():
+    tg_sdk.PUBLIC_KEY = tg_sdk.constants.CLI_PUB
+    tg_sdk.SECRET_KEY = tg_sdk.constants.CLI_SEC
+    tg_sdk.ENV = 'dev'
+
     order = Order.list(limit=1)[0]
     items_before = order.items
     params = {
