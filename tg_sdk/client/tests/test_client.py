@@ -11,4 +11,5 @@ def test_client_post():
         'domain': 'PostMixinTest.net',
         'affiliate': 'af_xgFkJRVh'
     }
+    return client_info
     # c = tg.Client.create(**client_info)

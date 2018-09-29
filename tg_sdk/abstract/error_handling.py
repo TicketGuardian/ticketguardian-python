@@ -16,4 +16,3 @@ def raise_response_error(response):
                    (Exception,),
                    {})
     raise exc(errors[0].get('message'))
-

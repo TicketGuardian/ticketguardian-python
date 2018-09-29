@@ -10,7 +10,7 @@
 # Imports
 from tg_sdk.affiliate import Affiliate
 from tg_sdk.client import Client
-from tg_sdk.constants import *
+from tg_sdk import constants
 from tg_sdk.customer import Customer
 from tg_sdk.item import Item
 from tg_sdk.order import Order
@@ -35,6 +35,7 @@ ISO_8601 = 'iso-8601'
 __all__ = [
     "Affiliate",
     "Client",
+    "constants",
     "Customer",
     "ENV",
     "Item",

@@ -8,6 +8,10 @@ def test_retrieve_resource():
     tg_sdk.SECRET_KEY = tg_sdk.AFF_SEC
     tg_sdk.ENV = 'DEV'
 
+<<<<<<< Updated upstream
+=======
+def test_retrieve_resource():
+>>>>>>> Stashed changes
     for attr in vars(tg_sdk):
         cls = getattr(tg_sdk, attr)
         if hasattr(cls, 'resource') and hasattr(cls, 'retrieve'):

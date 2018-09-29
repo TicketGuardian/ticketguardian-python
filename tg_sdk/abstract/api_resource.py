@@ -160,7 +160,6 @@ class APIResource(object):
             return getattr(self, self.id_name)
         return self.id
 
-
     @property
     def core_url(self):
         return self._core_url
