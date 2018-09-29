@@ -2,15 +2,13 @@ from tg_sdk.abstract import (
     ListResourceMixin,
     PostResourceMixin,
     PutResourceMixin,
-    RetrieveResourceMixin, )
+    RetrieveResourceMixin,
+    validate, )
 from tg_sdk.client import Client
 from tg_sdk.customer import Customer
 from tg_sdk.item import Item
 from tg_sdk.policy import Policy
-from tg_sdk.order import (
-    exceptions,
-    _validate_card, 
-    _validate_address)
+from tg_sdk.order import exceptions
 
 
 class Order(
@@ -80,7 +78,7 @@ class Order(
             raise exceptions.InvalidItemsException
 
         if params.get('card'):
-            _validate_card(params.get('card'))
+            validate._validate_card(params.get('card'))
 
         return self.update(
             self.order_number,
@@ -131,21 +129,21 @@ class Order(
         if {"first_name", "last_name", "email"} != set(customer.keys()):
             raise exceptions.InvalidCustomerInformationException
         if params.get('card'):
-            _validate_card(params.get('card'))
+            validate._validate_card(params.get('card'))
 
         billing_address = params.get('billing_address')
         shipping_address = params.get('shipping_address')
 
         if billing_address:
-            _validate_address(billing_address)
+            validate._validate_address(billing_address)
 
         if shipping_address:
-            _validate_address(shipping_address)
+            validate._validate_address(shipping_address)
         elif billing_address:
             params['ship_to_billing_addr'] = True
 
         return super(Order, cls).create(
-                                    items=items,
-                                    customer=customer,
-                                    order_number=order_number,
-                                    **params)
+            items=items,
+            customer=customer,
+            order_number=order_number,
+            **params)
