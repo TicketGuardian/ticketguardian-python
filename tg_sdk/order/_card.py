@@ -5,7 +5,7 @@ EXPIRE_MONTH = 'expire_month'
 EXPIRE_YEAR = 'expire_year'
 
 
-def validate_card(card):
+def _validate_card(card):
     valid_info_set = {NUMBER, EXPIRE_MONTH, EXPIRE_YEAR}
     card_set = set(card.keys())
 
