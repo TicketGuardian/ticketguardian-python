@@ -14,7 +14,8 @@ class ListResourceMixin(APIResource):
         be added into params as a keyword arg.
 
             Keyword Arguments:
-                instance (object): An instance of the class making the retrieval.
+                instance (object): An instance of the class making
+                                   the retrieval.
                 ext: Strings that are extensions of the url
                      This should only be used from within resource methods.
                 limit: The maximum resources that will be returned.
