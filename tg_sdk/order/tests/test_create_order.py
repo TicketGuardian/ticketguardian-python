@@ -1,6 +1,5 @@
 import uuid
 
-import tg_sdk
 from tg_sdk.order import Order
 from tg_sdk._project._decorators import client_test_method
 
@@ -10,8 +9,8 @@ def test_create_order_wo_card():
     params = {
         "customer": {
             "first_name": "SDK",
-            "last_name": "TEST",  
-            "email":"SDK@ticketguardian.net"
+            "last_name": "TEST",
+            "email": "SDK@ticketguardian.net"
         },
         "order_number": str(uuid.uuid4()),
         "currency": "USD",
@@ -29,11 +28,10 @@ def test_create_order_wo_card():
             "state": "UT",
             "country": "US",
             "zip_code": "84101"
-        }	
+        }
     }
-    
 
-    order = tg_sdk.Order.create(**params)
+    order = Order.create(**params)
     params.pop('billing_address')
 
     for key in params:
@@ -47,8 +45,8 @@ def test_create_order_w_card():
     params = {
         "customer": {
             "first_name": "SDK",
-            "last_name": "TEST w/ card",  
-            "email":"SDK@ticketguardian.net"
+            "last_name": "TEST w/ card",
+            "email": "SDK@ticketguardian.net"
         },
         "card": {
             "number": "4111111111111111",
@@ -72,11 +70,10 @@ def test_create_order_w_card():
             "state": "UT",
             "country": "US",
             "zip_code": "84101"
-        }	
+        }
     }
-    
 
-    order = tg_sdk.Order.create(**params)
+    order = Order.create(**params)
     params.pop('billing_address')
     params.pop('card')
 
@@ -84,4 +81,3 @@ def test_create_order_w_card():
         assert hasattr(order, key)
 
     assert hasattr(order.customer, 'billing_address')
-
