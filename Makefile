@@ -10,3 +10,6 @@ tests:
 	make venv
 	make install
 	venv/bin/python3 -m pytest
+
+flake8:
+	venv/bin/flake8
