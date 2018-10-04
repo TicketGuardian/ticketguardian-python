@@ -7,7 +7,7 @@ if os.path.exists(DEFAULT_ENV_PATH):
     with open(DEFAULT_ENV_PATH) as f:
         for line in f:
             if line == '\n' or line[0] == '#':
-                pass
+                continue
             key, value = line.split('=')
             if os.environ.get(key) is None:
                 os.environ.setdefault(key, value)
