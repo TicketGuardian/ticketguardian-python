@@ -8,6 +8,6 @@ if os.path.exists(DEFAULT_ENV_PATH):
         for line in f:
             if line == '\n' or line[0] == '#':
                 continue
-            key, value = line.split('=')
+            key, value = line.rstrip().split('=')
             if os.environ.get(key) is None:
                 os.environ.setdefault(key, value)
