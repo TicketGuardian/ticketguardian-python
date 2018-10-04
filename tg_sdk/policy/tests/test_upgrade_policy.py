@@ -2,13 +2,11 @@ import pytest
 
 import tg_sdk
 from tg_sdk.policy.exceptions import NoBillingAddressException
+from tg_sdk._project._decorators import client_test_method
 
 
+@client_test_method
 def test_upgrade_policy_wo_card():
-    tg_sdk.PUBLIC_KEY = tg_sdk.constants.CLI_PUB
-    tg_sdk.SECRET_KEY = tg_sdk.constants.CLI_SEC
-    tg_sdk.ENV = 'dev'
-
     policy = tg_sdk.Policy.list(limit=1, status='Accepted')[0]
 
     params = {
@@ -31,6 +29,7 @@ def test_upgrade_policy_wo_card():
     assert policy.status == tg_sdk.policy.constants.UPGRADED
 
 
+@client_test_method
 def test_upgrade_policy_w_card():
     policy = tg_sdk.Policy.list(limit=1, status='Accepted')[0]
 
@@ -67,6 +66,7 @@ def test_upgrade_policy_w_card():
     assert policy.status == tg_sdk.policy.constants.UPGRADED
 
 
+@client_test_method
 def test_cannot_upgrade_w_card_wo_billing_address():
     policy = tg_sdk.Policy.list(limit=1, status='Accepted')[0]
 

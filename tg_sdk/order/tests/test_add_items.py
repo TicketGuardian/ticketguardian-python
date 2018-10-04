@@ -1,15 +1,11 @@
-from tg_sdk.order import Order
-import tg_sdk
 import random
 
+import tg_sdk
+from tg_sdk.order import Order
+from tg_sdk._project._decorators import client_test_method
 
-
-
+@client_test_method
 def test_add_items_wo_card():
-    tg_sdk.PUBLIC_KEY = tg_sdk.constants.CLI_PUB
-    tg_sdk.SECRET_KEY = tg_sdk.constants.CLI_SEC
-    tg_sdk.ENV = 'dev'
-
     order = Order.list(limit=1)[0]
     items_before = order.items
     params = {
@@ -29,12 +25,8 @@ def test_add_items_wo_card():
     for key in params['items'][0]:
         assert getattr(new_item, key) == params['items'][0][key]
 
-
+@client_test_method
 def test_add_items_w_card():
-    tg_sdk.PUBLIC_KEY = tg_sdk.constants.CLI_PUB
-    tg_sdk.SECRET_KEY = tg_sdk.constants.CLI_SEC
-    tg_sdk.ENV = 'dev'
-
     order = Order.list(limit=1)[0]
     items_before = order.items
     params = {
@@ -59,11 +51,8 @@ def test_add_items_w_card():
     for key in params['items'][0]:
         assert getattr(new_item, key) == params['items'][0][key]
 
+@client_test_method
 def test_add_multiple_items():
-    tg_sdk.PUBLIC_KEY = tg_sdk.constants.CLI_PUB
-    tg_sdk.SECRET_KEY = tg_sdk.constants.CLI_SEC
-    tg_sdk.ENV = 'dev'
-
     order = Order.list(limit=1)[0]
     items_before = order.items
     params = {

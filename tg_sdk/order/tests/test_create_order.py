@@ -1,13 +1,11 @@
 import uuid
 
-from tg_sdk.order import Order
 import tg_sdk
+from tg_sdk.order import Order
+from tg_sdk._project._decorators import client_test_method
 
 
-tg_sdk.PUBLIC_KEY = tg_sdk.constants.CLI_PUB
-tg_sdk.SECRET_KEY = tg_sdk.constants.CLI_SEC
-tg_sdk.ENV = 'dev'
-
+@client_test_method
 def test_create_order_wo_card():
     params = {
         "customer": {
@@ -43,6 +41,8 @@ def test_create_order_wo_card():
 
     assert hasattr(order.customer, 'billing_address')
 
+
+@client_test_method
 def test_create_order_w_card():
     params = {
         "customer": {
