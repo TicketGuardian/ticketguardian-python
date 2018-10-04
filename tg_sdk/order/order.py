@@ -7,6 +7,8 @@ from tg_sdk.client import Client
 from tg_sdk.customer import Customer
 from tg_sdk.item import Item
 from tg_sdk.policy import Policy
+from tg_sdk.order import exceptions
+from tg_sdk.order._card import validate_card
 
 
 class Order(
@@ -48,14 +50,13 @@ class Order(
     def quote(self):
         return
 
-    def add_items(self, currency="USD", **params):
+    def add_items(self, items, currency='USD', **params):
         """Add items to the order instance using the given parameters.
 
-        Keyword Arguments:
-            currency (str): The currency of the Items. Defaults to USD.
+        Required Keyword Arguments:
             items (list): The list of item dictionaries.
                 item (dict): a dictionary containing the following values.
-                   Name (str): The name of the item.
+                   name (str): The name of the item.
                    reference_number (str): The unique number of the item.
                    cost (float): The cost of the item.
                    customer (dict): An optional customer object.
@@ -63,10 +64,23 @@ class Order(
                    event (dict): An optional event object.
                                  Defaults to null.
 
+        Optional Keyword Arguments:
+            currency (str): The currency of the Items. Defaults to USD.
+            card (dict): Card must contain the 'number', 'expire_month',
+                         and 'expire_year'.
+
         Returns:
             The order object that the items were added to.
         """
-        if self.order_number is None or params == {}:
-            return None
+        if not isinstance(items, list) or len(items) == 0:
+            raise exceptions.InvalidItemsException
 
-        return self.update(self.order_number, 'add-items', **params)
+        if params.get('card'):
+            validate_card(params.get('card'))
+
+        return self.update(
+            self.order_number,
+            'add-items',
+            items=items,
+            currency=currency,
+            **params)

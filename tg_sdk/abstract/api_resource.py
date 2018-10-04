@@ -46,6 +46,16 @@ class APIResource(object):
         else:
             return super().__setattr__(key, value)
 
+    def __repr__(self):
+        resource_name = self.resource[:-1].title()
+
+        if hasattr(self, 'name'):
+            name = self.name
+        else:
+            name = self._get_object_id
+
+        return '<{}: {}>'.format(resource_name, name)
+
     @classmethod
     def _construct(cls, **params):
         """
@@ -138,6 +148,18 @@ class APIResource(object):
         for arg in args:
             url += "{}/".format(arg)
         return url
+
+    @property
+    def _get_object_id(self):
+        """ Used in the few cases that an objects id is not named id
+            For example, Items have an id attribute but Orders have an
+            order-number
+        :return: The id of the object
+        """
+        if hasattr(self, 'id_name'):
+            return getattr(self, self.id_name)
+        return self.id
+
 
     @property
     def core_url(self):
