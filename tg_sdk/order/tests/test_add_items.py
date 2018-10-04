@@ -8,7 +8,7 @@ from tg_sdk._project._decorators import client_test_method
 def test_add_items_wo_card():
     order = Order.list(limit=1)[0]
     items_before = order.items
-    reference_num = "reference_num_" + str(random.randint(1, 10)),
+    reference_num = "reference_num_" + str(random.randint(1, 10))
     params = {
         "currency": "USD",
         "items": [
@@ -31,7 +31,7 @@ def test_add_items_wo_card():
 def test_add_items_w_card():
     order = Order.list(limit=1)[0]
     items_before = order.items
-    reference_num = "reference_num_" + str(random.randint(1, 10)),
+    reference_num = "reference_num_" + str(random.randint(1, 10))
     params = {
         "card": {
             "number": "4111111111111111",
