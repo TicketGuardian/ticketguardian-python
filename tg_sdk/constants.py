@@ -9,10 +9,3 @@ CORE_SANDBOX = 'https://connect-sandbox.ticketguardian.net'
 ENV = 'prod'
 PUBLIC_KEY = ""
 SECRET_KEY = ""
-
-# Add a valid key pair here to use for testing.
-AFF_PUB = ''
-AFF_SEC = ''
-
-CLI_PUB = ''
-CLI_SEC = ''
