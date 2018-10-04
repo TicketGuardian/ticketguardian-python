@@ -2,16 +2,10 @@ import json
 import requests
 
 import tg_sdk
+from tg_sdk._project._decorators import affiliate_test_method
 
+@affiliate_test_method
 def test_retrieve_resource():
-    tg_sdk.PUBLIC_KEY = tg_sdk.AFF_PUB
-    tg_sdk.SECRET_KEY = tg_sdk.AFF_SEC
-    tg_sdk.ENV = 'DEV'
-
-<<<<<<< Updated upstream
-=======
-def test_retrieve_resource():
->>>>>>> Stashed changes
     for attr in vars(tg_sdk):
         cls = getattr(tg_sdk, attr)
         if hasattr(cls, 'resource') and hasattr(cls, 'retrieve'):
@@ -44,7 +38,7 @@ def test_retrieve_resource():
             for attr in obj:
                 assert hasattr(resource_object, attr)
 
-
+@affiliate_test_method
 def test_list_resource():
 
     for attr in vars(tg_sdk):
