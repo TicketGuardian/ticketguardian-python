@@ -20,9 +20,15 @@ def test_retrieve_resource():
             obj = objects[0]
             id_name = getattr(cls, 'id_name', 'id')
 
+            # Skip if object is customers since customer does not have an id
+            # when listed.
+            if cls.resource == 'customers':
+                continue
+
             # Skip objects that have a null id
-            if not obj[id_name]:
+            if not obj.get(id_name):
                 for i in objects[1:]:
+
                     if i[id_name]:
                         obj = i
                         break
@@ -34,6 +40,7 @@ def test_retrieve_resource():
 
 @affiliate_test_method
 def test_list_resource():
+
     for attr in vars(tg_sdk):
         cls = getattr(tg_sdk, attr)
         if hasattr(cls, 'resource') and hasattr(cls, 'list'):

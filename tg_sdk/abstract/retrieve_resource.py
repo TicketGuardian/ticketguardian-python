@@ -13,14 +13,6 @@ class RetrieveResourceMixin(APIResource):
             return object.__getattribute__(self, attr)
         raise AttributeError
 
-    def __repr__(self):
-        # Each resource class has a resource class attribute that is the
-        # plural of the resource name. So I am removing the last letter s.
-        return '<{}: {}>'.format(self.resource[:-1].title(), self.name)
-
-    def __str__(self):
-        pass
-
     @classmethod
     def retrieve(cls, resource_id, *ext, **params):
         """
@@ -71,9 +63,7 @@ class RetrieveResourceMixin(APIResource):
         can return different attributes so this fills all attributes that are
         missing when a missing attribute is requested.
         """
-        data = self.retrieve(self.id, raw_data=True)
+        data = self.retrieve(self._get_object_id, raw_data=True)
+
         for attr in data:
-            if '_' + attr not in vars(self):
-                # This condition skips all non property method names then
-                # checks if a private variable of the same name exists
-                setattr(self, attr, data.get(attr, None))
+            setattr(self, attr, data.get(attr, None))
