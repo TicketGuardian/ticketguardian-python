@@ -11,6 +11,7 @@ def affiliate_test_method(func):
         func()
     return wrapper
 
+
 def client_test_method(func):
     def wrapper():
         tg_sdk.PUBLIC_KEY = os.environ.get('CLI_PUB')

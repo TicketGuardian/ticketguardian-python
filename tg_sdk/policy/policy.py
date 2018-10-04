@@ -92,8 +92,8 @@ class Policy(
                 currency (str): The currency of the Items. Defaults to USD.
 
             Returns:
-                Nothing is returned. The object is updated to reflect the changes
-                made to the policy.
+                Nothing is returned. The object is updated to reflect the
+                changes made to the policy.
             """
             self.update(
                 self.policy_number,
