@@ -1,4 +1,5 @@
-from tg_sdk.order.exceptions import InvalidCardInformationException
+from tg_sdk.abstract.validate.exceptions import (
+    InvalidCardInformationException, )
 
 NUMBER = 'number'
 EXPIRE_MONTH = 'expire_month'

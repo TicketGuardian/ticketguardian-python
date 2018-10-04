@@ -19,6 +19,7 @@ class PutResourceMixin(APIResource):
                 object is returned.
         """
         url = self._make_url(resource_id, *ext)
+        raw_data = params.pop('raw_data', False)
 
         response = requests.put(
             url,
@@ -28,6 +29,9 @@ class PutResourceMixin(APIResource):
 
         if response.ok:
             data = json.loads(response.text)
+            if raw_data:
+                return data
+
             for key in data:
                 setattr(self, key, data[key])
         else:
