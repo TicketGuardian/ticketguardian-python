@@ -23,6 +23,6 @@ def test_get_quote():
     results = ["currency", "symbol", "total", "quote"]
     
     quote = Quote(**params)
-    import pdb; pdb.set_trace()
+
     for key in results:
         assert hasattr(quote, key)
