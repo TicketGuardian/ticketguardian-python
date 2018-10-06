@@ -38,7 +38,7 @@ class RetrieveResourceMixin(APIResource):
                 raw data: If raw_data is true this will return the data that
                           was returned from the request.
         """
-        instance = params.pop('instance')
+        instance = params.pop('instance', None)
         if not instance:
             instance = cls()
         url = instance._make_url(resource_id, *ext)

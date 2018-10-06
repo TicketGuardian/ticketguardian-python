@@ -76,7 +76,9 @@ class APIResource(object):
             Returns:
                 object -- An instance of the child object.
         """
-        instance = params.pop('instance', cls())
+        instance = params.pop('instance', None)
+        if not instance:
+            instance = cls()
         if 'obj' in params:
             data = params.pop('obj').__dict__
             for key in data:
