@@ -51,7 +51,7 @@ class APIResource(object):
 
         if resource_name[-1] == 's':
             resource_name = resource_name[:-1]
-        
+
         if hasattr(self, 'name'):
             name = getattr(self, 'name')
         elif hasattr(self, 'id'):

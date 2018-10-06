@@ -21,7 +21,7 @@ def test_get_quote():
     }
 
     results = ["currency", "symbol", "total", "quote"]
-    
+
     quote = Quote(**params)
 
     for key in results:

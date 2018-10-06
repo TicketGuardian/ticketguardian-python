@@ -1,5 +1,6 @@
 from tg_sdk.abstract import PostResourceMixin
 
+
 class Quote(PostResourceMixin):
     resource = "quote"
 
