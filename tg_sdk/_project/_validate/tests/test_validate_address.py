@@ -1,7 +1,7 @@
 import pytest
 
-from tg_sdk.abstract.validate import _validate_address
-from tg_sdk.abstract.validate.exceptions import (
+from tg_sdk._project._validate import _validate_address
+from tg_sdk._project._validate.exceptions import (
     InvalidAddressInformationException, )
 
 

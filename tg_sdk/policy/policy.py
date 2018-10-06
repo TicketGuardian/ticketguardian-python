@@ -3,9 +3,9 @@ from tg_sdk.abstract import (
     PutResourceMixin,
     ListResourceMixin)
 from tg_sdk.item import Item
-from tg_sdk.abstract import validate
 from tg_sdk.policy.exceptions import NoBillingAddressException
 from tg_sdk.policy.constants import UPGRADED
+from tg_sdk._project._validate import _validate_card, _validate_address
 
 
 class Policy(
@@ -55,13 +55,13 @@ class Policy(
         """
         card = params.get('card')
         if card:
-            validate._validate_card(card)
+            _validate_card(card)
             billing_address = params.get('billing_address')
 
             if not billing_address:
                 raise NoBillingAddressException
 
-            validate._validate_address(billing_address)
+            _validate_address(billing_address)
 
         upgrade = self.update(
             self.policy_number,
@@ -71,8 +71,32 @@ class Policy(
             raw_data=True,
             **params)
 
-        # Since a few values change on the original policy this will update it
         self.status = UPGRADED
 
         # The new policy is returned.
         return Policy.retrieve(upgrade.get("policy_number"))
+
+    def exchange(self, item, currency='USD'):
+            """ Exchange a policy item.
+            Keyword Arguments:
+                item (dict): a dictionary containing the following values.
+                    name (str): The name of the item.
+                    reference_number (str): The unique number of the item.
+                    cost (float): The cost of the item.
+                    customer (dict): An optional customer object.
+                                    Defaults to null.
+                    event (dict): An optional event object.
+                                Defaults to null.
+
+            Optional Keyword Arguments:
+                currency (str): The currency of the Items. Defaults to USD.
+
+            Returns:
+                Nothing is returned. The object is updated to reflect the
+                changes made to the policy.
+            """
+            self.update(
+                self.policy_number,
+                'exchange',
+                item=item,
+                currency=currency)

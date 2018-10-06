@@ -16,7 +16,6 @@ from tg_sdk.abstract.put_resource import PutResourceMixin
 from tg_sdk.abstract.retrieve_resource import RetrieveResourceMixin
 from tg_sdk.abstract.error_handling import raise_response_error
 from tg_sdk.abstract.sdk_exception import SDKException
-from tg_sdk.abstract import validate
 
 __all__ = ['APIResource',
            'DeleteResourceMixin',
@@ -25,5 +24,4 @@ __all__ = ['APIResource',
            'PutResourceMixin',
            'RetrieveResourceMixin',
            'raise_response_error',
-           'SDKException',
-           'validate', ]
+           'SDKException', ]

@@ -1,3 +1,4 @@
+flake8
 PyJWT==1.5.3
-requests==2.19.1
 pytest
+requests==2.19.1

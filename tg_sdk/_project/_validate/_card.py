@@ -1,4 +1,4 @@
-from tg_sdk.abstract.validate.exceptions import (
+from tg_sdk._project._validate.exceptions import (
     InvalidCardInformationException, )
 
 NUMBER = 'number'
