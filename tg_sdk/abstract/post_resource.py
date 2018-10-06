@@ -22,7 +22,10 @@ class PostResourceMixin(APIResource):
                 -or-
                 dict of raw data: If raw_data is true.
         """
-        instance = params.pop('instance', cls())
+        instance = params.pop('instance')
+        if not instance:
+            instance = cls()
+
         url = instance._make_url(*ext)
 
         response = requests.post(

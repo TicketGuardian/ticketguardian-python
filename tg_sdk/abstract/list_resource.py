@@ -29,7 +29,9 @@ class ListResourceMixin(APIResource):
                 -or-
                 list of raw data: If raw_data is true.
         """
-        instance = params.pop('instance', cls())
+        instance = params.pop('instance')
+        if not instance:
+            instance = cls()
         resources = []
         raw_data = params.pop('raw_data', False)
         limit = params.get("limit", None)
