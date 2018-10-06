@@ -52,11 +52,11 @@ class APIResource(object):
         if resource_name == 's':
             resource_name = resource_name[:-1].title()
         
-        if getattr(self, 'name'):
+        if hasattr(self, 'name'):
             name = getattr(self, 'name')
-        elif getattr(self, 'id'):
+        elif hasattr(self, 'id'):
             name = getattr(self, 'id')
-        elif getattr(self, 'id_name'):
+        elif hasattr(self, 'id_name'):
             name = getattr(self, 'id_name')
         else:
             name = hex(id(self))
