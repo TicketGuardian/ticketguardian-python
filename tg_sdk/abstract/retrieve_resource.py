@@ -57,7 +57,7 @@ class RetrieveResourceMixin(APIResource):
         if raw_data:
             return data
         else:
-            return instance._construct(**data)
+            return instance._construct(instance=instance, **data)
 
     def get_missing_attrs(self):
         """

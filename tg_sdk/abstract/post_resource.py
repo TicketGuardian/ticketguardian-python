@@ -42,4 +42,4 @@ class PostResourceMixin(APIResource):
         if params.pop('raw_data', False):
             return data
         else:
-            return instance._construct(**data)
+            return instance._construct(instance=instance, **data)
