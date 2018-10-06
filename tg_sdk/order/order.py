@@ -48,6 +48,10 @@ class Order(
             self._policies = self._construct_list(self._policies, Policy)
         return self._policies
 
+    def charge(self, customer, billing_address, card, policies=[]):
+        
+        return
+
     def add_items(self, items, currency='USD', **params):
         """Add items to the order instance using the given parameters.
 
