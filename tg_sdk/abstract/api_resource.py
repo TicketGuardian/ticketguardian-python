@@ -60,7 +60,7 @@ class APIResource(object):
             name = getattr(self, 'id_name')
         else:
             addr = hex(id(self))
-            return '<{} object at {}>'.format(resource_name.title(), addr)
+            return '<{} at {}>'.format(resource_name.title(), addr)
 
         return '<{}: {}>'.format(resource_name.title(), name)
 
