@@ -4,7 +4,6 @@ import requests
 import tg_sdk
 from tg_sdk._project._decorators import affiliate_test_method
 
-
 @affiliate_test_method
 def test_retrieve_resource():
     for attr in vars(tg_sdk):

@@ -47,12 +47,20 @@ class APIResource(object):
             return super().__setattr__(key, value)
 
     def __repr__(self):
-        resource_name = self.resource[:-1].title()
+        resource_name = self.resource
+
+        if resource_name == 's':
+            resource_name = resource_name[:-1].title()
 
         if hasattr(self, 'name'):
             name = self.name
         else:
-            name = self._get_object_id
+            try:
+                name = self._get_object_id
+            except AttributeError:
+                # If resource has no name or id then print default string.
+                return super().__repr__(self)
+
 
         return '<{}: {}>'.format(resource_name, name)
 
