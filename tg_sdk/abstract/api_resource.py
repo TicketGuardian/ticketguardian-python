@@ -51,16 +51,15 @@ class APIResource(object):
 
         if resource_name == 's':
             resource_name = resource_name[:-1].title()
-
-        if hasattr(self, 'name'):
-            name = self.name
+        
+        if getattr(self, 'name'):
+            name = getattr(self, 'name')
+        elif getattr(self, 'id'):
+            name = getattr(self, 'id')
+        elif getattr(self, 'id_name'):
+            name = getattr(self, 'id_name')
         else:
-            try:
-                name = self._get_object_id
-            except AttributeError:
-                # If resource has no name or id then print default string.
-                return super().__repr__(self)
-
+            name = hex(id(self))
 
         return '<{}: {}>'.format(resource_name, name)
 
