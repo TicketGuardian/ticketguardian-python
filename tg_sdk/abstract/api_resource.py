@@ -49,8 +49,8 @@ class APIResource(object):
     def __repr__(self):
         resource_name = self.resource
 
-        if resource_name == 's':
-            resource_name = resource_name[:-1].title()
+        if resource_name[-1] == 's':
+            resource_name = resource_name[:-1]
         
         if hasattr(self, 'name'):
             name = getattr(self, 'name')
@@ -59,9 +59,9 @@ class APIResource(object):
         elif hasattr(self, 'id_name'):
             name = getattr(self, 'id_name')
         else:
-            name = hex(id(self))
+            return '<{} object at {}>'.format(resource_name.title(), name)
 
-        return '<{}: {}>'.format(resource_name, name)
+        return '<{}: {}>'.format(resource_name.title(), name)
 
     @classmethod
     def _construct(cls, **params):
