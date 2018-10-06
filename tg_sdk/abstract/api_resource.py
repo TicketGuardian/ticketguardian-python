@@ -59,7 +59,8 @@ class APIResource(object):
         elif hasattr(self, 'id_name'):
             name = getattr(self, 'id_name')
         else:
-            return '<{} object at {}>'.format(resource_name.title(), name)
+            addr = hex(id(self))
+            return '<{} object at {}>'.format(resource_name.title(), addr)
 
         return '<{}: {}>'.format(resource_name.title(), name)
 
