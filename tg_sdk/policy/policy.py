@@ -1,11 +1,11 @@
 from tg_sdk.abstract import (
     RetrieveResourceMixin,
     PutResourceMixin,
-    ListResourceMixin)
+    ListResourceMixin,
+    validate,)
 from tg_sdk.item import Item
-from tg_sdk.abstract import validate
-from tg_sdk.policy.exceptions import NoBillingAddressException
 from tg_sdk.policy.constants import UPGRADED
+from tg_sdk.policy.exceptions import NoBillingAddressException
 
 
 class Policy(
@@ -29,7 +29,8 @@ class Policy(
         return self._customer
 
     def upgrade(self, item, currency='USD', **params):
-        """ Upgrade a policy item.
+        """
+        Upgrade a policy item.
         Keyword Arguments:
             item (dict): a dictionary containing the following values.
                 name (str): The name of the item.
@@ -53,15 +54,13 @@ class Policy(
             An instance of the new policy that was created from upgrading. This
             object is updated to reflect the changes made.
         """
-        card = params.get('card')
-        if card:
-            validate._validate_card(card)
-            billing_address = params.get('billing_address')
+        if params.get('card'):
+            validate._validate_card(params['card'])
 
-            if not billing_address:
+            if params.get('billing_address'):
+                validate._validate_address(params['billing_address'])
+            else:
                 raise NoBillingAddressException
-
-            validate._validate_address(billing_address)
 
         upgrade = self.update(
             self.policy_number,

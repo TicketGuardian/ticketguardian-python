@@ -7,8 +7,8 @@ from tg_sdk.abstract import (
 from tg_sdk.client import Client
 from tg_sdk.customer import Customer
 from tg_sdk.item import Item
-from tg_sdk.policy import Policy
 from tg_sdk.order import exceptions
+from tg_sdk.policy import Policy
 
 
 class Order(
@@ -22,17 +22,14 @@ class Order(
 
     @property
     def client(self):
-        if self._client is None:
-            return None
-        if isinstance(self._client, str):
+        if self._client is not None and isinstance(self._client, str):
             self._client = Client._construct(id=self._client)
         return self._client
 
     @property
     def customer(self):
-        if self._customer is None:
-            return None
-        if not hasattr(self._customer, 'resource'):
+        if self._customer is not None and not hasattr(
+                self._customer, 'resource'):
             self._customer = Customer._construct(obj=self._customer)
         return self._customer
 
@@ -89,7 +86,8 @@ class Order(
 
     @classmethod
     def create(cls, items, customer, order_number, **params):
-        """ Create an order using the following parameters.
+        """
+        Create an order using the following parameters.
 
         Keyword Arguments:
             items (list): The list of item objects.
@@ -131,15 +129,12 @@ class Order(
         if params.get('card'):
             validate._validate_card(params.get('card'))
 
-        billing_address = params.get('billing_address')
-        shipping_address = params.get('shipping_address')
+        if params.get('billing_address'):
+            validate._validate_address(params['billing_address'])
 
-        if billing_address:
-            validate._validate_address(billing_address)
-
-        if shipping_address:
-            validate._validate_address(shipping_address)
-        elif billing_address:
+        if params.get('shipping_address'):
+            validate._validate_address(params['shipping_address'])
+        elif params.get('billing_address'):
             params['ship_to_billing_addr'] = True
 
         return super(Order, cls).create(
