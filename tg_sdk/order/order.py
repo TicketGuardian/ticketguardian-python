@@ -7,7 +7,7 @@ from tg_sdk.client import Client
 from tg_sdk.customer import Customer
 from tg_sdk.item import Item
 from tg_sdk.policy import Policy
-from tg_sdk._project._validate import _validate_address, _validate_card
+from tg_sdk._project. import _validate
 from tg_sdk.order import exceptions
 
 
@@ -22,17 +22,14 @@ class Order(
 
     @property
     def client(self):
-        if self._client is None:
-            return None
-        if isinstance(self._client, str):
+        if self._client is not None and isinstance(self._client, str):
             self._client = Client._construct(id=self._client)
         return self._client
 
     @property
     def customer(self):
-        if self._customer is None:
-            return None
-        if not hasattr(self._customer, 'resource'):
+        if self._customer is not None and not hasattr(
+                self._customer, 'resource'):
             self._customer = Customer._construct(obj=self._customer)
         return self._customer
 
@@ -78,7 +75,7 @@ class Order(
             raise exceptions.InvalidItemsException
 
         if params.get('card'):
-            _validate_card(params.get('card'))
+            _validate._validate_card(params.get('card'))
 
         return self.update(
             self.order_number,
@@ -89,7 +86,8 @@ class Order(
 
     @classmethod
     def create(cls, items, customer, order_number, **params):
-        """ Create an order using the following parameters.
+        """
+        Create an order using the following parameters.
 
         Keyword Arguments:
             items (list): The list of item objects.
@@ -129,17 +127,14 @@ class Order(
         if {"first_name", "last_name", "email"} != set(customer.keys()):
             raise exceptions.InvalidCustomerInformationException
         if params.get('card'):
-            _validate_card(params.get('card'))
+            _validate._validate_card(params.get('card'))
 
-        billing_address = params.get('billing_address')
-        shipping_address = params.get('shipping_address')
+        if params.get('billing_address'):
+            _validate.validate._validate_address(params['billing_address'])
 
-        if billing_address:
-            _validate_address(billing_address)
-
-        if shipping_address:
-            _validate_address(shipping_address)
-        elif billing_address:
+        if params.get('shipping_address'):
+            _validate.validate._validate_address(params['shipping_address'])
+        elif params.get('billing_address'):
             params['ship_to_billing_addr'] = True
 
         return super(Order, cls).create(

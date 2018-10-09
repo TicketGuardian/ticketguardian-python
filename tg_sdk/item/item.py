@@ -1,5 +1,5 @@
-from tg_sdk.customer import Customer
 from tg_sdk.abstract import APIResource
+from tg_sdk.customer import Customer
 
 
 class Item(APIResource):
@@ -7,6 +7,5 @@ class Item(APIResource):
 
     @property
     def customer(self):
-        if self._customer is None:
-            return None
-        return Customer._construct(**self._customer)
+        if self._customer is not None:
+            return Customer._construct(**self._customer)
