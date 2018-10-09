@@ -1,4 +1,3 @@
-import json
 import requests
 
 from tg_sdk.abstract.api_resource import APIResource
@@ -8,7 +7,8 @@ from tg_sdk.abstract.error_handling import raise_response_error
 class PostResourceMixin(APIResource):
     @classmethod
     def create(cls, *ext, **params):
-        """ Post a new resource with the given parameters.
+        """
+        Post a new resource with the given parameters.
             Keyword Arguments:
                 instance: An instance of the class making the retrieval.
                 ext: Strings that are extensions of the url
@@ -27,19 +27,18 @@ class PostResourceMixin(APIResource):
             instance = cls()
 
         url = instance._make_url(*ext)
+        raw_data = params.pop('raw_data', False)
 
-        response = requests.post(
-            url,
+        res = requests.post(
+            instance._make_url(*ext),
             headers=instance._default_headers,
             json=params
         )
+        if not res.ok:
+            raise_response_error(res)
 
-        if response.ok:
-            data = json.loads(response.text)
-        else:
-            raise_response_error(response)
+        data = res.json()
 
-        if params.pop('raw_data', False):
-            return data
-        else:
-            return instance._construct(instance=instance, **data)
+        return data if raw_data else instance._construct(
+            instance=instance,
+            **data)
