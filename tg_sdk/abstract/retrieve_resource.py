@@ -9,8 +9,8 @@ class RetrieveResourceMixin(APIResource):
     def __getattr__(self, attr):
         if not self.is_updated:
             self.is_updated = True
-            self.get_missing_attrs()
-            return object.__getattribute__(self, attr)
+            self._get_missing_attrs()
+            return getattr(self, attr)
         raise AttributeError
 
     @classmethod
@@ -59,7 +59,7 @@ class RetrieveResourceMixin(APIResource):
         else:
             return instance._construct(instance=instance, **data)
 
-    def get_missing_attrs(self):
+    def _get_missing_attrs(self):
         """
         Fills in any missing attributes in an object. List and Retrieve
         can return different attributes so this fills all attributes that are
