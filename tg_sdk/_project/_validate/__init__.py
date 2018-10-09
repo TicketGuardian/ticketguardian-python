@@ -4,5 +4,5 @@ from tg_sdk._project._validate._customer import _validate_customer
 
 __all__ = [
     "_validate_address",
-    "_validate_card", 
+    "_validate_card",
     "_validate_customer"]

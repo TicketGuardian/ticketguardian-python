@@ -8,7 +8,7 @@ from tg_sdk.customer import Customer
 from tg_sdk.item import Item
 from tg_sdk.policy import Policy
 from tg_sdk._project._validate import (
-    _validate_address, 
+    _validate_address,
     _validate_card,
     _validate_customer, )
 from tg_sdk.order import exceptions
@@ -55,7 +55,7 @@ class Order(
         """ Chage an order.
 
         Keyword Arguments:
-            customer (dict): Must include first_name, last_name, email, phone 
+            customer (dict): Must include first_name, last_name, email, phone
             billing_address (dict): The order's billing address.
                                     Must include address1, address2, city,
                                     state, country, zip_code.
@@ -65,7 +65,7 @@ class Order(
         Optional Arguments:
             policies (list): A list of Policy Numbers. If none are given then
                              all policies are charged.
-        
+
         Returns:
             An object containing the information returned from the charge.
             The order that was charged is updated to reflect the changes.

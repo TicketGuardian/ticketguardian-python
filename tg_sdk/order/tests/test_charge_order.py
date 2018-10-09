@@ -1,5 +1,3 @@
-import uuid
-
 from tg_sdk.order import Order
 from tg_sdk._project._decorators import client_test_method
 
@@ -11,8 +9,8 @@ def test_charge_order():
         ],
         "customer": {
             "first_name": "Galvin",
-            "last_name": "Belson",  
-            "email":"g.Belson@hooli.com",
+            "last_name": "Belson",
+            "email": "g.Belson@hooli.com",
             "phone": "999-999-9999"
         },
         "billing_address": {
@@ -25,14 +23,14 @@ def test_charge_order():
         "card": {
             "number": "4111111111111111",
             "expire_month": "11",
-            "expire_year":"20",
+            "expire_year": "20",
             "cvv": "123"
         }
     }
     order_limit = 100
     orders = Order.list(limit=order_limit)
     condition = True
-    test_order = None
+    order = None
 
     while condition:
         """
@@ -43,7 +41,6 @@ def test_charge_order():
         for order in orders:
             for policy in order.policies:
                 if policy.status == "Accepted":
-                    test_order = order
                     condition = False
                     break
             if not condition:
