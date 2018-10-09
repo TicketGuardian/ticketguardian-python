@@ -7,7 +7,7 @@ from tg_sdk.client import Client
 from tg_sdk.customer import Customer
 from tg_sdk.item import Item
 from tg_sdk.policy import Policy
-from tg_sdk._project. import _validate
+from tg_sdk._project import _validate
 from tg_sdk.order import exceptions
 
 

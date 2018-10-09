@@ -63,8 +63,6 @@ class Policy(
             else:
                 raise NoBillingAddressException
 
-            _validate._validate_address(billing_address)
-
         upgrade = self.update(
             self.policy_number,
             'upgrade',
