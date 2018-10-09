@@ -50,7 +50,7 @@ class ListResourceMixin(APIResource):
                     new = [res for res in data.get('results', [])]
                 else:
                     new = [
-                        instance._construct(instance=instance, **res)
+                        instance._construct(**res)
                         for res in data.get('results', [])
                     ]
                 resources += new
