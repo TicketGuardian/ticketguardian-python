@@ -130,10 +130,10 @@ class Order(
             _validate._validate_card(params.get('card'))
 
         if params.get('billing_address'):
-            _validate.validate._validate_address(params['billing_address'])
+            _validate._validate_address(params['billing_address'])
 
         if params.get('shipping_address'):
-            _validate.validate._validate_address(params['shipping_address'])
+            _validate._validate_address(params['shipping_address'])
         elif params.get('billing_address'):
             params['ship_to_billing_addr'] = True
 
