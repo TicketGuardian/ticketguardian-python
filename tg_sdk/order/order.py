@@ -7,7 +7,10 @@ from tg_sdk.client import Client
 from tg_sdk.customer import Customer
 from tg_sdk.item import Item
 from tg_sdk.policy import Policy
-from tg_sdk._project._validate import _validate_address, _validate_card
+from tg_sdk._project._validate import (
+    _validate_address, 
+    _validate_card,
+    _validate_customer, )
 from tg_sdk.order import exceptions
 
 
@@ -49,8 +52,40 @@ class Order(
         return self._policies
 
     def charge(self, customer, billing_address, card, policies=[]):
+        """ Chage an order.
+
+        Keyword Arguments:
+            customer (dict): Must include first_name, last_name, email, phone 
+            billing_address (dict): The order's billing address.
+                                    Must include address1, address2, city,
+                                    state, country, zip_code.
+            card (dict): Card must contain the 'number', 'expire_month',
+                         and 'expire_year'.
+
+        Optional Arguments:
+            policies (list): A list of Policy Numbers. If none are given then
+                             all policies are charged.
         
-        return
+        Returns:
+            An object containing the information returned from the charge.
+            The order that was charged is updated to reflect the changes.
+        """
+        _validate_customer(customer)
+        _validate_card(card)
+        _validate_address(billing_address)
+
+        response = super().create(
+            self.order_number,
+            'charge',
+            customer=customer,
+            billing_address=billing_address,
+            card=card,
+            policies=policies,
+            raw_data=True)
+
+        self._get_missing_attrs()
+
+        return self._construct_general('Charge', response)
 
     def add_items(self, items, currency='USD', **params):
         """Add items to the order instance using the given parameters.
