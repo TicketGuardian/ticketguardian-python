@@ -7,8 +7,9 @@ EXPIRE_YEAR = 'expire_year'
 
 
 def _validate_card(card):
-    valid_info_set = {NUMBER, EXPIRE_MONTH, EXPIRE_YEAR}
+    required_fields = {NUMBER, EXPIRE_MONTH, EXPIRE_YEAR}
     card_set = set(card.keys())
 
-    if not valid_info_set.issubset(card_set):
+    if not required_fields.issubset(card_set) and \
+    not required_fields == card_set:
         raise InvalidCardInformationException
