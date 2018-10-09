@@ -1,8 +1,7 @@
 from tg_sdk.abstract import (
     RetrieveResourceMixin,
     PutResourceMixin,
-    ListResourceMixin,
-    validate,)
+    ListResourceMixin, )
 from tg_sdk.item import Item
 from tg_sdk.policy.constants import UPGRADED
 from tg_sdk.policy.exceptions import NoBillingAddressException
