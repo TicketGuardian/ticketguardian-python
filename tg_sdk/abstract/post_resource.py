@@ -27,7 +27,6 @@ class PostResourceMixin(APIResource):
         if not instance:
             instance = cls()
 
-
         res = requests.post(
             instance._make_url(*ext),
             headers=instance._default_headers,
@@ -39,5 +38,5 @@ class PostResourceMixin(APIResource):
         data = res.json()
 
         return data if raw_data else instance._construct(
-          instance=instance,
-          **data)
+            instance=instance,
+            **data)
