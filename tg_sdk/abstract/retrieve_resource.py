@@ -38,26 +38,22 @@ class RetrieveResourceMixin(APIResource):
                 raw data: If raw_data is true this will return the data that
                           was returned from the request.
         """
-        instance = params.pop('instance', None)
-        if not instance:
-            instance = cls()
-        url = instance._make_url(resource_id, *ext)
+        instance = params.pop('instance', cls())
         raw_data = params.pop('raw_data', False)
+
         response = requests.request(
             "GET",
-            url,
+            instance._make_url(resource_id, *ext),
             headers=instance._default_headers,
             params=params
         )
-        if response.ok:
-            data = json.loads(response.text)
-        else:
+
+        if not response.ok:
             raise_response_error(response)
 
-        if raw_data:
-            return data
-        else:
-            return instance._construct(instance=instance, **data)
+        data = json.loads(response.text)
+
+        return data if raw_data else instance._construct(**data)
 
     def get_missing_attrs(self):
         """

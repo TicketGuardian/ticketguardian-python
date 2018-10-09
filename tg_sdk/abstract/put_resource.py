@@ -1,4 +1,3 @@
-import json
 import requests
 
 from tg_sdk.abstract.api_resource import APIResource
@@ -27,12 +26,12 @@ class PutResourceMixin(APIResource):
             json=params
         )
 
-        if response.ok:
-            data = json.loads(response.text)
-            if raw_data:
-                return data
-
-            for key in data:
-                setattr(self, key, data[key])
-        else:
+        if not response.ok:
             raise_response_error(response)
+
+        data = response.json()
+
+        for key in data:
+            setattr(self, key, data[key])
+
+        return data if raw_data else None

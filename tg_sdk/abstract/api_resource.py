@@ -145,7 +145,8 @@ class APIResource(object):
                             "Use 'dev', 'prod', or 'sandbox'")
 
     def _make_url(self, *args):
-        """ Used internally to make urls for the mixins.
+        """
+        Used internally to make urls for the mixins.
         Arguments:
             Any extension of the url as strings. The default url is the
             {core url}/{api version}/{resource name}
@@ -161,7 +162,8 @@ class APIResource(object):
 
     @property
     def _get_object_id(self):
-        """ Used in the few cases that an objects id is not named id
+        """
+        Used in the few cases that an objects id is not named id
             For example, Items have an id attribute but Orders have an
             order-number
         :return: The id of the object

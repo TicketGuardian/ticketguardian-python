@@ -9,4 +9,3 @@ def test_client_post():
         'affiliate': 'af_xgFkJRVh'
     }
     return client_info
-    # c = tg.Client.create(**client_info)

@@ -7,7 +7,8 @@ from tg_sdk.abstract.error_handling import raise_response_error
 class DeleteResourceMixin(APIResource):
     @classmethod
     def delete(cls, resource_id, *ext):
-        """ Delete an existing resource.
+        """
+        Delete an existing resource.
             Arguments:
                 resource_id (str): The unique id of the resource.
                 ext (list): An extension of the url if extra args are needed.
@@ -18,11 +19,7 @@ class DeleteResourceMixin(APIResource):
         """
         instance = cls()
         url = instance._make_url(resource_id, *ext)
-
-        response = requests.delete(
-            url,
-            headers=instance._default_headers
-        )
+        response = requests.delete(url, headers=instance._default_headers)
 
         if not response.ok:
             raise_response_error(response)
