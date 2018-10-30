@@ -1,11 +1,11 @@
 from tg_sdk.abstract import (
     RetrieveResourceMixin,
     PutResourceMixin,
-    ListResourceMixin,
-    validate,)
+    ListResourceMixin,)
 from tg_sdk.item import Item
 from tg_sdk.policy.constants import UPGRADED
 from tg_sdk.policy.exceptions import NoBillingAddressException
+from tg_sdk._project import _validate
 
 
 class Policy(
@@ -54,11 +54,12 @@ class Policy(
             An instance of the new policy that was created from upgrading. This
             object is updated to reflect the changes made.
         """
+
         if params.get('card'):
-            validate._validate_card(params['card'])
+            _validate._validate_card(params['card'])
 
             if params.get('billing_address'):
-                validate._validate_address(params['billing_address'])
+                _validate._validate_address(params['billing_address'])
             else:
                 raise NoBillingAddressException
 
@@ -70,8 +71,32 @@ class Policy(
             raw_data=True,
             **params)
 
-        # Since a few values change on the original policy this will update it
         self.status = UPGRADED
 
         # The new policy is returned.
         return Policy.retrieve(upgrade.get("policy_number"))
+
+    def exchange(self, item, currency='USD'):
+            """ Exchange a policy item.
+            Keyword Arguments:
+                item (dict): a dictionary containing the following values.
+                    name (str): The name of the item.
+                    reference_number (str): The unique number of the item.
+                    cost (float): The cost of the item.
+                    customer (dict): An optional customer object.
+                                    Defaults to null.
+                    event (dict): An optional event object.
+                                Defaults to null.
+
+            Optional Keyword Arguments:
+                currency (str): The currency of the Items. Defaults to USD.
+
+            Returns:
+                Nothing is returned. The object is updated to reflect the
+                changes made to the policy.
+            """
+            self.update(
+                self.policy_number,
+                'exchange',
+                item=item,
+                currency=currency)
