@@ -47,14 +47,22 @@ class APIResource(object):
             return super().__setattr__(key, value)
 
     def __repr__(self):
-        resource_name = self.resource[:-1].title()
+        resource_name = self.resource
+
+        if resource_name[-1] == 's':
+            resource_name = resource_name[:-1]
 
         if hasattr(self, 'name'):
-            name = self.name
+            name = getattr(self, 'name')
+        elif hasattr(self, 'id'):
+            name = getattr(self, 'id')
+        elif hasattr(self, 'id_name'):
+            name = getattr(self, 'id_name')
         else:
-            name = self._get_object_id
+            addr = hex(id(self))
+            return '<{} at {}>'.format(resource_name.title(), addr)
 
-        return '<{}: {}>'.format(resource_name, name)
+        return '<{}: {}>'.format(resource_name.title(), name)
 
     @classmethod
     def _construct(cls, **params):
@@ -68,7 +76,9 @@ class APIResource(object):
             Returns:
                 object -- An instance of the child object.
         """
-        instance = params.pop('instance', cls())
+        instance = params.pop('instance', None)
+        if not instance:
+            instance = cls()
         if 'obj' in params:
             data = params.pop('obj').__dict__
             for key in data:

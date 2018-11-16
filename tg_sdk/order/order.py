@@ -45,10 +45,6 @@ class Order(
             self._policies = self._construct_list(self._policies, Policy)
         return self._policies
 
-    @property
-    def quote(self):
-        return
-
     def add_items(self, items, currency='USD', **params):
         """Add items to the order instance using the given parameters.
 
