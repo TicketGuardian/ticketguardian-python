@@ -1,4 +1,4 @@
 flake8
 PyJWT==1.5.3
 pytest
-requests==2.19.1
+requests==2.20.0

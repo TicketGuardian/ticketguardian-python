@@ -27,6 +27,9 @@ class PostResourceMixin(APIResource):
             instance = cls()
 
         raw_data = params.pop('raw_data', False)
+        instance = params.pop('instance', None)
+        if not instance:
+            instance = cls()
 
         res = requests.post(
             instance._make_url(*ext),
