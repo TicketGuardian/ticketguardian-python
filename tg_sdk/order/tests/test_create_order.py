@@ -1,3 +1,4 @@
+import random
 import uuid
 
 from tg_sdk.order import Order
@@ -17,8 +18,8 @@ def test_create_order_wo_card():
         "items": [
             {
                 "name": "Test VIP",
-                "reference_number": "BI-VIP42657",
-                "cost": ".99"
+                "reference_number": "BI-VIP" + str(uuid.uuid4())[:5],
+                "cost": str(round(random.uniform(1, 100), 2))
             }
         ],
         "billing_address": {
@@ -59,8 +60,8 @@ def test_create_order_w_card():
         "items": [
             {
                 "name": "Test VIP",
-                "reference_number": "BI-VIP42657",
-                "cost": ".99"
+                "reference_number": "BI-VIP" + str(uuid.uuid4())[:5],
+                "cost": str(round(random.uniform(1, 100), 2))
             }
         ],
         "billing_address": {

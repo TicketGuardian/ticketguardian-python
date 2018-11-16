@@ -49,15 +49,13 @@ class APIResource(object):
     def __repr__(self):
         resource_name = self.resource
 
-        if resource_name[-1] == 's':
-            resource_name = resource_name[:-1]
-
         if hasattr(self, 'name'):
             name = getattr(self, 'name')
         elif hasattr(self, 'id'):
             name = getattr(self, 'id')
         elif hasattr(self, 'id_name'):
-            name = getattr(self, 'id_name')
+            id_name = getattr(self, 'id_name')
+            name = getattr(self, id_name)
         else:
             addr = hex(id(self))
             return '<{} at {}>'.format(resource_name.title(), addr)
