@@ -47,7 +47,9 @@ class APIResource(object):
             return super().__setattr__(key, value)
 
     def __repr__(self):
-        resource_name = self.resource
+        resource_name = self.__class__.__name__
+        if resource_name[-1] == 's':
+            resource_name = resource_name[:-1]
 
         if hasattr(self, 'name'):
             name = getattr(self, 'name')
