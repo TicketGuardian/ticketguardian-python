@@ -42,7 +42,7 @@ def test_retrieve_resource():
 
 @affiliate_test_method
 def test_list_resource():
-
+    from math import ceil
     for attr in vars(tg_sdk):
         cls = getattr(tg_sdk, attr)
         if hasattr(cls, 'resource') and hasattr(cls, 'list'):
@@ -63,3 +63,13 @@ def test_list_resource():
 
             for attr in obj:
                 assert hasattr(resource_objects[0], attr)
+
+            # This tests that after each load the unloaded objects in the
+            # list remain none.
+            for i in range(ceil(len(resource_objects) / 20)):
+                resource_objects[i * 20]
+                for ind, obj in enumerate(resource_objects._data):
+                    if ind < (i + 1) * 20:
+                        assert obj is not None
+                    else:
+                        assert obj is None
