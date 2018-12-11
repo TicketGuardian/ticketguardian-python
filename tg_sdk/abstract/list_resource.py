@@ -3,7 +3,7 @@ import requests
 
 from tg_sdk.abstract.api_resource import APIResource
 from tg_sdk.abstract.error_handling import raise_response_error
-from tg_sdk.abstract.resource_list import Resource_List
+from tg_sdk.abstract.resource_list import ResourceList
 
 
 class ListResourceMixin(APIResource):
@@ -13,7 +13,7 @@ class ListResourceMixin(APIResource):
         """
         Returns a list of resources that will lazy load objects
         """
-        return Resource_List(cls=cls, limit=limit, *ext, **params)
+        return ResourceList(cls=cls, limit=limit, *ext, **params)
 
     def get_list(self, *ext, **params):
         """
