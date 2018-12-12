@@ -13,7 +13,7 @@ class ListResourceMixin(APIResource):
         """
         Returns a list of resources that will lazy load objects
         """
-        return ResourceList(cls=cls, limit=limit, *ext, **params)
+        return ResourceList(cls=cls, *ext, **params)
 
     def get_list(self, *ext, **params):
         """
