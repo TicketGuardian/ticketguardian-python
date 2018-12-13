@@ -31,8 +31,8 @@ class ResourceList(list, LazyLoadMixin):
         """
         cls: The class of the objects being listed
         size: The size of the ResourceList
-              Defaults to count of resources and only used as a kwarg interally
-              on sliced lists.
+              Defaults to count of resources and only used as a kwarg
+              internally on sliced lists.
         data: A defaultdict containing the objects.
               Only used as a kwarg for sliced lists.
         slice_ind: Used to calculate the index of a sliced list since the same
@@ -99,8 +99,6 @@ class ResourceIterator(LazyLoadMixin):
         """
         cls: The class of the objects being listed
         size: The size of the ResourceList
-              Defaults to count of resources and only used as a kwarg interally
-              on sliced lists.
         data: A defaultdict containing the objects.
               Only used as a kwarg for sliced lists.
         offset: The first value on the current page.
