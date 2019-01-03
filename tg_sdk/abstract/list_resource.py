@@ -3,7 +3,7 @@ import requests
 
 from tg_sdk.abstract.api_resource import APIResource
 from tg_sdk.abstract.error_handling import raise_response_error
-from tg_sdk.abstract.resource_list import ResourceList
+from tg_sdk.abstract.lazy_load_list import ResourceList
 
 
 class ListResourceMixin(APIResource):
@@ -42,11 +42,9 @@ class ListResourceMixin(APIResource):
         """
         resources = []
         raw_data = params.pop('raw_data', False)
-        limit = params.pop("limit", None)
         url = self._make_url(*ext)
 
-        response = requests.request(
-            "GET",
+        response = requests.get(
             url,
             headers=self._default_headers,
             params=params
@@ -63,8 +61,13 @@ class ListResourceMixin(APIResource):
         else:
             raise_response_error(response)
 
-        return resources[:limit]
+        return resources
 
-    def get_resource_count(self):
-        data = self.get_list(obj_list=[], raw_data=True, limit=1)
+    def get_resource_count(self, *ext, **params):
+        data = self.get_list(
+            *ext,
+            raw_data=True,
+            limit=1,
+            **params
+        )
         return data.get("count")
