@@ -41,7 +41,7 @@ class ResourceList(list, LazyLoadMixin):
         params: Extra params for the api call.
         """
         self._cls = cls
-        self._size = size or self._cls().get_resource_count()
+        self._size = size or self._cls().get_resource_count(*ext, **params)
         self._data = data or defaultdict(lambda: None)
         self._slice_ind = slice_ind
         self._ext = ext
