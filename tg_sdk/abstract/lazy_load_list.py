@@ -106,6 +106,7 @@ class ResourceList(list, LazyLoadMixin):
             size=self._size,
             data=self._data,
             slice_ind=self._slice_ind,
+            lazy=True,
             *self._ext,
             **self._params
         )
@@ -133,6 +134,9 @@ class ResourceIterator(LazyLoadMixin):
         self._ext = ext
         self._params = params
         self._lazy = self._params.pop('lazy', False)
+    
+    def __iter__(self):
+        return self
 
     def __next__(self):
         if self._ind < self._size:
