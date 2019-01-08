@@ -134,7 +134,7 @@ class ResourceIterator(LazyLoadMixin):
         self._ext = ext
         self._params = params
         self._lazy = self._params.pop('lazy', False)
-    
+
     def __iter__(self):
         return self
 
