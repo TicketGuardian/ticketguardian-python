@@ -20,7 +20,7 @@ class LazyLoadMixin:
 
         if lazy:
             start_ind = 0
-            end_ind = 20
+            end_ind = PAGE_SIZE
 
         for i in range(start_ind, end_ind):
             self._data[i] = obj_list[i - start_ind]
