@@ -5,7 +5,7 @@ from tg_sdk.constants import PAGE_SIZE
 
 
 class LazyLoadMixin:
-    def _update_list(self, offset):
+    def _update_list(self, offset, lazy=False):
         """
         Used to lazy load self._data when an page that has not been loaded
         is called.
@@ -17,6 +17,10 @@ class LazyLoadMixin:
 
         start_ind = offset
         end_ind = offset + len(obj_list)
+
+        if lazy:
+            start_ind = 0
+            end_ind = PAGE_SIZE
 
         for i in range(start_ind, end_ind):
             self._data[i] = obj_list[i - start_ind]
@@ -93,6 +97,20 @@ class ResourceList(list, LazyLoadMixin):
     def __len__(self):
         return self._size
 
+    def iterator(self):
+        """
+        Returns an iterator which only saves the current page in memory.
+        """
+        return ResourceIterator(
+            cls=self._cls,
+            size=self._size,
+            data=self._data,
+            slice_ind=self._slice_ind,
+            lazy=True,
+            *self._ext,
+            **self._params
+        )
+
 
 class ResourceIterator(LazyLoadMixin):
     def __init__(self, cls, size, data, slice_ind=0, *ext, **params):
@@ -115,12 +133,16 @@ class ResourceIterator(LazyLoadMixin):
         self._slice_ind = slice_ind
         self._ext = ext
         self._params = params
+        self._lazy = self._params.pop('lazy', False)
+
+    def __iter__(self):
+        return self
 
     def __next__(self):
         if self._ind < self._size:
             if self._data[self._index] is None:
                 offset = self._get_offset(self._index)
-                self._update_list(offset)
+                self._update_list(offset, self._lazy)
 
             obj = self._data[self._index]
             self._ind += 1
@@ -130,4 +152,9 @@ class ResourceIterator(LazyLoadMixin):
 
     @property
     def _index(self):
-        return self._ind + self._slice_ind
+        ind = self._ind + self._slice_ind
+
+        if self._lazy:
+            ind = ind % PAGE_SIZE
+
+        return ind
