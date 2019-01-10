@@ -47,4 +47,5 @@ __all__ = [
     "Product",
     "PUBLIC_KEY",
     "SECRET_KEY",
+    "ENVIRONMENT",
 ]
