@@ -18,7 +18,10 @@ class Order(
         PutResourceMixin, ):
 
     resource = "orders"
-    id_name = "order_number"
+
+    @property
+    def id(self):
+        return self.order_number
 
     @property
     def client(self):
