@@ -14,7 +14,10 @@ class Policy(
         ListResourceMixin):
 
     resource = 'policies'
-    id_name = 'policy_number'
+
+    @property
+    def id(self):
+        return self.policy_number
 
     @property
     def item(self):
