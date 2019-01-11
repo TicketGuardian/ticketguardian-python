@@ -11,7 +11,7 @@ In order to use the TicketGuardian SDK, you must have a valid and active key pai
 ## Installation
 
 ```
-pip install git+https://github.com/TicketGuardian/ticketguardian-sdk
+pip install git+https://github.com/TicketGuardian/ticketguardian-python
 ```
 
 
