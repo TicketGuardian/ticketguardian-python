@@ -9,7 +9,7 @@ from tg_sdk.constants import (
     BILLING_SANDBOX,
     CORE_DEV,
     CORE_PROD,
-    CORE_SANDBOX, )
+    CORE_SANDBOX,)
 from tg_sdk.exceptions import (
     CouldNotRetrieveToken,
     CredentialsNotProvided, )
@@ -26,15 +26,15 @@ class APIResource(object):
             env (str) -- The environment where requests will be made.
                          Billing and Core will be in the same env.
                          Prod will always be default.
-                         input can only be 'prod', 'dev', 'sandbox'
+                         input can only be 'prod' or 'sandbox'
         """
-        from tg_sdk import PUBLIC_KEY, SECRET_KEY, ENV
+        from tg_sdk import PUBLIC_KEY, SECRET_KEY, ENVIRONMENT
         self._public_key = params.get('public_key', PUBLIC_KEY)
         self._secret_key = params.get('secret_key', SECRET_KEY)
         self._core_url = None
         self._billing_url = None
         self._token = None
-        self._env = params.get('env', ENV)
+        self._env = params.get('env', ENVIRONMENT)
         self._configure_environment(self._env)
 
     def __setattr__(self, key, value):
@@ -112,7 +112,7 @@ class APIResource(object):
 
             Arguments:
                 env (str) -- The name of the environment to change to.
-                             Only accepts 'prod', 'dev', or 'sandbox'
+                             Only accepts 'prod' or 'sandbox'
         """
         env = env.lower()
         if env == 'dev':
@@ -129,7 +129,7 @@ class APIResource(object):
             self._billing_url = BILLING_PROD
         else:
             raise Exception("Invalid environment. "
-                            "Use 'dev', 'prod', or 'sandbox'")
+                            "Use prod' or 'sandbox'")
 
     def _make_url(self, *args):
         """

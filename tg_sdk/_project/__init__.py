@@ -1,13 +1,13 @@
 import os
 
-DEFAULT_ENV_NAME = '.env'
-DEFAULT_ENV_PATH = "./{}".format(DEFAULT_ENV_NAME)
+ENV_PATH = "./.env"
+CRD_PATH = "./credentials"
 
-if os.path.exists(DEFAULT_ENV_PATH):
-    with open(DEFAULT_ENV_PATH) as f:
-        for line in f:
-            if line == '\n' or line[0] == '#':
-                continue
-            key, value = line.rstrip().split('=')
-            if os.environ.get(key) is None:
+for path in [ENV_PATH, CRD_PATH]:
+    if os.path.exists(path):
+        with open(path) as f:
+            for line in f:
+                if line == '\n' or line[0] == '#':
+                    continue
+                key, value = line.rstrip().split('=')
                 os.environ.setdefault(key, value)

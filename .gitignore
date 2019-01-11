@@ -19,3 +19,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 venv/
+.env
+credentials
+.DS_Store
+.idea
+.vscode/

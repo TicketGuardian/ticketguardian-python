@@ -17,6 +17,12 @@ from tg_sdk.order import Order
 from tg_sdk.policy import Policy
 from tg_sdk.product import Product
 
+# Credentials
+import os
+PUBLIC_KEY = os.environ.get('PUBLIC_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
+ENVIRONMENT = os.environ.get('ENVIRONMENT')
+
 __title__ = 'TicketGuardian SDK'
 __version__ = '0.0.0'
 __author__ = 'TicketGuardian'
@@ -44,4 +50,5 @@ __all__ = [
     "Product",
     "PUBLIC_KEY",
     "SECRET_KEY",
+    "ENVIRONMENT",
 ]
