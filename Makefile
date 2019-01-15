@@ -4,7 +4,7 @@ install:
 
 venv:
 	pip3 install --user virtualenv
-	python3 -m virtualenv venv
+	virtualenv venv
 
 tests:
 	make venv

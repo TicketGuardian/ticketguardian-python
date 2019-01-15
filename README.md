@@ -1,12 +1,19 @@
 # Python Client for TicketGuardian API
-
+[![buddy pipeline](https://app.buddy.works/ticketguardian/ticketguardian-sdk/pipelines/pipeline/154249/badge.svg?token=a8d6086f0206fad0d2d5b576dd757c1d420553cdd3246f819b85fe21a1474c44 "buddy pipeline")](https://app.buddy.works/ticketguardian/ticketguardian-sdk/pipelines/pipeline/154249)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2458/badge)](https://bestpractices.coreinfrastructure.org/projects/2458)
 A python SDK for interacting with the TicketGuardian API
 
+## Documentation
+* [API Documentation](https://docs.ticketguardian.net/)
 
 ## Prerequisites
 
 In order to use the TicketGuardian SDK, you must have a valid and active key pair.
 
+### Compatibilities
+              | Version       |
+|:------------:|:-------------:|
+| Python       |  3.6+         |
 
 ## Installation
 
@@ -57,7 +64,7 @@ from tg_sdk import Policy
 policy_list = Policy.list(created__lte='2018-05-01T07:00:00')
 ```
 
-# Advanced Usage
+## Advanced Usage
 
 ## Client
 ### Creating a Client
@@ -194,3 +201,15 @@ params = {
 
 quote = Quote(**params)
 ```
+
+## Test Suite
+To run the test suite first you need to enter a pair of active keys for an affiliate and a client in .env
+```
+AFF_PUB= ...
+AFF_SEC= ...
+
+CLI_PUB= ...
+CLI_SEC= ...
+```
+
+Once the keys are set use the command `make tests` to start the testing suite.
