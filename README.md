@@ -76,13 +76,19 @@ Client.create(name='Client name', domain='client_domain.com', affiliate='af_123'
 ## Order
 ### Creating an Order
 ```
+from random import choices
+from string import ascii_uppercase
+
+# Generate a unique order number
+order_num = ''.join(choices(ascii_uppercase, k=55))
+
 params = {
     "customer": {
         "first_name": "Richard",
         "last_name": "Hendricks",
         "email": "Rhendricks@piedpiper.com"
     },
-    "order_number": 'ord_123',
+    "order_number": order_num,
     "currency": "USD",
     "items": [
         {
@@ -123,6 +129,7 @@ order.add_items(**params)
 ## Charge an Order
 ```
 from tg_sdk import Order
+
 params = {
     "policies": [
     ],
