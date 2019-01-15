@@ -26,8 +26,8 @@ ENVIRONMENT = os.environ.get('ENVIRONMENT')
 __title__ = 'TicketGuardian SDK'
 __version__ = '0.0.0'
 __author__ = 'TicketGuardian'
-__license__ = 'BSD 3-Clause'
-__copyright__ = 'Copyright 2017 TicketGuardian'
+__license__ = 'GPLv3'
+__copyright__ = 'Copyright 2017-2019 TicketGuardian'
 
 # Version synonym
 VERSION = __version__
