@@ -5,7 +5,7 @@ We love contributors and We greatly value feedback and contributions from our co
 ## Contributing Code
 
 The list below are guidelines to use when submitting pull requests. These are the same set of guidelines that the core contributors use when submitting changes, and we ask the same of all community contributions as well:
-* The SDK is released under [MIT license]. Any code you submit will be released under that license.
+* The SDK is released under [GPLv3 license]. Any code you submit will be released under that license.
 * Code should follow pep 8, although if you are modifying an existing module, it is more important for the code to be consistent if there are any discrepancies.
 * If you would like to implement support for a significant feature that is not yet available in the TicketGuardian Python SDK, please open an [issue] to discuss the feature request further.
 
@@ -24,6 +24,7 @@ The list below are guidelines to use when submitting pull requests. These are th
 
 
 [GitHub Help]: https://help.github.com/articles/about-pull-requests/
+[GPLv3 license]: https://github.com/TicketGuardian/ticketguardian-python/blob/master/LICENSE
 [issue]: https://github.com/TicketGuardian/ticketguardian-python/issues
 [issues]: https://github.com/TicketGuardian/ticketguardian-python/issues
 [pep8]: https://www.python.org/dev/peps/pep-0008/
