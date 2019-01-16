@@ -9,7 +9,7 @@ install:
 
 tests:
 	make venv
-	make dev-install
+	make install
 	venv/bin/python3 -m pytest
 
 flake8:
