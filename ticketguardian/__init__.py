@@ -8,15 +8,15 @@
 """
 
 # Imports
-from tg_sdk.affiliate import Affiliate
-from tg_sdk.client import Client
-from tg_sdk import constants
-from tg_sdk.customer import Customer
-from tg_sdk.item import Item
-from tg_sdk.order import Order
-from tg_sdk.policy import Policy
-from tg_sdk.product import Product
-from tg_sdk.quote import Quote
+from ticketguardian.affiliate import Affiliate
+from ticketguardian.client import Client
+from ticketguardian import constants
+from ticketguardian.customer import Customer
+from ticketguardian.item import Item
+from ticketguardian.order import Order
+from ticketguardian.policy import Policy
+from ticketguardian.product import Product
+from ticketguardian.quote import Quote
 
 # Credentials
 import os

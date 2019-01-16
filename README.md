@@ -27,25 +27,25 @@ pip install git+https://github.com/TicketGuardian/ticketguardian-python
 
 The library needs to be configured to your active key pair.
 ```
-import tg_sdk
-tg_sdk.PUBLIC_KEY = '...'
-tg_sdk.SECRET_KEY = '...'
-tg_sdk.ENVIRONMENT = 'sandbox'
+import ticketguardian
+ticketguardian.PUBLIC_KEY = '...'
+ticketguardian.SECRET_KEY = '...'
+ticketguardian.ENVIRONMENT = 'sandbox'
 ```
 
-If no environment is specified then `tg_sdk.ENVIRONMENT` defaults to `prod`.
-`tg_sdk.ENVIRONMENT` only accepts `'prod'` or `'sandbox'`.
+If no environment is specified then `ticketguardian.ENVIRONMENT` defaults to `prod`.
+`ticketguardian.ENVIRONMENT` only accepts `'prod'` or `'sandbox'`.
 
 ## Basic Usage
 
 ### Listing and Retrieving a Resource
 ```
 # List of all objects
-from tg_sdk import Affiliate
+from ticketguardian import Affiliate
 affiliate_list = Affiliate.list()
 
 # List of filtered objects
-from tg_sdk import Policy
+from ticketguardian import Policy
 policy_list = Policy.list(created__lte='2018-05-01T07:00:00')
 
 # Retrieving a Resource
@@ -60,7 +60,7 @@ same_affiliate = Affiliate.retrieve(affiliate_id)
 ## Client
 ### Creating a Client
 ```
-from tg_sdk import Client
+from ticketguardian import Client
 Client.create(name='Client name', domain='client_domain.com', affiliate='af_123')
 ```
 
@@ -68,7 +68,7 @@ Client.create(name='Client name', domain='client_domain.com', affiliate='af_123'
 ### Creating an Order
 Note: Only Clients can create orders
 ```
-from tg_sdk import Order
+from ticketguardian import Order
 from random import choices
 from string import ascii_uppercase
 
@@ -150,7 +150,7 @@ charge_data = order.charge(**params)
 ## Policy
 ### Upgrade Policy
 ```
-from tg_sdk import Policy
+from ticketguardian import Policy
 
 params = {
     "currency": "EUR",
@@ -167,7 +167,7 @@ upgraded_policy = policy.upgrade(**params)
 
 ### Exchange Policy
 ```
-from tg_sdk import Policy
+from ticketguardian import Policy
 params = {
     "item": {
         "name": "Ticket 00001 - Johnny Appleseed",
@@ -183,7 +183,7 @@ policy.exchange(**params)
 
 # Quote
 ```
-from tg_sdk import Quote
+from ticketguardian import Quote
 
 params = {
     "items": [
