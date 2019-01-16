@@ -48,8 +48,10 @@ class APIResource(object):
 
     def __repr__(self):
         resource_name = self.__class__.__name__
-
-        return '<{}: {}>'.format(resource_name.title(), self.id)
+        if hasattr(self, 'id'):
+            return F'<{resource_name.title()}: {self.id}>'
+        else:
+            return F'<{resource_name.title()} object at {hex(id(self))}>'
 
     @classmethod
     def _construct(cls, **params):
