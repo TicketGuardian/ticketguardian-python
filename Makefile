@@ -1,13 +1,11 @@
-install: 
-	venv/bin/pip3 install .
-
-dev-install:
-	venv/bin/pip3 install .
-	venv/bin/pip3 install -r requirements/dev.txt
-
 venv:
 	pip3 install --user virtualenv
 	python3 -m virtualenv venv
+
+install:
+	make venv
+	venv/bin/pip3 install .
+	venv/bin/pip3 install -r requirements/dev.txt
 
 tests:
 	make venv
