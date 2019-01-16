@@ -1,8 +1,12 @@
 from setuptools import setup, find_packages
 from tg_sdk import __version__
 
-with open('requirements.txt') as f:
-    requirements = f.read().splitlines()
+import os
+
+requirements = []
+for file in os.listdir("./requirements/dep/"):
+    with open(F'./requirements/dep/{file}') as f:
+        requirements += f.read().splitlines()
 
 setup(
     name='tg_sdk',

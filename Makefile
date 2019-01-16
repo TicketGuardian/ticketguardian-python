@@ -1,5 +1,5 @@
 install: 
-	venv/bin/pip3 install -r requirements.txt
+	venv/bin/pip3 install -r requirements/default.txt
 	venv/bin/pip3 install .
 
 venv:
@@ -9,6 +9,7 @@ venv:
 tests:
 	make venv
 	make install
+	venv/bin/pip3 install -r requirements/dev.txt
 	venv/bin/python3 -m pytest
 
 flake8:
