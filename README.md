@@ -1,4 +1,6 @@
-# Python Client for TicketGuardian API
+# TicketGuardian Python Library
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2458/badge)](https://bestpractices.coreinfrastructure.org/projects/2458)
+[![buddy pipeline](https://app.buddy.works/ticketguardian/ticketguardian-sdk/pipelines/pipeline/154249/badge.svg?token=a8d6086f0206fad0d2d5b576dd757c1d420553cdd3246f819b85fe21a1474c44 "buddy pipeline")](https://app.buddy.works/ticketguardian/ticketguardian-sdk/pipelines/pipeline/154249)
 
 A python SDK for interacting with the TicketGuardian API
 
