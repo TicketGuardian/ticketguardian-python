@@ -25,45 +25,34 @@ pip install git+https://github.com/TicketGuardian/ticketguardian-python
 
 # Getting Started
 
-The library needs to be configured to your active key pair. You can do that in one of two ways
-### 1.
-Set your `PUBLIC_KEY`, `SECRET_KEY`, and `ENVIRONMENT` within `credentials`.
-```
-# Enter a valid and active key pair
-
-PUBLIC_KEY=pk_12345
-SECRET_KEY=sk_12345
-ENVIRONMENT=sandbox
-```
-### 2.
-Set `PUBLIC_KEY` and `SECRET_KEY` to their appropriate values manually.
+The library needs to be configured to your active key pair.
 ```
 import tg_sdk
-tg_sdk.PUBLIC_KEY = 'pk_12345'
-tg_sdk.SECRET_KEY = 'sk_12345'
+tg_sdk.PUBLIC_KEY = '...'
+tg_sdk.SECRET_KEY = '...'
 tg_sdk.ENVIRONMENT = 'sandbox'
 ```
 
-The default environment is `prod`, so if you would like to use another environment then set `tg_sdk.ENVIRONMENT` to the environment you would like to use.
+If no environment is specified then `tg_sdk.ENVIRONMENT` defaults to `prod`.
 `tg_sdk.ENVIRONMENT` only accepts `'prod'` or `'sandbox'`.
 
 ## Basic Usage
 
-### Retrieving a Resource
-```
-from tg_sdk import Affiliate
-aff1 = Affiliate.retrieve('af_123')
-```
-
-### Listing a Resource
+### Listing and Retrieving a Resource
 ```
 # List of all objects
 from tg_sdk import Affiliate
-aff_list = Affiliate.list()
+affiliate_list = Affiliate.list()
 
 # List of filtered objects
 from tg_sdk import Policy
 policy_list = Policy.list(created__lte='2018-05-01T07:00:00')
+
+# Retrieving a Resource
+affiliate = affiliate_list[0]
+affiliate_id = affiliate.id
+
+same_affiliate = Affiliate.retrieve(affiliate_id)
 ```
 
 ## Advanced Usage
@@ -77,7 +66,9 @@ Client.create(name='Client name', domain='client_domain.com', affiliate='af_123'
 
 ## Order
 ### Creating an Order
+Note: Only Clients can create orders
 ```
+from tg_sdk import Order
 from random import choices
 from string import ascii_uppercase
 
@@ -111,8 +102,7 @@ params = {
 
 order = Order.create(**params)
 ```
-
-## Adding Items to an Order
+### Adding Items to an Order
 ```
 params = {
     "currency": "USD",
@@ -127,11 +117,8 @@ params = {
 
 order.add_items(**params)
 ```
-
-## Charge an Order
+### Charge an Order
 ```
-from tg_sdk import Order
-
 params = {
     "policies": [
     ],
@@ -156,14 +143,15 @@ params = {
     }
 }
 
-order = Order.retrieve('ord_123')
-order.charge(**params)
+charge_data = order.charge(**params)
 ```
 
 
 ## Policy
 ### Upgrade Policy
 ```
+from tg_sdk import Policy
+
 params = {
     "currency": "EUR",
     "item": {
@@ -173,11 +161,13 @@ params = {
     }
 }
 
+policy = Policy.list(status='Accepted')[0]
 upgraded_policy = policy.upgrade(**params)
 ```
 
 ## Exchange Policy
 ```
+from tg_sdk import Policy
 params = {
     "item": {
         "name": "Ticket 00001 - Johnny Appleseed",
@@ -187,11 +177,14 @@ params = {
     "currency": "USD",
 }
 
+policy = Policy.list(status='Issued')[0]
 policy.exchange(**params)
 ```
 
 # Quote
 ```
+from tg_sdk import Quote
+
 params = {
     "items": [
         {
@@ -211,14 +204,14 @@ params = {
 quote = Quote(**params)
 ```
 
-## Test Suite
-To run the test suite first you need to enter a pair of active keys for an affiliate and a client in .env
+# Testing Suite
+To run the test suite first you need to enter a pair of active keys for an affiliate and a client in `.env`
 ```
-AFF_PUB= ...
-AFF_SEC= ...
+AFF_PUB= '...'
+AFF_SEC= '...'
 
-CLI_PUB= ...
-CLI_SEC= ...
+CLI_PUB= '...'
+CLI_SEC= '...'
 ```
 
 Once the keys are set use the command `make tests` to start the testing suite.
