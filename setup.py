@@ -10,9 +10,9 @@ setup(
     version=__version__,
     description='A python SDK for interacting with the TicketGuardian API',
     author='TicketGuardian',
-    author_email='austin@ticketguardian.net',
+    author_email='developers@ticketguardian.com',
     url='https://github.com/TicketGuardian/ticketguardian-python',
-    keywords=['sdk', 'TicketGuardian'],
+    keywords=['sdk', 'TicketGuardian', 'python'],
     install_requires=requirements,
     classifiers=[],
 )
