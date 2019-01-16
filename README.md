@@ -1,6 +1,7 @@
 # Python Client for TicketGuardian API
 [![buddy pipeline](https://app.buddy.works/ticketguardian/ticketguardian-sdk/pipelines/pipeline/154249/badge.svg?token=a8d6086f0206fad0d2d5b576dd757c1d420553cdd3246f819b85fe21a1474c44 "buddy pipeline")](https://app.buddy.works/ticketguardian/ticketguardian-sdk/pipelines/pipeline/154249)
 [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/2458/badge)](https://bestpractices.coreinfrastructure.org/projects/2458)
+
 A python SDK for interacting with the TicketGuardian API
 
 ## Documentation
@@ -11,7 +12,7 @@ A python SDK for interacting with the TicketGuardian API
 In order to use the TicketGuardian SDK, you must have a valid and active key pair.
 
 ### Compatibilities
-              | Version       |
+|              | Version       |
 |:------------:|:-------------:|
 | Python       |  3.6+         |
 
@@ -30,20 +31,21 @@ Set your `PUBLIC_KEY`, `SECRET_KEY`, and `ENVIRONMENT` within `credentials`.
 ```
 # Enter a valid and active key pair
 
-PUBLIC_KEY= ...
-SECRET_KEY= ...
-ENVIRONMENT= ...
+PUBLIC_KEY=pk_12345
+SECRET_KEY=sk_12345
+ENVIRONMENT=sandbox
 ```
 ### 2.
 Set `PUBLIC_KEY` and `SECRET_KEY` to their appropriate values manually.
 ```
 import tg_sdk
-tg_sdk.PUBLIC_KEY = ...
-tg_sdk.SECRET_KEY = ...
+tg_sdk.PUBLIC_KEY = 'pk_12345'
+tg_sdk.SECRET_KEY = 'sk_12345'
+tg_sdk.ENVIRONMENT = 'sandbox'
 ```
 
 The default environment is `prod`, so if you would like to use another environment then set `tg_sdk.ENVIRONMENT` to the environment you would like to use.
-`tg_sdk.ENVIRONMENT` only accepts `'prod'` or `'sandbox'`. Core and Billing will always use the same environment.
+`tg_sdk.ENVIRONMENT` only accepts `'prod'` or `'sandbox'`.
 
 ## Basic Usage
 
