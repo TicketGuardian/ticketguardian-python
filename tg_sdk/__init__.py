@@ -16,6 +16,7 @@ from tg_sdk.item import Item
 from tg_sdk.order import Order
 from tg_sdk.policy import Policy
 from tg_sdk.product import Product
+from tg_sdk.quote import Quote
 
 # Credentials
 import os
@@ -43,11 +44,11 @@ __all__ = [
     "Client",
     "constants",
     "Customer",
-    "ENV",
     "Item",
     "Order",
     "Policy",
     "Product",
+    "Quote",
     "PUBLIC_KEY",
     "SECRET_KEY",
     "ENVIRONMENT",

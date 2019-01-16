@@ -4,11 +4,17 @@
 
 A python SDK for interacting with the TicketGuardian API
 
+## Documentation
+* [API Documentation](https://docs.ticketguardian.net/)
 
 ## Prerequisites
 
 In order to use the TicketGuardian SDK, you must have a valid and active key pair.
 
+### Compatibilities
+|              | Version       |
+|:------------:|:-------------:|
+| Python       |  3.6+         |
 
 ## Installation
 
@@ -19,47 +25,37 @@ pip install git+https://github.com/TicketGuardian/ticketguardian-python
 
 # Getting Started
 
-The library needs to be configured to your active key pair. You can do that in one of two ways
-### 1.
-Set your `PUBLIC_KEY`, `SECRET_KEY`, and `ENVIRONMENT` within `credentials`.
-```
-# Enter a valid and active key pair
-
-PUBLIC_KEY= ...
-SECRET_KEY= ...
-ENVIRONMENT= ...
-```
-### 2.
-Set `PUBLIC_KEY` and `SECRET_KEY` to their appropriate values manually.
+The library needs to be configured to your active key pair.
 ```
 import tg_sdk
-tg_sdk.PUBLIC_KEY = ...
-tg_sdk.SECRET_KEY = ...
+tg_sdk.PUBLIC_KEY = '...'
+tg_sdk.SECRET_KEY = '...'
+tg_sdk.ENVIRONMENT = 'sandbox'
 ```
 
-The default environment is `prod`, so if you would like to use another environment then set `tg_sdk.ENVIRONMENT` to the environment you would like to use.
-`tg_sdk.ENVIRONMENT` only accepts `'prod'` or `'sandbox'`. Core and Billing will always use the same environment.
+If no environment is specified then `tg_sdk.ENVIRONMENT` defaults to `prod`.
+`tg_sdk.ENVIRONMENT` only accepts `'prod'` or `'sandbox'`.
 
 ## Basic Usage
 
-### Retrieving a Resource
-```
-from tg_sdk import Affiliate
-aff1 = Affiliate.retrieve('af_123')
-```
-
-### Listing a Resource
+### Listing and Retrieving a Resource
 ```
 # List of all objects
 from tg_sdk import Affiliate
-aff_list = Affiliate.list()
+affiliate_list = Affiliate.list()
 
 # List of filtered objects
 from tg_sdk import Policy
 policy_list = Policy.list(created__lte='2018-05-01T07:00:00')
+
+# Retrieving a Resource
+affiliate = affiliate_list[0]
+affiliate_id = affiliate.id
+
+same_affiliate = Affiliate.retrieve(affiliate_id)
 ```
 
-# Advanced Usage
+## Advanced Usage
 
 ## Client
 ### Creating a Client
@@ -70,14 +66,22 @@ Client.create(name='Client name', domain='client_domain.com', affiliate='af_123'
 
 ## Order
 ### Creating an Order
+Note: Only Clients can create orders
 ```
+from tg_sdk import Order
+from random import choices
+from string import ascii_uppercase
+
+# Generate a unique order number
+order_num = ''.join(choices(ascii_uppercase, k=55))
+
 params = {
     "customer": {
         "first_name": "Richard",
         "last_name": "Hendricks",
         "email": "Rhendricks@piedpiper.com"
     },
-    "order_number": 'ord_123',
+    "order_number": order_num,
     "currency": "USD",
     "items": [
         {
@@ -98,8 +102,7 @@ params = {
 
 order = Order.create(**params)
 ```
-
-## Adding Items to an Order
+### Adding Items to an Order
 ```
 params = {
     "currency": "USD",
@@ -114,10 +117,8 @@ params = {
 
 order.add_items(**params)
 ```
-
-## Charge an Order
+### Charge an Order
 ```
-from tg_sdk import Order
 params = {
     "policies": [
     ],
@@ -142,14 +143,15 @@ params = {
     }
 }
 
-order = Order.retrieve('ord_123')
-order.charge(**params)
+charge_data = order.charge(**params)
 ```
 
 
 ## Policy
 ### Upgrade Policy
 ```
+from tg_sdk import Policy
+
 params = {
     "currency": "EUR",
     "item": {
@@ -159,11 +161,13 @@ params = {
     }
 }
 
+policy = Policy.list(status='Accepted')[0]
 upgraded_policy = policy.upgrade(**params)
 ```
 
-## Exchange Policy
+### Exchange Policy
 ```
+from tg_sdk import Policy
 params = {
     "item": {
         "name": "Ticket 00001 - Johnny Appleseed",
@@ -173,11 +177,14 @@ params = {
     "currency": "USD",
 }
 
+policy = Policy.list(status='Issued')[0]
 policy.exchange(**params)
 ```
 
 # Quote
 ```
+from tg_sdk import Quote
+
 params = {
     "items": [
         {
@@ -196,3 +203,15 @@ params = {
 
 quote = Quote(**params)
 ```
+
+# Testing Suite
+To run the test suite first you need to enter a pair of active keys for an affiliate and a client in `.env`
+```
+AFF_PUB= '...'
+AFF_SEC= '...'
+
+CLI_PUB= '...'
+CLI_SEC= '...'
+```
+
+Once the keys are set use the command `make tests` to start the testing suite.
