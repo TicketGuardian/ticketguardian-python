@@ -165,7 +165,7 @@ policy = Policy.list(status='Accepted')[0]
 upgraded_policy = policy.upgrade(**params)
 ```
 
-## Exchange Policy
+### Exchange Policy
 ```
 from tg_sdk import Policy
 params = {
