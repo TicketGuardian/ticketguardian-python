@@ -1,5 +1,6 @@
 from setuptools import setup, find_packages
-from ticketguardian import __version__
+
+__version__ = '0.0.0'
 
 with open('requirements.txt') as f:
     requirements = f.read().splitlines()
