@@ -8,6 +8,7 @@
 
 ### Updated
  - README
+ - Renamed tg_sdk to ticketguardian
 
 ### Removed
  - Requirements.txt

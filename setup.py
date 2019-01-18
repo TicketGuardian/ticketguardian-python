@@ -1,5 +1,5 @@
 from setuptools import setup, find_packages
-from tg_sdk import __version__
+from ticketguardian import __version__
 
 import os
 
@@ -9,7 +9,7 @@ for file in os.listdir("./requirements/dep/"):
         requirements += f.read().splitlines()
 
 setup(
-    name='tg_sdk',
+    name='ticketguardian',
     packages=find_packages(exclude=['test*']),
     version=__version__,
     description='A python SDK for interacting with the TicketGuardian API',
