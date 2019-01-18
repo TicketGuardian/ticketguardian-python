@@ -25,13 +25,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 ENVIRONMENT = os.environ.get('ENVIRONMENT')
 
 __title__ = 'TicketGuardian SDK'
-__version__ = '0.0.0'
 __author__ = 'TicketGuardian'
 __license__ = 'GPLv3'
 __copyright__ = 'Copyright 2017-2019 TicketGuardian'
 
-# Version synonym
-VERSION = __version__
 
 # Header encoding (see RFC5987)
 HTTP_HEADER_ENCODING = 'iso-8859-1'
