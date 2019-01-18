@@ -7,3 +7,4 @@
 
 ### Updated
  - README
+ - Renamed tg_sdk to ticketguardian
