@@ -10,12 +10,12 @@ for file in os.listdir("./requirements/dep/"):
         requirements += f.read().splitlines()
 
 setup(
-    name='ticketguardian',
+    name='ticketguardian-python',
     packages=find_packages(exclude=['test*']),
     version=__version__,
     description='A python SDK for interacting with the TicketGuardian API',
     author='TicketGuardian',
-    author_email='developers@ticketguardian.com',
+    author_email='developers@protecht.io',
     url='https://github.com/TicketGuardian/ticketguardian-python',
     keywords=['sdk', 'TicketGuardian', 'python'],
     install_requires=requirements,
