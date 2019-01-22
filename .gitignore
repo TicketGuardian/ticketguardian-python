@@ -18,3 +18,15 @@ tags
 __pycache__/
 *.py[cod]
 *$py.class
+venv/
+.env
+credentials
+.DS_Store
+.idea
+.vscode/
+
+# Build Related Dirs
+build/
+dist/
+ticketguardian.egg-info/
+*.tar.gz
