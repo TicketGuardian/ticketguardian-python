@@ -39,8 +39,6 @@ def test_charge_order():
         time finding a simpler way.
         """
         for order in orders:
-            if order is None:
-                import pdb; pdb.set_trace()
             for policy in order.policies:
                 if policy.status == "Accepted":
                     condition = False
