@@ -1,4 +1,11 @@
 ## [Unreleased]
+### Updated
+ - Compatibility with Python2.7
+
+### Fixed
+ - Lazy load list slice
+
+## [1.0.0] 1/21/2019
 
 ### Added
  - Lazy load list and iterator (Not 100% complete but okay for internal use)

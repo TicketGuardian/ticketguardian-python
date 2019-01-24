@@ -21,3 +21,17 @@ def test_lazy_iterator():
                 else:
                     assert resource_objects._data[j] is None
         ind += 1
+
+
+@affiliate_test_method
+def test_resourcelist_slice():
+    # This tests that after each load the unloaded objects in the
+    # list remain none.
+    resource_objects = Policy.list()
+    sliced = resource_objects[20:25]
+
+    for ind, i in enumerate(sliced):
+        # Assert that each value returned by the iterator is not None
+        assert i is not None
+        # Assert that the "parent" list resource_objects is updated with sliced
+        assert resource_objects._data[ind + 20] == i
