@@ -39,6 +39,8 @@ def test_charge_order():
         time finding a simpler way.
         """
         for order in orders:
+            if order is None:
+                import pdb; pdb.set_trace()
             for policy in order.policies:
                 if policy.status == "Accepted":
                     condition = False
@@ -62,7 +64,18 @@ def test_charge_order():
     }
 
     for field in charge_fields:
+        is_unicode = False
         assert hasattr(charge, field)
-        assert isinstance(getattr(charge, field), charge_fields[field])
+        if charge_fields[field] == str:
+            try:
+                # A little hacky but unicode is not defined in Python3
+                # so if this fails then we are testing Python2
+                is_unicode = isinstance(getattr(charge, field), unicode)
+            except NameError:
+                pass
+
+        assert is_unicode or isinstance(
+            getattr(charge, field), charge_fields[field]
+        )
 
     return charge

@@ -1,5 +1,6 @@
 from ticketguardian.affiliate import Affiliate
 from ticketguardian.abstract import (
+    APIResource,
     ListResourceMixin,
     PostResourceMixin,
     RetrieveResourceMixin, )
@@ -7,6 +8,10 @@ from ticketguardian.abstract import (
 
 class Client(ListResourceMixin, RetrieveResourceMixin, PostResourceMixin, ):
     resource = "clients"
+    
+    def __init__(self):
+        super(Client, self).__init__()
+
 
     @property
     def affiliate(self):

@@ -1,10 +1,14 @@
 from ticketguardian.abstract import (
+    APIResource,
     ListResourceMixin,
     RetrieveResourceMixin, )
 
 
 class Affiliate(ListResourceMixin, RetrieveResourceMixin,):
     resource = "affiliates"
+
+    def __init__(self):
+        super(Affiliate, self).__init__()
 
     @property
     def parent(self):

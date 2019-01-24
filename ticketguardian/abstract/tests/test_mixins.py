@@ -10,8 +10,7 @@ def test_retrieve_resource():
     for attr in vars(ticketguardian):
         cls = getattr(ticketguardian, attr)
         if hasattr(cls, 'resource') and hasattr(cls, 'retrieve'):
-            response = requests.request(
-                "GET",
+            response = requests.get(
                 cls()._make_url(),
                 headers=cls()._default_headers
             )
@@ -50,8 +49,7 @@ def test_list_resource():
     for attr in vars(ticketguardian):
         cls = getattr(ticketguardian, attr)
         if hasattr(cls, 'resource') and hasattr(cls, 'list'):
-            response = requests.request(
-                "GET",
+            response = requests.get(
                 cls()._make_url(),
                 headers=cls()._default_headers
             )
