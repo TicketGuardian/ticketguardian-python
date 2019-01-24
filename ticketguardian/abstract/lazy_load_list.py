@@ -152,7 +152,7 @@ class ResourceIterator(LazyLoadMixin):
             return obj
         else:
             raise StopIteration
-    
+
     def next(self):
         # Needed for python 2.7 compatibility
         return self.__next__()

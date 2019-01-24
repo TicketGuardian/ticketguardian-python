@@ -1,4 +1,4 @@
-from ticketguardian.abstract import APIResource, PostResourceMixin
+from ticketguardian.abstract import PostResourceMixin
 
 
 class Quote(PostResourceMixin):

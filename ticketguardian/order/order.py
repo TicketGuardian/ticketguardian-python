@@ -1,5 +1,4 @@
 from ticketguardian.abstract import (
-    APIResource,
     ListResourceMixin,
     PostResourceMixin,
     PutResourceMixin,

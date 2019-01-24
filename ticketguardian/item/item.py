@@ -8,7 +8,6 @@ class Item(APIResource):
     def __init__(self):
         super(Item, self).__init__()
 
-
     @property
     def customer(self):
         if self._customer is not None:

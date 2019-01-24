@@ -1,4 +1,4 @@
-from ticketguardian.abstract import APIResource, RetrieveResourceMixin
+from ticketguardian.abstract import RetrieveResourceMixin
 
 
 class Customer(RetrieveResourceMixin):
