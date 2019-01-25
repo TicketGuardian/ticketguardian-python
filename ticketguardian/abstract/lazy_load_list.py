@@ -31,7 +31,7 @@ class LazyLoadMixin:
 
 
 class ResourceList(list, LazyLoadMixin):
-    def __init__(self, cls, size=None, data=None, slice_ind=0, *ext, **params):
+    def __init__(self, cls, size=None, slice_ind=0, *ext, **params):
         """
         cls: The class of the objects being listed
         size: The size of the ResourceList
@@ -46,7 +46,7 @@ class ResourceList(list, LazyLoadMixin):
         """
         self._cls = cls
         self._size = size or self._cls().get_resource_count(*ext, **params)
-        self._data = data if data is not None else defaultdict(lambda: None)
+        self._data = params.pop('data', defaultdict(lambda: None))
         self._slice_ind = slice_ind
         self._ext = ext
         self._params = params
