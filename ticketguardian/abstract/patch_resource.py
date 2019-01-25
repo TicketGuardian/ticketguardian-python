@@ -6,23 +6,17 @@ from ticketguardian.abstract.error_handling import raise_response_error
 
 class PatchResourceMixin(APIResource):
 
-    def patch(self, request, *args, **kwargs):
-        """
-        Patch a resource with kwargs.
-            Keyword Arguments:
-                ext: Strings that are extensions of the url
-                     This should only be used from within resource methods.
-        """
-        url = self._make_url(resource_id, *ext)
+    def patch(self, resource_id, *args, **kwargs):
+        url = self._make_url(resource_id, *args)
 
-        res = requests.patch(
+        response = requests.patch(
             url,
             headers=self._default_headers,
             json=params
         )
-        if not res.ok:
-            raise_response_error(res)
 
-        data = res.json()
-
-        return data
+        if response.ok:
+            data = json.loads(response.text)
+            return self._construct(**data)
+        else:
+            raise_response_error(response)
