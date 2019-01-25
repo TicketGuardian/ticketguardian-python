@@ -1,7 +1,9 @@
 import json
 import requests
+import sys
 
 import ticketguardian
+from ticketguardian import Order
 from ticketguardian._project._decorators import affiliate_test_method
 
 
@@ -67,3 +69,13 @@ def test_list_resource():
 
             for attr in obj:
                 assert hasattr(resource_objects[0], attr)
+
+
+@affiliate_test_method
+def test_patch_resource():
+    """
+    """
+    order = Order.list()[0]
+    order_id = order.order_id
+    print(order)
+    sys.stderr.write("\n")

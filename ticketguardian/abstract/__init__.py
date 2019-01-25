@@ -2,6 +2,7 @@
 from ticketguardian.abstract.api_resource import APIResource
 from ticketguardian.abstract.delete_resource import DeleteResourceMixin
 from ticketguardian.abstract.list_resource import ListResourceMixin
+from ticketguardian.abstract.patch_resource import PatchResourceMixin
 from ticketguardian.abstract.post_resource import PostResourceMixin
 from ticketguardian.abstract.put_resource import PutResourceMixin
 from ticketguardian.abstract.lazy_load_list import ResourceList
@@ -13,6 +14,7 @@ __all__ = [
     'APIResource',
     'DeleteResourceMixin',
     'ListResourceMixin',
+    'PatchResourceMixin',
     'PostResourceMixin',
     'PutResourceMixin',
     'ResourceList',

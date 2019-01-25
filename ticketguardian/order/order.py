@@ -1,5 +1,6 @@
 from ticketguardian.abstract import (
     ListResourceMixin,
+    PatchResourceMixin,
     PostResourceMixin,
     PutResourceMixin,
     RetrieveResourceMixin, )
@@ -14,6 +15,7 @@ from ticketguardian.order import exceptions
 class Order(
         ListResourceMixin,
         RetrieveResourceMixin,
+        PatchResourceMixin,
         PostResourceMixin,
         PutResourceMixin, ):
 

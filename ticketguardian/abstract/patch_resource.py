@@ -5,16 +5,27 @@ from ticketguardian.abstract.error_handling import raise_response_error
 
 
 class PatchResourceMixin(APIResource):
-    def patch(self, resource_id, *ext, **params):
-        """
-        Update a currently existing resource.
-            Keyword Arguments:
-                ext: An extension of the url if extra args are needed.
-                     Does not need the leading or trailing '/'.
 
-            Returns:
-                An instance of the object that is being updated.
-                If a bad request is made then an empty instance of the resource
-                object is returned.
+    def patch(self, request, *args, **kwargs):
         """
-        return self.partial_update(request, *args, **kwargs)
+        Patch a resource with kwargs.
+            Keyword Arguments:
+                ext: Strings that are extensions of the url
+                     This should only be used from within resource methods.
+                raw_data (bool): A boolean value that will tell this method to
+                                 return the raw list data.
+        """
+        url = self._make_url(resource_id, *ext)
+        raw_data = params.pop('raw_data', False)
+
+        res = requests.patch(
+            url,
+            headers=self._default_headers,
+            json=params
+        )
+        if not res.ok:
+            raise_response_error(res)
+
+        data = res.json()
+
+        return data if raw_data else self
