@@ -26,7 +26,7 @@ class LazyLoadMixin:
             self._data[i] = obj_list[i - start_ind]
 
     def _get_offset(self, ind):
-        page_number = floor(ind / (PAGE_SIZE))
+        page_number = int(floor(ind / (PAGE_SIZE)))
         return page_number * PAGE_SIZE
 
 
@@ -52,7 +52,10 @@ class ResourceList(list, LazyLoadMixin):
         self._params = params
 
     def __repr__(self):
-        return F"<{self._cls.__name__} ResourceList: {self._size} objects>"
+        return "<{} ResourceList: {} objects>".format(
+            self._cls.__name__,
+            self._size
+        )
 
     def __iter__(self):
         return ResourceIterator(
@@ -77,7 +80,7 @@ class ResourceList(list, LazyLoadMixin):
                 data=self._data,
                 slice_ind=start,
                 *self._ext,
-                **self._params,
+                **self._params
             )
         if ind >= self._size:
             raise IndexError('list index out of range')
@@ -149,6 +152,10 @@ class ResourceIterator(LazyLoadMixin):
             return obj
         else:
             raise StopIteration
+
+    def next(self):
+        # Needed for python 2.7 compatibility
+        return self.__next__()
 
     @property
     def _index(self):

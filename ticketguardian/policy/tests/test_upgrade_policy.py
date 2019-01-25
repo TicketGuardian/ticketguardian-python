@@ -14,7 +14,7 @@ def test_upgrade_policy_wo_card():
         "item": {
             "name": "Ticket 00004 - Johnny Appleseed",
             "reference_number": "{{$randomInt}}",
-            "cost": "100.00"
+            "cost": policy.item.cost + 1
         }
     }
 
@@ -51,7 +51,7 @@ def test_upgrade_policy_w_card():
         "item": {
             "name": "Ticket 00004 - Johnny Appleseed",
             "reference_number": "125416",
-            "cost": "900.00"
+            "cost": policy.item.cost + 1
         }
     }
 

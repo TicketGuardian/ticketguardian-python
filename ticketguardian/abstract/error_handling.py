@@ -1,5 +1,5 @@
 import json
-from json.decoder import JSONDecodeError
+from simplejson import JSONDecodeError
 
 
 def raise_response_error(response):
@@ -14,6 +14,6 @@ def raise_response_error(response):
     # Create Exception type matching the
     # exception given by the API if it is given
     if error.get('reason'):
-        exc = type(error['reason'], (Exception,), {})
+        exc = type(str(error['reason']), (Exception,), {})
 
     raise exc(error['message'])
