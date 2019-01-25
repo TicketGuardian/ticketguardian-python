@@ -12,11 +12,8 @@ class PatchResourceMixin(APIResource):
             Keyword Arguments:
                 ext: Strings that are extensions of the url
                      This should only be used from within resource methods.
-                raw_data (bool): A boolean value that will tell this method to
-                                 return the raw list data.
         """
         url = self._make_url(resource_id, *ext)
-        raw_data = params.pop('raw_data', False)
 
         res = requests.patch(
             url,
@@ -28,4 +25,4 @@ class PatchResourceMixin(APIResource):
 
         data = res.json()
 
-        return data if raw_data else self
+        return data
