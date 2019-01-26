@@ -12,7 +12,6 @@ from ticketguardian.affiliate import Affiliate
 from ticketguardian.client import Client
 from ticketguardian import constants
 from ticketguardian.customer import Customer
-from ticketguardian.item import Item
 from ticketguardian.order import Order
 from ticketguardian.policy import Policy
 from ticketguardian.product import Product
@@ -41,7 +40,6 @@ __all__ = [
     "Client",
     "constants",
     "Customer",
-    "Item",
     "Order",
     "Policy",
     "Product",
@@ -49,4 +47,14 @@ __all__ = [
     "PUBLIC_KEY",
     "SECRET_KEY",
     "ENVIRONMENT",
+]
+
+RESOURCES = [
+    Affiliate,
+    Client,
+    Customer,
+    Order,
+    Policy,
+    Product,
+    Quote,
 ]

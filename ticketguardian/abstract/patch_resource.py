@@ -12,11 +12,11 @@ class PatchResourceMixin(APIResource):
         response = requests.patch(
             url,
             headers=self._default_headers,
-            json=params
+            json=kwargs
         )
 
         if response.ok:
             data = json.loads(response.text)
-            return self._construct(**data)
+            self._construct(instance=self, **data)
         else:
             raise_response_error(response)
