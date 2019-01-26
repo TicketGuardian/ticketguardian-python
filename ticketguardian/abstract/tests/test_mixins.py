@@ -3,7 +3,7 @@ import requests
 import sys
 
 import ticketguardian
-from ticketguardian import Order
+from ticketguardian import Order, Product, Policy
 from ticketguardian._project._decorators import affiliate_test_method
 
 
@@ -74,8 +74,18 @@ def test_list_resource():
 @affiliate_test_method
 def test_patch_resource():
     """
+    test_patch_resource will test PATCH on our various resource types.
+    As of writing, it will not be tested on:
+        Policy, Product, Customer (PATCH not allowed)
+    It will be tested on all RESOURCES declared in ticketguardian.__init__.py
     """
-    order = Order.list()[0]
-    order_id = order.order_id
-    print(order)
-    sys.stderr.write("\n")
+    for cls in ticketguardian.RESOURCES:
+        # Test all resources except Customer. We don't PATCH Customer
+        try:
+            obj = cls.list()[0]
+            resource_id = obj.id
+            if not isinstance(obj, Product) and not isinstance(obj, Policy):
+                obj.patch(resource_id)
+        except AttributeError:
+            # Relevant for Customer class. Customer does not have list.
+            pass
