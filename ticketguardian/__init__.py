@@ -48,13 +48,3 @@ __all__ = [
     "SECRET_KEY",
     "ENVIRONMENT",
 ]
-
-RESOURCES = [
-    Affiliate,
-    Client,
-    Customer,
-    Order,
-    Policy,
-    Product,
-    Quote,
-]

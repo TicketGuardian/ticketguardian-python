@@ -5,7 +5,6 @@ from ticketguardian.abstract import (
 
 
 class Quote(
-    PatchResourceMixin,
     PostResourceMixin):
     resource = "quote"
 
