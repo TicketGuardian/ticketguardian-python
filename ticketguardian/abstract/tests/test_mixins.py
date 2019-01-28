@@ -1,6 +1,5 @@
 import json
 import requests
-import sys
 
 import ticketguardian
 from ticketguardian._project._decorators import affiliate_test_method
