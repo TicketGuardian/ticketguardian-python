@@ -3,7 +3,6 @@ import requests
 import sys
 
 import ticketguardian
-from ticketguardian import Affiliate, Client, Order, Product, Policy, Quote
 from ticketguardian._project._decorators import affiliate_test_method
 
 
