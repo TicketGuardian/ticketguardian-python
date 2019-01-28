@@ -1,4 +1,3 @@
-from collections import defaultdict
 from math import floor
 
 from ticketguardian.constants import PAGE_SIZE
@@ -46,7 +45,7 @@ class ResourceList(list, LazyLoadMixin):
         """
         self._cls = cls
         self._size = size or self._cls().get_resource_count(*ext, **params)
-        self._data = params.pop('data', defaultdict(lambda: None))
+        self._data = params.pop('data', {})
         self._slice_ind = slice_ind
         self._ext = ext
         self._params = params
@@ -88,7 +87,7 @@ class ResourceList(list, LazyLoadMixin):
             # Add offsetting index
             ind += self._slice_ind
 
-        if self._data[ind] is None:
+        if self._data.get(ind) is None:
             offset = self._get_offset(ind)
             self._update_list(offset)
 
@@ -140,7 +139,7 @@ class ResourceIterator(LazyLoadMixin):
 
     def __next__(self):
         if self._ind < self._size:
-            if self._data[self._index] is None:
+            if self._data.get(self._index) is None:
                 offset = self._get_offset(self._index)
                 self._update_list(offset, self._lazy)
 

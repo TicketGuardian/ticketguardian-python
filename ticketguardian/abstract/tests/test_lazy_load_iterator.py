@@ -19,7 +19,7 @@ def test_lazy_iterator():
                 if j < 20:
                     assert resource_objects._data[j] is not None
                 else:
-                    assert resource_objects._data[j] is None
+                    assert resource_objects._data.get(j) is None
         ind += 1
 
 
