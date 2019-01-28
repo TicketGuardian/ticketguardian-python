@@ -19,6 +19,9 @@ class Order(
 
     resource = "orders"
 
+    def __init__(self):
+        super(Order, self).__init__()
+
     @property
     def id(self):
         return self.order_number
@@ -71,7 +74,7 @@ class Order(
         _validate._validate_card(card)
         _validate._validate_address(billing_address)
 
-        response = super().create(
+        response = super(Order, self).create(
             self.order_number,
             'charge',
             customer=customer,

@@ -41,8 +41,7 @@ class RetrieveResourceMixin(APIResource):
         instance = params.pop('instance', cls())
         raw_data = params.pop('raw_data', False)
 
-        response = requests.request(
-            "GET",
+        response = requests.get(
             instance._make_url(resource_id, *ext),
             headers=instance._default_headers,
             params=params

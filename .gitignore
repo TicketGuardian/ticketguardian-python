@@ -19,6 +19,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 venv/
+venv27/
 .env
 credentials
 .DS_Store

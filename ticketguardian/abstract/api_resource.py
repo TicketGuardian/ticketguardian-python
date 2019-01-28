@@ -42,16 +42,19 @@ class APIResource(object):
             value = self._construct_general(key.title(), value)
 
         if key in vars(type(self)):
-            return super().__setattr__('_' + key, value)
+            return super(APIResource, self).__setattr__('_' + key, value)
         else:
-            return super().__setattr__(key, value)
+            return super(APIResource, self).__setattr__(key, value)
 
     def __repr__(self):
         resource_name = self.__class__.__name__
         if hasattr(self, 'id'):
-            return F'<{resource_name.title()}: {self.id}>'
+            return '<{}: {}>'.format(resource_name.title(), self.id)
         else:
-            return F'<{resource_name.title()} object at {hex(id(self))}>'
+            return '<{} object at {}>'.format(
+                resource_name.title(),
+                hex(id(self))
+            )
 
     @classmethod
     def _construct(cls, **params):
@@ -215,8 +218,8 @@ class APIResource(object):
             'Accept': "application/json",
             'Content-Type': "application/json",
         }
-        response = requests.request(
-            "POST",
+
+        response = requests.post(
             url,
             data=json.dumps(payload),
             headers=headers
