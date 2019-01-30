@@ -1,9 +1,13 @@
 from ticketguardian.abstract import (
     ListResourceMixin,
+    PatchResourceMixin,
     RetrieveResourceMixin, )
 
 
-class Affiliate(ListResourceMixin, RetrieveResourceMixin,):
+class Affiliate(
+    ListResourceMixin,
+    PatchResourceMixin,
+    RetrieveResourceMixin,):
     resource = "affiliates"
 
     def __init__(self):

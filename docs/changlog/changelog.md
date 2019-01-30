@@ -10,6 +10,7 @@
  - credentials file for a users set of keys
  - Example showing how to use the sdk for quoting items, creating an order, and charging the order.
  - A requirements directory
+ - PATCH capabilities for Affiliate, Client, and Order
 
 ### Updated
  - README

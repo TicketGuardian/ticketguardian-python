@@ -2,10 +2,15 @@ from ticketguardian.affiliate import Affiliate
 from ticketguardian.abstract import (
     ListResourceMixin,
     PostResourceMixin,
+    PatchResourceMixin,
     RetrieveResourceMixin, )
 
 
-class Client(ListResourceMixin, RetrieveResourceMixin, PostResourceMixin, ):
+class Client(
+    ListResourceMixin,
+    PatchResourceMixin,
+    PostResourceMixin,
+    RetrieveResourceMixin,):
     resource = "clients"
 
     def __init__(self):

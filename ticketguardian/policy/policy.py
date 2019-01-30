@@ -1,6 +1,6 @@
 from ticketguardian.abstract import (
-    RetrieveResourceMixin,
     PutResourceMixin,
+    RetrieveResourceMixin,
     ListResourceMixin, )
 from ticketguardian.item import Item
 from ticketguardian.policy.constants import UPGRADED

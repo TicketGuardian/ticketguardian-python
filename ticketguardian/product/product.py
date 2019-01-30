@@ -3,7 +3,9 @@ from ticketguardian.abstract import (
     RetrieveResourceMixin, )
 
 
-class Product(RetrieveResourceMixin, ListResourceMixin):
+class Product(
+    RetrieveResourceMixin,
+    ListResourceMixin):
     resource = "products"
 
     def __init__(self):

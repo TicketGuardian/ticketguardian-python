@@ -1,7 +1,11 @@
-from ticketguardian.abstract import PostResourceMixin
+from ticketguardian.abstract import (
+    PatchResourceMixin,
+    PostResourceMixin,
+)
 
 
-class Quote(PostResourceMixin):
+class Quote(
+    PostResourceMixin):
     resource = "quote"
 
     def __init__(self, currency='USD', **params):
