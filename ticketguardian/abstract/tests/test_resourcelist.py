@@ -17,4 +17,4 @@ def test_resourcelist_lazy_loads():
                 assert resource_objects._data[j] is not None
             else:
                 # If j is greater than i then it should be None
-                assert resource_objects._data[j] is None
+                assert resource_objects._data.get(j) is None
