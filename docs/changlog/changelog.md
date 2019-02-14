@@ -4,6 +4,10 @@
 
 ### Fixed
  - Lazy load list slice
+ - Patch tests that were failing
+
+### Added
+ - Affiliate method to get all parent Affiliates
 
 
 ## [1.0.0] 1/21/2019
