@@ -1,7 +1,7 @@
 from ticketguardian.affiliate import Affiliate
 
 
-def test_get_parent_scope():
+def test_parent_scope():
     affiliate = None
     for i in Affiliate.list():
         if i.parent is not None:
@@ -10,7 +10,7 @@ def test_get_parent_scope():
             break
 
     parent = affiliate.parent
-    parent_list = affiliate.get_parent_scope()
+    parent_list = affiliate.parent_scope
 
     for index, test_parent in enumerate(parent_list):
         assert parent.id == test_parent.id
