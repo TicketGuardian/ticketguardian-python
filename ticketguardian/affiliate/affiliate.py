@@ -19,9 +19,18 @@ class Affiliate(
             self._parent = self._construct(obj=self._parent)
         return self._parent
 
+    @property
+    def scope(self):
+        """
+        Used to gets all children within the scope of this Affiliate.
+        Returns:
+            list: a list of all children of the Affiliate
+        """
+        return self.retrieve(self.id, 'scope', raw_data=True)
+
     def get_parent_scope(self):
         """
-        Used to gets all parents within the scope of the Affiliate.
+        Used to gets all parents within the scope of this Affiliate.
         Returns:
             list: a list of all parents of the Affiliate
         """
