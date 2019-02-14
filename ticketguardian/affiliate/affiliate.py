@@ -24,11 +24,12 @@ class Affiliate(
         """
         Used to gets all children within the scope of this Affiliate.
         Returns:
-            list: a list of all children of the Affiliate
+            list: a list of all children of the Affiliate including itself.
         """
         return self.retrieve(self.id, 'scope', raw_data=True)
 
-    def get_parent_scope(self):
+    @property
+    def parent_scope(self):
         """
         Used to gets all parents within the scope of this Affiliate.
         Returns:
