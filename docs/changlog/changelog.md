@@ -8,7 +8,6 @@
  - Core URL
 
 ### Added
- - Affiliate method to get all parent Affiliates
  - Auth class
  - Scope property for Client and Affiliate
  - Parent Scope property for Affiliate
