@@ -32,6 +32,6 @@ class Client(
         """
         Used to gets all children within the scope of this Client.
         Returns:
-            list: a list of all children of the Client
+            list: a list of all children of the Client including itself.
         """
         return self.retrieve(self.id, 'scope', raw_data=True)
