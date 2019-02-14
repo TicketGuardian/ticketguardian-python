@@ -5,6 +5,7 @@
 ### Fixed
  - Lazy load list slice
  - Patch tests that were failing
+ - Core URL
 
 ### Added
  - Affiliate method to get all parent Affiliates
