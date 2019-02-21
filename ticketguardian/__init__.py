@@ -16,6 +16,7 @@ from ticketguardian.order import Order
 from ticketguardian.policy import Policy
 from ticketguardian.product import Product
 from ticketguardian.quote import Quote
+from ticketguardian.user import User
 
 # Credentials
 import os
