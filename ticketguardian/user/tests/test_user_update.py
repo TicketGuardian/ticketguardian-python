@@ -4,7 +4,7 @@ from ticketguardian._project._decorators import affiliate_test_method
 
 
 @affiliate_test_method
-def test_client_patch():
+def test_user_patch():
     user = User.list()[0]
     first_name = user.first_name
     user.patch(user.id, first_name='test_patch')
@@ -13,7 +13,7 @@ def test_client_patch():
 
 
 @affiliate_test_method
-def test_client_update():
+def test_user_update():
     user = User.list()[0]
     user_info = {
         "first_name": user.first_name,
