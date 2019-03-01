@@ -5,6 +5,9 @@
 ### Fixed
  - Lazy load list slice
 
+### Added
+ - User class that supports retrieve, list, and update.
+
 
 ## [1.0.0] 1/21/2019
 ### Added
