@@ -7,10 +7,11 @@ from ticketguardian.abstract import (
 
 
 class Client(
-    ListResourceMixin,
-    PatchResourceMixin,
-    PostResourceMixin,
-    RetrieveResourceMixin,):
+        ListResourceMixin,
+        PatchResourceMixin,
+        PostResourceMixin,
+        RetrieveResourceMixin,):
+
     resource = "clients"
 
     def __init__(self):
@@ -25,3 +26,12 @@ class Client(
     @property
     def domain(self):
         return
+
+    @property
+    def scope(self):
+        """
+        Used to gets all children within the scope of this Client.
+        Returns:
+            list: a list of all children of the Client including itself.
+        """
+        return self.retrieve(self.id, 'scope', raw_data=True)

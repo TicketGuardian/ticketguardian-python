@@ -4,6 +4,13 @@
 
 ### Fixed
  - Lazy load list slice
+ - Patch tests that were failing
+ - Core URL
+
+### Added
+ - Auth class
+ - Scope property for Client and Affiliate
+ - Parent Scope property for Affiliate
 
 ### Added
  - User class that supports retrieve, list, and update.
