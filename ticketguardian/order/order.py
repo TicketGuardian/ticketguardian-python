@@ -1,5 +1,6 @@
 from ticketguardian.abstract import (
     ListResourceMixin,
+    PatchResourceMixin,
     PostResourceMixin,
     PutResourceMixin,
     RetrieveResourceMixin, )
@@ -14,10 +15,14 @@ from ticketguardian.order import exceptions
 class Order(
         ListResourceMixin,
         RetrieveResourceMixin,
+        PatchResourceMixin,
         PostResourceMixin,
         PutResourceMixin, ):
 
     resource = "orders"
+
+    def __init__(self):
+        super(Order, self).__init__()
 
     @property
     def id(self):
@@ -71,7 +76,7 @@ class Order(
         _validate._validate_card(card)
         _validate._validate_address(billing_address)
 
-        response = super().create(
+        response = super(Order, self).create(
             self.order_number,
             'charge',
             customer=customer,

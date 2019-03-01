@@ -1,6 +1,6 @@
 from ticketguardian.abstract import (
-    RetrieveResourceMixin,
     PutResourceMixin,
+    RetrieveResourceMixin,
     ListResourceMixin, )
 from ticketguardian.item import Item
 from ticketguardian.policy.constants import UPGRADED
@@ -14,6 +14,9 @@ class Policy(
         ListResourceMixin):
 
     resource = 'policies'
+
+    def __init__(self):
+        super(Policy, self).__init__()
 
     @property
     def id(self):

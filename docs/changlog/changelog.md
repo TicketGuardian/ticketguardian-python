@@ -1,16 +1,32 @@
-## [1.0.1]
+## [Unreleased]
+### Updated
+ - Compatibility with Python2.7
 
+### Fixed
+ - Lazy load list slice
+ - Patch tests that were failing
+ - Core URL
+
+### Added
+ - Auth class
+ - Scope property for Client and Affiliate
+ - Parent Scope property for Affiliate
+
+### Added
+ - User class that supports retrieve, list, and update.
+
+## [1.0.1] 3/1/2019
 ### Updated
  - Development core url
 
-## [1.0.0]
-
+## [1.0.0] 1/21/2019
 ### Added
  - Lazy load list and iterator
  - Lazy load iterator which only stores the current page of objects
  - credentials file for a users set of keys
  - Example showing how to use the sdk for quoting items, creating an order, and charging the order.
  - A requirements directory
+ - PATCH capabilities for Affiliate, Client, and Order
 
 ### Updated
  - README

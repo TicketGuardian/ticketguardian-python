@@ -2,11 +2,20 @@ from ticketguardian.affiliate import Affiliate
 from ticketguardian.abstract import (
     ListResourceMixin,
     PostResourceMixin,
+    PatchResourceMixin,
     RetrieveResourceMixin, )
 
 
-class Client(ListResourceMixin, RetrieveResourceMixin, PostResourceMixin, ):
+class Client(
+        ListResourceMixin,
+        PatchResourceMixin,
+        PostResourceMixin,
+        RetrieveResourceMixin,):
+
     resource = "clients"
+
+    def __init__(self):
+        super(Client, self).__init__()
 
     @property
     def affiliate(self):
@@ -17,3 +26,12 @@ class Client(ListResourceMixin, RetrieveResourceMixin, PostResourceMixin, ):
     @property
     def domain(self):
         return
+
+    @property
+    def scope(self):
+        """
+        Used to gets all children within the scope of this Client.
+        Returns:
+            list: a list of all children of the Client including itself.
+        """
+        return self.retrieve(self.id, 'scope', raw_data=True)

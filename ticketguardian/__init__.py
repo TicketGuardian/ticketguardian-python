@@ -12,11 +12,11 @@ from ticketguardian.affiliate import Affiliate
 from ticketguardian.client import Client
 from ticketguardian import constants
 from ticketguardian.customer import Customer
-from ticketguardian.item import Item
 from ticketguardian.order import Order
 from ticketguardian.policy import Policy
 from ticketguardian.product import Product
 from ticketguardian.quote import Quote
+from ticketguardian.user import User
 
 # Credentials
 import os
@@ -41,7 +41,6 @@ __all__ = [
     "Client",
     "constants",
     "Customer",
-    "Item",
     "Order",
     "Policy",
     "Product",

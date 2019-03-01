@@ -14,7 +14,7 @@ In order to use the TicketGuardian SDK, you must have a valid and active key pai
 ### Compatibilities
 |              | Version       |
 |:------------:|:-------------:|
-| Python       |  3.6+         |
+| Python       |  2.7+         |
 
 ## Installation
 
