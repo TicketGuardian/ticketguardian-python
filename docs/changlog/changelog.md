@@ -1,4 +1,4 @@
-## [1.1.0]
+## [1.1.0] 2/4/2019
 ### Updated
  - Compatibility with Python2.7
 
