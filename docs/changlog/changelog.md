@@ -1,11 +1,10 @@
-## [Unreleased]
+## [1.1.0]
 ### Updated
  - Compatibility with Python2.7
 
 ### Fixed
  - Lazy load list slice
  - Patch tests that were failing
- - Core URL
 
 ### Added
  - Auth class
@@ -15,6 +14,8 @@
 ### Added
  - User class that supports retrieve, list, and update.
 
+## [1.0.1]
+ - Core URL
 
 ## [1.0.0] 1/21/2019
 ### Added
