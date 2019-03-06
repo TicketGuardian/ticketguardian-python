@@ -65,4 +65,3 @@ def test_list_resource():
 
             for attr in obj:
                 assert hasattr(resource_objects[0], attr)
-

@@ -1,5 +1,3 @@
-from ticketguardian.client import Client
-from ticketguardian.affiliate import Affiliate
 from ticketguardian.abstract import RetrieveResourceMixin
 
 

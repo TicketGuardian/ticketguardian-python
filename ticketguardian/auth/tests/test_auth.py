@@ -1,6 +1,4 @@
-from ticketguardian.affiliate import Affiliate
 from ticketguardian.auth import Auth
-from ticketguardian.client import Client
 
 from ticketguardian._project._decorators import affiliate_test_method
 
