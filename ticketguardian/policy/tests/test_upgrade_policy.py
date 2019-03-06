@@ -7,14 +7,19 @@ from ticketguardian._project._decorators import client_test_method
 
 @client_test_method
 def test_upgrade_policy_wo_card():
-    policy = ticketguardian.Policy.list(limit=1, status='Accepted')[0]
+    policy_list = ticketguardian.Policy.list(status='Accepted')
+    policy = None
+    for pol in policy_list:
+        if pol.item.cost < 100:
+            policy = pol
+            break
 
     params = {
-        "currency": "EUR",
+        "currency": "USD",
         "item": {
             "name": "Ticket 00004 - Johnny Appleseed",
             "reference_number": "{{$randomInt}}",
-            "cost": policy.item.cost + 1
+            "cost": policy.item.cost + 100
         }
     }
 
@@ -31,7 +36,12 @@ def test_upgrade_policy_wo_card():
 
 @client_test_method
 def test_upgrade_policy_w_card():
-    policy = ticketguardian.Policy.list(limit=1, status='Accepted')[0]
+    policy_list = ticketguardian.Policy.list(status='Accepted')
+    policy = None
+    for pol in policy_list:
+        if pol.item.cost < 100:
+            policy = pol
+            break
 
     params = {
         "billing_address": {
@@ -51,7 +61,7 @@ def test_upgrade_policy_w_card():
         "item": {
             "name": "Ticket 00004 - Johnny Appleseed",
             "reference_number": "125416",
-            "cost": policy.item.cost + 1
+            "cost": policy.item.cost + 100
         }
     }
 
