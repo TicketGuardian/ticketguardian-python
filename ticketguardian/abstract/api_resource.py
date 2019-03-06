@@ -1,4 +1,5 @@
 from datetime import datetime
+from time import mktime
 import json
 import requests
 
@@ -206,7 +207,7 @@ class APIResource(object):
     def _has_valid_token(self):
         if self._token is None:
             return False
-        current_timestamp = datetime.now().timestamp()
+        current_timestamp = mktime(datetime.now().timetuple())
         exp_timestamp = self._token_payload.get('exp', 0)
         return exp_timestamp > current_timestamp
 
