@@ -20,7 +20,7 @@ tests:
 # Python2.7
 venv27:
 	pip2.7 install --user virtualenv
-	python2.7 -m virtualenv venv
+	python2.7 -m virtualenv venv27
 
 install27:
 	make venv27
