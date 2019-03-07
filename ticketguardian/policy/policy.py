@@ -12,9 +12,6 @@ class Policy(RetrieveResourceMixin, PutResourceMixin, ListResourceMixin):
 
     resource = 'policies'
 
-    def __init__(self):
-        super(Policy, self).__init__()
-
     @property
     def id(self):
         return self.policy_number

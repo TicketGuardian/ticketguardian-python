@@ -5,6 +5,3 @@ from ticketguardian.abstract import (
 
 class Product(RetrieveResourceMixin, ListResourceMixin):
     resource = "products"
-
-    def __init__(self):
-        super(Product, self).__init__()

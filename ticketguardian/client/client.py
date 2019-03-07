@@ -14,9 +14,6 @@ class Client(
 
     resource = "clients"
 
-    def __init__(self):
-        super(Client, self).__init__()
-
     @property
     def affiliate(self):
         if not hasattr(self._affiliate, 'resource'):

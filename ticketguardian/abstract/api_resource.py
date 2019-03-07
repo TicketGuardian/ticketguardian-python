@@ -30,19 +30,19 @@ class APIResource(object):
                          input can only be 'prod' or 'sandbox'
         """
         from ticketguardian import PUBLIC_KEY, SECRET_KEY, ENVIRONMENT
-        if 'token' in params:
-            self._public_key = None
-            self._secret_key = None
-            self._token = params.get('token')
-        else:
-            self._public_key = params.get('public_key', PUBLIC_KEY)
-            self._secret_key = params.get('secret_key', SECRET_KEY)
-            self._token = None
-
+        self._public_key = None
+        self._secret_key = None
+        self._token = None
         self._core_url = None
         self._billing_url = None
         self._env = params.get('env', ENVIRONMENT)
         self._configure_environment(self._env)
+
+        if params.get('token'):
+            self._token = params.get('token')
+        else:
+            self._public_key = params.get('public_key', PUBLIC_KEY)
+            self._secret_key = params.get('secret_key', SECRET_KEY)
 
     def __setattr__(self, key, value):
         if isinstance(value, dict):

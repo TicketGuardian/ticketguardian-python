@@ -11,6 +11,3 @@ class User(
         PutResourceMixin,
         RetrieveResourceMixin,):
     resource = "users"
-
-    def __init__(self):
-        super(User, self).__init__()
