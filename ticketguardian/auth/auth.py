@@ -5,11 +5,11 @@ class Auth(RetrieveResourceMixin):
 
     resource = 'auth'
 
-    def get_scope(cls):
+    def get_scope(self):
         """
         Get own scope.
 
         Returns:
             list -- A list containing all objects within scope including self
         """
-        return cls.retrieve('scope', raw_data=True)
+        return self.retrieve('scope', raw_data=True, instance=self)
