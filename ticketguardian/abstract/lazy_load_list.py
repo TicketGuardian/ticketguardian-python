@@ -66,21 +66,28 @@ class ResourceList(list, LazyLoadMixin):
             **self._params
         )
 
+    def __getslice__(self, i, j):
+        """
+        This method is deprecated in Python3 but is needed for Python2.7.
+        """
+        start = i or 0
+        stop = j or self._size
+        return ResourceList(
+            cls=self._cls,
+            size=stop - start,
+            data=self._data,
+            slice_ind=start,
+            *self._ext,
+            **self._params
+        )
+
     def __getitem__(self, ind):
         """
         Returns a new instance of ResourceList if a sliced list is needed.
         """
         if isinstance(ind, slice):
-            start = ind.start or 0
-            stop = ind.stop or self._size
-            return ResourceList(
-                cls=self._cls,
-                size=stop - start,
-                data=self._data,
-                slice_ind=start,
-                *self._ext,
-                **self._params
-            )
+            return self.__getslice__(ind.start, ind.stop)
+
         if ind >= self._size:
             raise IndexError('list index out of range')
         if ind < 0:
