@@ -55,6 +55,18 @@ affiliate_id = affiliate.id
 same_affiliate = Affiliate.retrieve(affiliate_id)
 ```
 
+### Updating a Resource
+```
+# Note: Implemeneted on Order, Policy, anUser
+from ticketguardian import User
+user = User.list()[0]
+user.update(first_name="SDK", last_name="Example", email="Example@domain.com", role=user.role)
+
+# Partial Update
+# Note: Implemented on Affiliate, Client, Order, and User
+user.patch(first_name="Partial_Example")
+```
+
 ## Advanced Usage
 
 ## Client
