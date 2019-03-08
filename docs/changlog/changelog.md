@@ -11,6 +11,10 @@
  - Scope property for Client and Affiliate
  - Parent Scope property for Affiliate
  - User class that supports retrieve, list, and update.
+ - Update and Partial Update examples on README
+
+### Changed
+ - `.update()` and `.patch()` will use the Object's `id` by default. Changed from having to pass `id` as an argument.
 
 ## [1.0.1]
  - Core URL
