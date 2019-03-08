@@ -9,7 +9,13 @@ from ticketguardian._project._decorators import affiliate_test_method
 def test_retrieve_resource():
     for attr in vars(ticketguardian):
         cls = getattr(ticketguardian, attr)
+
         if hasattr(cls, 'resource') and hasattr(cls, 'retrieve'):
+            if cls.resource == 'auth':
+                # Skip Auth since it does not use retrieve like the other
+                # classes
+                continue
+
             response = requests.get(
                 cls()._make_url(),
                 headers=cls()._default_headers
@@ -28,7 +34,7 @@ def test_retrieve_resource():
 
             # Skip if object is customers since customer does not have an id
             # when listed.
-            if cls.resource == 'customers':
+            if cls.resource in ['customers']:
                 continue
 
             # Skip objects that have a null id

@@ -64,7 +64,6 @@ class Policy(RetrieveResourceMixin, PutResourceMixin, ListResourceMixin):
                 raise NoBillingAddressException
 
         upgrade = self.update(
-            self.policy_number,
             'upgrade',
             item=item,
             currency=currency,
@@ -96,7 +95,6 @@ class Policy(RetrieveResourceMixin, PutResourceMixin, ListResourceMixin):
                 changes made to the policy.
         """
         self.update(
-            self.policy_number,
             'exchange',
             item=item,
             currency=currency

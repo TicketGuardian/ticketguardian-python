@@ -115,7 +115,6 @@ class Order(
             _validate._validate_card(params.get('card'))
 
         return self.update(
-            self.order_number,
             'add-items',
             items=items,
             currency=currency,

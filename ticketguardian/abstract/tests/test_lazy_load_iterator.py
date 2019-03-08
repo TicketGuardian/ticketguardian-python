@@ -7,6 +7,7 @@ def test_lazy_iterator():
     # When using the iterator method in ResourceList only objects at index 0 to
     # 19 should be initialized
     resource_objects = Policy.list()
+
     ind = 0
     for i in resource_objects.iterator():
         if ind == 60:
