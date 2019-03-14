@@ -57,7 +57,7 @@ same_affiliate = Affiliate.retrieve(affiliate_id)
 
 ### Updating a Resource
 ```
-# Note: Implemeneted on Order, Policy, and User
+# Note: Implemented on Order, Policy, and User
 from ticketguardian import User
 user = User.list()[0]
 user.update(first_name="SDK", last_name="Example", email="Example@domain.com", role=user.role)
