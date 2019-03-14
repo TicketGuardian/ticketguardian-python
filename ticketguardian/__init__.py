@@ -9,14 +9,15 @@
 
 # Imports
 from ticketguardian.affiliate import Affiliate
+from ticketguardian.auth import Auth
 from ticketguardian.client import Client
 from ticketguardian import constants
 from ticketguardian.customer import Customer
-from ticketguardian.item import Item
 from ticketguardian.order import Order
 from ticketguardian.policy import Policy
 from ticketguardian.product import Product
 from ticketguardian.quote import Quote
+from ticketguardian.user import User
 
 # Credentials
 import os
@@ -38,10 +39,10 @@ ISO_8601 = 'iso-8601'
 
 __all__ = [
     "Affiliate",
+    "Auth",
     "Client",
     "constants",
     "Customer",
-    "Item",
     "Order",
     "Policy",
     "Product",

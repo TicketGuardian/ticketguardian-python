@@ -1,5 +1,8 @@
-from ticketguardian.abstract import RetrieveResourceMixin
+from ticketguardian.abstract import (
+    PostResourceMixin,
+    RetrieveResourceMixin,
+)
 
 
-class Customer(RetrieveResourceMixin):
+class Customer(PostResourceMixin, RetrieveResourceMixin):
     resource = 'customers'

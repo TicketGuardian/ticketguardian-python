@@ -1,5 +1,6 @@
 from ticketguardian.abstract import (
     ListResourceMixin,
+    PatchResourceMixin,
     PostResourceMixin,
     PutResourceMixin,
     RetrieveResourceMixin, )
@@ -14,6 +15,7 @@ from ticketguardian.order import exceptions
 class Order(
         ListResourceMixin,
         RetrieveResourceMixin,
+        PatchResourceMixin,
         PostResourceMixin,
         PutResourceMixin, ):
 
@@ -71,7 +73,7 @@ class Order(
         _validate._validate_card(card)
         _validate._validate_address(billing_address)
 
-        response = super().create(
+        response = super(Order, self).create(
             self.order_number,
             'charge',
             customer=customer,
@@ -113,7 +115,6 @@ class Order(
             _validate._validate_card(params.get('card'))
 
         return self.update(
-            self.order_number,
             'add-items',
             items=items,
             currency=currency,

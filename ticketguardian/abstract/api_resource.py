@@ -1,4 +1,5 @@
 from datetime import datetime
+from time import mktime
 import json
 import requests
 
@@ -29,29 +30,38 @@ class APIResource(object):
                          input can only be 'prod' or 'sandbox'
         """
         from ticketguardian import PUBLIC_KEY, SECRET_KEY, ENVIRONMENT
-        self._public_key = params.get('public_key', PUBLIC_KEY)
-        self._secret_key = params.get('secret_key', SECRET_KEY)
+        self._public_key = None
+        self._secret_key = None
+        self._token = None
         self._core_url = None
         self._billing_url = None
-        self._token = None
         self._env = params.get('env', ENVIRONMENT)
         self._configure_environment(self._env)
+
+        if params.get('token'):
+            self._token = params.get('token')
+        else:
+            self._public_key = params.get('public_key', PUBLIC_KEY)
+            self._secret_key = params.get('secret_key', SECRET_KEY)
 
     def __setattr__(self, key, value):
         if isinstance(value, dict):
             value = self._construct_general(key.title(), value)
 
         if key in vars(type(self)):
-            return super().__setattr__('_' + key, value)
+            return super(APIResource, self).__setattr__('_' + key, value)
         else:
-            return super().__setattr__(key, value)
+            return super(APIResource, self).__setattr__(key, value)
 
     def __repr__(self):
         resource_name = self.__class__.__name__
         if hasattr(self, 'id'):
-            return F'<{resource_name.title()}: {self.id}>'
+            return '<{}: {}>'.format(resource_name.title(), self.id)
         else:
-            return F'<{resource_name.title()} object at {hex(id(self))}>'
+            return '<{} object at {}>'.format(
+                resource_name.title(),
+                hex(id(self))
+            )
 
     @classmethod
     def _construct(cls, **params):
@@ -197,7 +207,7 @@ class APIResource(object):
     def _has_valid_token(self):
         if self._token is None:
             return False
-        current_timestamp = datetime.now().timestamp()
+        current_timestamp = mktime(datetime.now().timetuple())
         exp_timestamp = self._token_payload.get('exp', 0)
         return exp_timestamp > current_timestamp
 
@@ -215,8 +225,8 @@ class APIResource(object):
             'Accept': "application/json",
             'Content-Type': "application/json",
         }
-        response = requests.request(
-            "POST",
+
+        response = requests.post(
             url,
             data=json.dumps(payload),
             headers=headers

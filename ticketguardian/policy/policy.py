@@ -1,6 +1,6 @@
 from ticketguardian.abstract import (
-    RetrieveResourceMixin,
     PutResourceMixin,
+    RetrieveResourceMixin,
     ListResourceMixin, )
 from ticketguardian.item import Item
 from ticketguardian.policy.constants import UPGRADED
@@ -8,10 +8,7 @@ from ticketguardian.policy.exceptions import NoBillingAddressException
 from ticketguardian._project import _validate
 
 
-class Policy(
-        RetrieveResourceMixin,
-        PutResourceMixin,
-        ListResourceMixin):
+class Policy(RetrieveResourceMixin, PutResourceMixin, ListResourceMixin):
 
     resource = 'policies'
 
@@ -67,7 +64,6 @@ class Policy(
                 raise NoBillingAddressException
 
         upgrade = self.update(
-            self.policy_number,
             'upgrade',
             item=item,
             currency=currency,
@@ -80,7 +76,7 @@ class Policy(
         return Policy.retrieve(upgrade.get("policy_number"))
 
     def exchange(self, item, currency='USD'):
-            """ Exchange a policy item.
+        """ Exchange a policy item.
             Keyword Arguments:
                 item (dict): a dictionary containing the following values.
                     name (str): The name of the item.
@@ -97,9 +93,9 @@ class Policy(
             Returns:
                 Nothing is returned. The object is updated to reflect the
                 changes made to the policy.
-            """
-            self.update(
-                self.policy_number,
-                'exchange',
-                item=item,
-                currency=currency)
+        """
+        self.update(
+            'exchange',
+            item=item,
+            currency=currency
+        )

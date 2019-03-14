@@ -1,12 +1,13 @@
 from setuptools import setup, find_packages
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
 
 import os
 
 requirements = []
+
 for file in os.listdir("./requirements/dep/"):
-    with open(F'./requirements/dep/{file}') as f:
+    with open('./requirements/dep/{}'.format(file)) as f:
         requirements += f.read().splitlines()
 
 setup(
