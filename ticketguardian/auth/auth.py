@@ -26,3 +26,8 @@ class Auth(RetrieveResourceMixin):
             return Affiliate.retrieve(root_id).scope
         else:
             return cls.retrieve('scope', raw_data=True)
+
+    @classmethod
+    def me(cls):
+        """GET /auth/me/"""
+        return cls.retrieve('me', raw_data=True)
