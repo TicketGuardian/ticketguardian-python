@@ -32,7 +32,7 @@ class Auth(RetrieveResourceMixin):
         """
         GET /auth/me/
         returns a dict containing info about the user, with the following keys:
-            id, first_name, last_Name, email, is_admin, is_superuser,
+            id, first_name, last_name, email, is_admin, is_superuser,
             external_id, affiliate, client, role
         params:
             1. token (str): JWT token.
