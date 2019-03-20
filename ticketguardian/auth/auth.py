@@ -26,3 +26,18 @@ class Auth(RetrieveResourceMixin):
             return Affiliate.retrieve(root_id).scope
         else:
             return cls.retrieve('scope', raw_data=True)
+
+    @classmethod
+    def me(cls, **params):
+        """
+        GET /auth/me/
+        returns a dict containing info about the user, with the following keys:
+            id, first_name, last_name, email, is_admin, is_superuser,
+            external_id, affiliate, client, role
+        params:
+            1. token (str): JWT token.
+                When provided, it will override the instances default headers.
+                If you don't provide the token, then it will default to the
+                sdk's instantiated token.
+        """
+        return cls.retrieve('me', raw_data=True, instance=cls(**params))

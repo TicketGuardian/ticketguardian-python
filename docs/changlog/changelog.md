@@ -11,6 +11,7 @@
  - Auth class
  - Scope property for Client and Affiliate
  - Parent Scope property for Affiliate
+ - auth/me call to Auth Class. [BE-361]
 
 ### Added
  - User class that supports retrieve, list, and update.
