@@ -3,14 +3,7 @@ from time import mktime
 import json
 import requests
 
-from ticketguardian.constants import (
-    API_VERSION,
-    BILLING_DEV,
-    BILLING_PROD,
-    BILLING_SANDBOX,
-    CORE_DEV,
-    CORE_PROD,
-    CORE_SANDBOX,)
+from ticketguardian.constants import API_VERSION, DOMAINS
 from ticketguardian.exceptions import (
     CouldNotRetrieveToken,
     CredentialsNotProvided, )
@@ -126,22 +119,13 @@ class APIResource(object):
                 env (str) -- The name of the environment to change to.
                              Only accepts 'prod' or 'sandbox'
         """
-        env = env.lower()
-        if env == 'dev':
-            self._env = 'dev'
-            self._core_url = CORE_DEV
-            self._billing_url = BILLING_DEV
-        elif env == 'sandbox':
-            self._env = 'sandbox'
-            self._core_url = CORE_SANDBOX
-            self._billing_url = BILLING_SANDBOX
-        elif env == 'prod':
-            self._env = 'prod'
-            self._core_url = CORE_PROD
-            self._billing_url = BILLING_PROD
-        else:
-            raise Exception("Invalid environment. "
-                            "Use prod' or 'sandbox'")
+        if env not in DOMAINS:
+            raise Exception("Invalid environment.")
+
+        domains = DOMAINS.get(env.lower())
+        self._env = env
+        self._core_url = domains.get('core')
+        self._billing_url = domains.get('billing')
 
     def _make_url(self, *args):
         """
@@ -150,6 +134,7 @@ class APIResource(object):
             Any extension of the url as strings. The default url is the
             {core url}/{api version}/{resource name}
         """
+        self._configure_environment(self._env)
         url = "{}/{}/{}/".format(
             self.core_url,
             API_VERSION,
@@ -179,8 +164,7 @@ class APIResource(object):
     def billing_url(self):
         return self._billing_url
 
-    @property
-    def token(self):
+    def get_token(self):
         if self._has_valid_token():
             return self._token
         elif self._public_key and self._secret_key:
@@ -193,7 +177,7 @@ class APIResource(object):
         return {
             'Accept': "application/json",
             'Content-Type': "application/json",
-            'Authorization': "JWT " + self.token
+            'Authorization': "JWT " + self.get_token()
         }
 
     @property
