@@ -1,4 +1,4 @@
-## [1.1.1] 4/4/2019
+## [1.2.0] 4/4/2019
 ### Added
  - backwards compatibility testing with `tox`
  - qa support
