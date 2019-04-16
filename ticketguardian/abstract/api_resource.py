@@ -122,7 +122,7 @@ class APIResource(object):
         if env not in DOMAINS:
             raise Exception("Invalid environment.")
 
-        domains = DOMAINS.get(env.lower())
+        domains = DOMAINS.get(env)
         self._env = env
         self._core_url = domains.get('core')
         self._billing_url = domains.get('billing')
