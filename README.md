@@ -34,7 +34,7 @@ ticketguardian.ENVIRONMENT = 'sandbox'
 ```
 
 If no environment is specified then `ticketguardian.ENVIRONMENT` defaults to `prod`.
-`ticketguardian.ENVIRONMENT` only accepts `'prod'` or `'sandbox'`.
+`ticketguardian.ENVIRONMENT` only accepts `'prod'`, `'sandbox'`, `'dev'`, or `'qa'`.
 
 ## Basic Usage
 

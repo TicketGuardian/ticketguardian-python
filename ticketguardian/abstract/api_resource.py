@@ -117,7 +117,7 @@ class APIResource(object):
 
             Arguments:
                 env (str) -- The name of the environment to change to.
-                             Only accepts 'prod' or 'sandbox'
+                             Only accepts 'prod', 'dev', 'sandbox', or 'qa'
         """
         if env not in DOMAINS:
             raise Exception("Invalid environment.")
