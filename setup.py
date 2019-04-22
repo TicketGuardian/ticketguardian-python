@@ -1,14 +1,8 @@
 from setuptools import setup, find_packages
 
-__version__ = '1.1.0'
+__version__ = '1.2.0'
 
 import os
-
-requirements = []
-
-for file in os.listdir("./requirements/dep/"):
-    with open('./requirements/dep/{}'.format(file)) as f:
-        requirements += f.read().splitlines()
 
 setup(
     name='ticketguardian-python',
@@ -19,6 +13,6 @@ setup(
     author_email='developers@protecht.io',
     url='https://github.com/TicketGuardian/ticketguardian-python',
     keywords=['sdk', 'TicketGuardian', 'python'],
-    install_requires=requirements,
+    install_requires=['PyJWT==1.5.3', 'simplejson==3.16.0', 'requests[security]'],
     classifiers=[],
 )

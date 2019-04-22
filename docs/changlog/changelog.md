@@ -1,3 +1,11 @@
+## [1.2.0] 4/4/2019
+### Added
+ - backwards compatibility testing with `tox`
+ - qa support
+
+### Fixed
+ - Quote failing to set `token`
+
 ## [1.1.0] 2/4/2019
 ### Updated
  - Compatibility with Python2.7
