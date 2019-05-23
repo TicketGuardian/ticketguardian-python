@@ -21,9 +21,6 @@ class Order(
 
     resource = "orders"
 
-    def __init__(self):
-        super(Order, self).__init__()
-
     @property
     def id(self):
         return self.order_number
@@ -118,7 +115,6 @@ class Order(
             _validate._validate_card(params.get('card'))
 
         return self.update(
-            self.order_number,
             'add-items',
             items=items,
             currency=currency,

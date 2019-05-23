@@ -7,9 +7,9 @@ from ticketguardian._project._decorators import affiliate_test_method
 def test_user_patch():
     user = User.list()[0]
     first_name = user.first_name
-    user.patch(user.id, first_name='test_patch')
+    user.patch(first_name='test_patch')
     assert user.first_name == 'test_patch'
-    user.patch(user.id, first_name=first_name)
+    user.patch(first_name=first_name)
 
 
 @affiliate_test_method
@@ -29,7 +29,7 @@ def test_user_update():
         "is_active": True,
         "role": "Sales"
     }
-    user.patch(user.id, **new_info)
+    user.patch(**new_info)
     for attr in new_info:
         assert getattr(user, attr) == new_info[attr]
-    user.patch(user.id, **user_info)
+    user.patch(**user_info)

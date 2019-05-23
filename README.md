@@ -34,7 +34,7 @@ ticketguardian.ENVIRONMENT = 'sandbox'
 ```
 
 If no environment is specified then `ticketguardian.ENVIRONMENT` defaults to `prod`.
-`ticketguardian.ENVIRONMENT` only accepts `'prod'` or `'sandbox'`.
+`ticketguardian.ENVIRONMENT` only accepts `'prod'`, `'sandbox'`, `'dev'`, or `'qa'`.
 
 ## Basic Usage
 
@@ -53,6 +53,18 @@ affiliate = affiliate_list[0]
 affiliate_id = affiliate.id
 
 same_affiliate = Affiliate.retrieve(affiliate_id)
+```
+
+### Updating a Resource
+```
+# Note: Implemented on Order, Policy, and User
+from ticketguardian import User
+user = User.list()[0]
+user.update(first_name="SDK", last_name="Example", email="Example@domain.com", role=user.role)
+
+# Partial Update
+# Note: Implemented on Affiliate, Client, Order, and User
+user.patch(first_name="Partial_Example")
 ```
 
 ## Advanced Usage

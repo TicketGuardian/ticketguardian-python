@@ -1,20 +1,29 @@
-## [Unreleased]
+## [1.2.0] 4/4/2019
+### Added
+ - backwards compatibility testing with `tox`
+ - qa support
+
+### Fixed
+ - Quote failing to set `token`
+
+## [1.1.0] 2/4/2019
 ### Updated
  - Compatibility with Python2.7
 
 ### Fixed
  - Lazy load list slice
  - Patch tests that were failing
- - Core URL
 
 ### Added
  - Auth class
  - Scope property for Client and Affiliate
  - Parent Scope property for Affiliate
  - auth/me call to Auth Class. [BE-361]
-
-### Added
  - User class that supports retrieve, list, and update.
+ - Update and Partial Update examples on README
+
+### Changed
+ - `.update()` and `.patch()` will use the Object's `id` by default. Changed from having to pass `id` as an argument.
 
 ## [1.0.1] 3/1/2019
 ### Updated

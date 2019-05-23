@@ -9,6 +9,7 @@
 
 # Imports
 from ticketguardian.affiliate import Affiliate
+from ticketguardian.auth import Auth
 from ticketguardian.client import Client
 from ticketguardian import constants
 from ticketguardian.customer import Customer
@@ -38,6 +39,7 @@ ISO_8601 = 'iso-8601'
 
 __all__ = [
     "Affiliate",
+    "Auth",
     "Client",
     "constants",
     "Customer",

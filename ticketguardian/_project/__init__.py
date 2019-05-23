@@ -9,5 +9,9 @@ for path in [ENV_PATH, CRD_PATH]:
             for line in f:
                 if line == '\n' or line[0] == '#':
                     continue
-                key, value = line.rstrip().split('=')
-                os.environ.setdefault(key, value)
+
+                if line.count('=') == 1:
+                    # .env should just be used to set public and secret keys
+                    # for testing.
+                    key, value = line.rstrip().split('=')
+                    os.environ.setdefault(key, value)
