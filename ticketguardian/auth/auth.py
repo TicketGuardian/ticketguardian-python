@@ -5,6 +5,15 @@ class Auth(RetrieveResourceMixin):
 
     resource = 'auth'
 
+    @property
+    def scope(self):
+        """
+        Get scope of self.
+        Returns:
+            list -- A list containing all objects within scope including self
+        """
+        return self.retrieve('scope', raw_data=True, instance=self)
+
     @classmethod
     def get_parents(cls, affiliate_id):
         """
