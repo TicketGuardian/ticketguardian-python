@@ -1,3 +1,7 @@
+## [1.3.0] 5/7/2020
+### Fixed
+ - Bug where get_parents would fail if affiliate can not retrieve parent affiliate.
+
 ## [1.2.0] 4/4/2019
 ### Added
  - backwards compatibility testing with `tox`

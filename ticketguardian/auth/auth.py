@@ -5,14 +5,37 @@ class Auth(RetrieveResourceMixin):
 
     resource = 'auth'
 
-    def get_scope(self):
+    @property
+    def scope(self):
         """
-        Get own scope.
-
+        Get scope of self.
         Returns:
             list -- A list containing all objects within scope including self
         """
         return self.retrieve('scope', raw_data=True, instance=self)
+
+    @classmethod
+    def get_parents(cls, affiliate_id):
+        """
+        Get all parents of an affiliate.
+
+        Returns:
+            list -- A list containing all parent ids of the Affiliate.
+        """
+        affiliate = Affiliate.retrieve(affiliate_id)
+
+        result = []
+
+        while hasattr(affiliate.parent, 'id'):
+            try:
+                result.append(affiliate.parent.id)
+                affiliate = affiliate.parent
+            except Exception:
+                # Relies on either reaching top affiliate which has a null
+                # parent or not having permissions to access top level parent.
+                break
+
+        return result
 
     @classmethod
     def me(cls, **params):
