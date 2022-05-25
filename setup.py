@@ -13,6 +13,6 @@ setup(
     author_email='developers@protecht.io',
     url='https://github.com/TicketGuardian/ticketguardian-python',
     keywords=['sdk', 'TicketGuardian', 'python'],
-    install_requires=['PyJWT==1.5.3', 'simplejson==3.16.0', 'requests[security]'],
+    install_requires=['PyJWT==2.4.0', 'simplejson==3.16.0', 'requests[security]'],
     classifiers=[],
 )
